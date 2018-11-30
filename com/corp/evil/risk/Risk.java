@@ -9,24 +9,17 @@ public class Risk {
     private int probability;
     private int impact;
 
-    Risk(String riskName, int probability, int impact) {
+    public Risk(String riskName, int probability, int impact) {
         this.riskName = riskName;
         this.probability = probability;
         this.impact = impact;
     }
 
-    int getRisk() {
+    public int getRisk() {
         return probability * impact;
     }
 
-    @Override
-    public String toString() {
-        return "Risk{" +
-                "riskName='" + riskName + '\'' +
-                ", probability=" + probability +
-                ", impact=" + impact +
-                '}';
-    }
+
 
     /*
      *  Auto-generated equals and hashCode (based on riskName)
@@ -47,27 +40,27 @@ public class Risk {
     /*
      *  Automatically generated getters and setters
      */
-    String getRiskName() {
+    public String getRiskName() {
         return riskName;
     }
 
-    void setRiskName(String riskName) {
+    public void setRiskName(String riskName) {
         this.riskName = riskName;
     }
 
-    int getProbability() {
+    public int getProbability() {
         return probability;
     }
 
-    void setProbability(int probability) {
+    public void setProbability(int probability) {
         this.probability = probability;
     }
 
-    int getImpact() {
+    public int getImpact() {
         return impact;
     }
 
-    void setImpact(int impact) {
+    public void setImpact(int impact) {
         this.impact = impact;
     }
 }
