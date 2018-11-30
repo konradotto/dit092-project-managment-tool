@@ -1,25 +1,47 @@
-import java.util.UUID;
+import java.util.Objects;
 
 /**
  * @author Konrad Otto
  */
 public class Risk {
 
-    private UUID uuid;
     private String riskName;
     private int probability;
     private int impact;
 
     public Risk(String riskName, int probability, int impact) {
-        uuid = UUID.randomUUID();
         this.riskName = riskName;
         this.probability = probability;
         this.impact = impact;
     }
 
-
     public int getRisk() {
         return probability * impact;
+    }
+
+    @Override
+    public String toString() {
+        return "Risk{" +
+                "riskName='" + riskName + '\'' +
+                ", probability=" + probability +
+                ", impact=" + impact +
+                '}';
+    }
+
+    /*
+     *  Auto-generated equals and hashCode (based on riskName)
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Risk risk = (Risk) o;
+        return Objects.equals(riskName, risk.riskName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(riskName);
     }
 
     /*
@@ -47,5 +69,9 @@ public class Risk {
 
     public void setImpact(int impact) {
         this.impact = impact;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Hello, world!");
     }
 }
