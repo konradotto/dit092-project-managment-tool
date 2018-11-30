@@ -9,13 +9,13 @@ public class Risk {
     private int probability;
     private int impact;
 
-    public Risk(String riskName, int probability, int impact) {
+    Risk(String riskName, int probability, int impact) {
         this.riskName = riskName;
         this.probability = probability;
         this.impact = impact;
     }
 
-    public int getRisk() {
+    int getRisk() {
         return probability * impact;
     }
 
@@ -47,31 +47,27 @@ public class Risk {
     /*
      *  Automatically generated getters and setters
      */
-    public String getRiskName() {
+    String getRiskName() {
         return riskName;
     }
 
-    public void setRiskName(String riskName) {
+    void setRiskName(String riskName) {
         this.riskName = riskName;
     }
 
-    public int getProbability() {
+    int getProbability() {
         return probability;
     }
 
-    public void setProbability(int probability) {
+    void setProbability(int probability) {
         this.probability = probability;
     }
 
-    public int getImpact() {
+    int getImpact() {
         return impact;
     }
 
-    public void setImpact(int impact) {
+    void setImpact(int impact) {
         this.impact = impact;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Hello, world!");
     }
 }
