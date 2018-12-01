@@ -6,6 +6,7 @@ import com.corp.evil.RiskAlreadyRegisteredException;
 
 public class RiskMatrix {
     private ArrayList<Risk> risks;
+    private String lineSeparator = System.lineSeparator();
 
     public RiskMatrix() {
         risks = new ArrayList<>();
@@ -24,6 +25,23 @@ public class RiskMatrix {
         this(RiskMatrix.fromJsonFile(file));
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        if (risks.isEmpty()) {
+            sb.append("There are no risks registered in this Risk Matrix yet." + lineSeparator);
+        } else {
+            sb.append("\tRisk Matrix" + lineSeparator + lineSeparator);
+
+            sb.append("Risk name\tprobability\timpact\trisk" + lineSeparator);
+            for (Risk risk : risks) {
+                sb.append(risk.getRiskName() + "\t" + risk.getProbability() + "\t" + risk.getImpact() +
+                        "\t" + risk.getRisk() + lineSeparator);
+            }
+        }
+        return sb.toString();
+    }
 
     // TODO: Constructor from JSON-file
 
