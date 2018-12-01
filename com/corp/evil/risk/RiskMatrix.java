@@ -27,9 +27,11 @@ public class RiskMatrix {
     public void addRisk(Risk risk) {
         if (risk == null) {
             throw new IllegalArgumentException("RiskMatrix can not add NULL value to risks");
+        } else if (risks.contains(risk)) {
+        	
+        } else {
+        	this.risks.add(risk);
         }
-
-        this.risks.add(risk);
     }
 
     public void addRisks(List<Risk> risks) {
