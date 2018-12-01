@@ -9,6 +9,9 @@ public enum RiskImpact {
     HIGH(4, "high"),
     VERY_HIGH(5, "very high");
 
+    private final int impact;
+    private final String text;
+
     private final static Map<Integer, RiskImpact> map;
 
     static {
@@ -18,9 +21,6 @@ public enum RiskImpact {
         }
         map = Collections.unmodifiableMap(tempMap);
     }
-
-    private final int impact;
-    private final String text;
 
     RiskImpact(int impact, String text) {
         this.impact = impact;
@@ -35,10 +35,9 @@ public enum RiskImpact {
         return text;
     }
 
-    public RiskImpact valueOf(int impact) throws RiskImpactNotDefinedException {
+    public static RiskImpact valueOf(int impact) throws RiskImpactNotDefinedException {
         if (!map.containsKey(impact)) {
-            throw new RiskImpactNotDefinedException("The RiskImpact you are trying to obtain " +
-                    "is not within the specified values.");
+            throw new RiskImpactNotDefinedException("No RiskImpact is defined for the requested value.");
         }
         return map.get(impact);
     }
