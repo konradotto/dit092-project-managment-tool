@@ -9,6 +9,9 @@ public class Risk {
     private int probability;
     private int impact;
 
+    private final static String[] riskSeverity = {"minor", "moderate", "major", "severe"};
+    private final static int[] riskBorders = {4, 10, 20, Integer.MAX_VALUE};
+
     public Risk(String riskName, int probability, int impact) {
         this.riskName = riskName;
         this.probability = probability;
@@ -16,14 +19,23 @@ public class Risk {
     }
 
     /**
-     *  Getter for the risk using probability and impact
+     * Getter for the risk using probability and impact
      *
-     *  @return product of probability and impact (risk)
+     * @return product of probability and impact (risk)
      */
     public int getRisk() {
         return probability * impact;
     }
 
+    public String getRiskString() {
+        int risk = getRisk();
+
+        for (int i = 0; i < riskBorders.length; ++i) {
+            if (risk < riskBorders[i]) {
+                return riskSeverity[i];
+            }
+        }
+    }
 
 
     /*

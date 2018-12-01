@@ -1,9 +1,9 @@
 public enum RiskImpact {
-    INSIGNIFICANT(1, "insignificant"),
-    MINOR(2, "minor"),
-    MODERATE(3, "moderate"),
-    MAJOR(4, "major"),
-    CRITICAL(5, "critical");
+    VERY_LOW(1, "very low"),
+    LOW(2, "low"),
+    MEDIUM(3, "medium"),
+    HIGH(4, "high"),
+    VERY_HIGH(5, "very high");
 
     private int value;
     private String word;
