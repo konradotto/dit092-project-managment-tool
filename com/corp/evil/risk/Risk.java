@@ -2,6 +2,7 @@ import java.util.Objects;
 
 /**
  * @author Konrad Otto
+ * @author Marcus Olsson
  */
 public class Risk {
 
@@ -29,12 +30,17 @@ public class Risk {
 
     public String getRiskString() {
         int risk = getRisk();
+        String severity = "";
 
-        for (int i = 0; i < riskBorders.length; ++i) {
+        int i = 0;
+        while (i < riskBorders.length && severity.equals("")) {
             if (risk < riskBorders[i]) {
-                return riskSeverity[i];
+                severity = riskSeverity[i];
             }
+            ++i;
         }
+
+        return severity;
     }
 
 
