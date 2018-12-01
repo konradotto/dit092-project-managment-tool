@@ -12,34 +12,34 @@ public enum RiskImpact {
     private final static Map<Integer, RiskImpact> map;
 
     static {
-        HashMap<Integer, RiskImpact> tempMap = new HashMap<Integer, RiskImpact>();
+        HashMap<Integer, RiskImpact> tempMap = new HashMap<>();
         for (RiskImpact impact : RiskImpact.values()) {
-            tempMap.put(impact.getValue(), impact);
+            tempMap.put(impact.getImpact(), impact);
         }
         map = Collections.unmodifiableMap(tempMap);
     }
 
-    private final int value;
+    private final int impact;
     private final String text;
 
-    private RiskImpact(int value, String text) {
-        this.value = value;
+    RiskImpact(int impact, String text) {
+        this.impact = impact;
         this.text = text;
     }
 
-    public int getValue() {
-        return value;
+    public int getImpact() {
+        return impact;
     }
 
     public String getText() {
         return text;
     }
 
-    public static RiskImpact valueOf(int value) throws RiskImpactNotDefinedException {
-        if (!map.containsKey(value)) {
-            throw new RiskImpactNotDefinedException("The provided integer can not be parsed into a " +
-                    "valid RiskImpact object");
+    public RiskImpact valueOf(int impact) throws RiskImpactNotDefinedException {
+        if (!map.containsKey(impact)) {
+            throw new RiskImpactNotDefinedException("The RiskImpact you are trying to obtain " +
+                    "is not within the specified values.");
         }
-        return map.get(value);
+        return map.get(impact);
     }
 }
