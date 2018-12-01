@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -7,16 +8,16 @@ import java.util.Objects;
 public class Risk {
 
     private String riskName;
-    private int probability;
-    private int impact;
+    private RiskProbability probability;
+    private RiskImpact impact;
 
     private final static String[] riskSeverity = {"minor", "moderate", "major", "severe"};
     private final static int[] riskBorders = {4, 10, 20, Integer.MAX_VALUE};
 
-    public Risk(String riskName, int probability, int impact) {
-        this.riskName = riskName;
-        this.probability = probability;
-        this.impact = impact;
+    public Risk(String riskName, int probability, int impact) throws RiskProbabilityNotDefinedException, RiskImpactNotDefinedException {
+        setRiskName(riskName);
+        setProbability(probability);
+        setImpact(impact);
     }
 
     /**
@@ -25,7 +26,7 @@ public class Risk {
      * @return product of probability and impact (risk)
      */
     public int getRisk() {
-        return probability * impact;
+        return getProbability() * getImpact();
     }
 
     public String getRiskString() {
@@ -39,10 +40,8 @@ public class Risk {
             }
             ++i;
         }
-
         return severity;
     }
-
 
     /*
      *  Auto-generated equals and hashCode (based on riskName)
@@ -72,18 +71,18 @@ public class Risk {
     }
 
     public int getProbability() {
-        return probability;
+        return probability.ordinal() + 1;
     }
 
-    public void setProbability(int probability) {
-        this.probability = probability;
+    public void setProbability(int probability) throws RiskProbabilityNotDefinedException {
+        this.probability = RiskProbability.valueOf(probability);
     }
 
     public int getImpact() {
-        return impact;
+        return impact.ordinal() + 1;
     }
 
-    public void setImpact(int impact) {
-        this.impact = impact;
+    public void setImpact(int impact) throws RiskImpactNotDefinedException {
+        this.impact = RiskImpact.valueOf(impact);
     }
 }
