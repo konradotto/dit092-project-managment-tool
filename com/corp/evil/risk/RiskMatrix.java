@@ -24,6 +24,7 @@ public class RiskMatrix {
         this(RiskMatrix.fromJsonFile(file));
     }
 
+
     // TODO: Constructor from JSON-file
 
     public void addRisk(Risk risk) throws RiskIsNullException, RiskAlreadyRegisteredException {
@@ -34,6 +35,14 @@ public class RiskMatrix {
                     "Change the name or delete the current risk of name <" + risk.getRiskName() + ">");
         } else {
         	this.risks.add(risk);
+        }
+    }
+
+    public void removeRisk(Risk risk) throws RiskIsNullException {
+        if (risk == null) {
+            throw new RiskIsNullException("RiskMatrix can not remove NULL value from risks");
+        } else {
+            risks.remove(risk);
         }
     }
 
