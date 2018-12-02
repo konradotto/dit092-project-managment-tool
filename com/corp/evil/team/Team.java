@@ -32,8 +32,13 @@ public class Team {
         activities.remove(activity);
     }
 
-    public boolean teamContains(UUID id){
+    public boolean teamContains(String id){
 
+        for (Member member : this.members) {
+            if(member != null && member.getID().equals(id)) {
+                return true;
+            }
+        }
         return false;
     }
 
