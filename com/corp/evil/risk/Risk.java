@@ -15,6 +15,11 @@ public class Risk {
         this.impact = impact;
     }
 
+    /**
+     *  Getter for the risk using probability and impact
+     *
+     *  @return product of probability and impact (risk)
+     */
     public int getRisk() {
         return probability * impact;
     }

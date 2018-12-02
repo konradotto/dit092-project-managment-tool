@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import exceptions;
 
 public class RiskMatrix {
     private ArrayList<Risk> risks;
@@ -26,10 +27,12 @@ public class RiskMatrix {
 
     public void addRisk(Risk risk) {
         if (risk == null) {
-            throw new IllegalArgumentException("RiskMatrix can not add NULL value to risks");
+            throw new RiskIsNullException("RiskMatrix can not add NULL value to risks");
+        } else if (risks.contains(risk)) {
+        	
+        } else {
+        	this.risks.add(risk);
         }
-
-        this.risks.add(risk);
     }
 
     public void addRisks(List<Risk> risks) {
