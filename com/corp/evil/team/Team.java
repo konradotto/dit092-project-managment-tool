@@ -17,22 +17,22 @@ public class Team {
     }
 
     public void addMember(Member member){
-
+        members.add(member);
     }
 
     public void removeMember(Member member){
-
+        members.remove(member);
     }
 
     public void addActivity(Activity activity){
-
+        activities.add(activity);
     }
 
     public void removeActivity(Activity activity){
-
+        activities.remove(activity);
     }
 
-    public boolean teamConstraints(UUID id){
+    public boolean teamContains(UUID id){
 
         return false;
     }
