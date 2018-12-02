@@ -41,6 +41,7 @@ public class RiskMatrix {
 
             // separator line
             sb.append(String.join("", Collections.nCopies(COLUMNS * COLUMN_WIDTH, "-")));
+            sb.append(lineSeparator);
 
             for (Risk risk : risks) {
                 sb.append(formatTableRow(new String[] {risk.getRiskName(), String.valueOf(risk.getProbability()),
@@ -54,7 +55,7 @@ public class RiskMatrix {
         String result = "";
 
         for(int i = 0; i < COLUMNS; ++i) {
-            result += String.format("%1$" + COLUMN_WIDTH + "s", columns[i]);
+            result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
         }
         result += String.format("%n");
 
