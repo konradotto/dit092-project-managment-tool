@@ -8,6 +8,7 @@ public class RiskTesting {
         RiskMatrix rm = new RiskMatrix();
         rm.addRisk(r);
 
-        System.out.print(rm.toString());
+        System.out.println(rm.toString());
+        System.out.println(rm.toStringText());
     }
 }
