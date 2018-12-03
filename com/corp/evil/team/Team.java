@@ -18,19 +18,50 @@ public class Team {
 
     }
 
-    public void addMember(Member member){
-        members.add(member);
+
+    public void addMember(Member member) throws MemberIsNullException, MemberAlreadyRegisteredException {
+        if (member == null) { throw new MemberIsNullException("This member does not exist!");
+        } else if (members.contains(member)) {
+            throw new MemberAlreadyRegisteredException("One member cannot be added to the same group twice!");
+        } else {
+            this.members.add(member);
+        }
     }
 
-    public void removeMember(Member member){
+
+    public void addMember(List<Member> member)throws MemberIsNullException, MemberAlreadyRegisteredException{
+        for (Member member :this.members){
+            members.add(member);
+        }
+
+    }
+
+    public void removeMember(Member member)throws MemberIsNullException {
+        if (member == null) { throw new MemberIsNullException("This member does not exist!"); }
         members.remove(member);
     }
 
-    public void addActivity(Activity activity){
-        activities.add(activity);
+    public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException{
+        if (activity == null) { throw new ActivityIsNullException("This activity does not exist!");
+        } else if (activities.contains(activity)) {
+            throw new ActivityAlreadyRegisteredException("An activity with same name exists already!");
+        } else {
+            activities.add(activity);
+        }
     }
 
+
+    public void addActivity(List<Activity> activity)throws ActivityAlreadyRegisteredException, ActivityIsNullException{
+        for (Activity activity :this.activities){ ActivityIsNullException("This activity does not exist!");}
+            activities.add(activity);
+        }
+
+
+
+
+
     public void removeActivity(Activity activity){
+        if (activity == null){ throw new ActivityIsNullException("This activity does not exist!");}
         activities.remove(activity);
     }
 
