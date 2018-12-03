@@ -26,7 +26,7 @@ public class ProjectSchedule {
 		return jsonText;
 	}
 
-	public void addActivity(Activity activity) {
+	public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException {
 		if(activities.contains(activity)) {
 			throw new ActivityAlreadyRegisteredException("This activity already exists!");
 		}
