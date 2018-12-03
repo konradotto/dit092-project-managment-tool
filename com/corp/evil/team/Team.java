@@ -24,7 +24,7 @@ public class Team {
         } else if (members.contains(member)) {
             throw new MemberAlreadyRegisteredException("One member cannot be added to the same group twice!");
         } else {
-            this.members.add(member);
+            members.add(member);
         }
     }
 
