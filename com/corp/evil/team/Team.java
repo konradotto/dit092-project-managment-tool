@@ -67,13 +67,23 @@ public class Team {
     }
 
     public boolean teamContains(String id){
-
-        for (Member member : this.members) {
+        for (Member member : members) {
             if(member != null && member.getID().equals(id)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public Member retrieveMember (String id){
+
+        for (Member member: members){
+            if (member.getID().equals(id)){
+                return member;
+            }
+        }
+
+        return null;
     }
 
     @java.lang.Override
