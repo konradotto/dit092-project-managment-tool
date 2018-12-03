@@ -8,7 +8,8 @@ public class Member {
     private final double SALARY_PER_HOUR;
     private Duration timeSpent;
 
-    Member(String name, double salary){
+    Member(String name, double salary)throws NameIsEmptyException{
+        if (name.isEmpty()){ throw new NameIsEmptyException("The field name cannot be empty!"); }
         this.name = name;
         this.SALARY_PER_HOUR = salary;
         this.uuid = UUID.randomUUID().toString();

@@ -10,10 +10,12 @@ public class Team {
 
     }
 
-    public Team(String name, ArrayList<Member> members, ArrayList <Activity> activities){
+    public Team(String name, ArrayList<Member> members, ArrayList <Activity> activities)throws NameIsEmptyException {
+        if (name.isEmpty()){ throw new NameIsEmptyException("The field name cannot be empty!"); }
+        this.name = name;
         this.members = members;
         this.activities = activities;
-        this.name = name;
+
     }
 
     public void addMember(Member member){
