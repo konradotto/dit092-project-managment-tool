@@ -29,9 +29,9 @@ public class Team {
     }
 
 
-    public void addMember(List<Member> member)throws MemberIsNullException, MemberAlreadyRegisteredException{
-        for (Member member :this.members){
-            members.add(member);
+    public void addMember(List<Member> members)throws MemberIsNullException, MemberAlreadyRegisteredException{
+        for (Member member :members){
+            addMember(member);
         }
 
     }
@@ -51,16 +51,17 @@ public class Team {
     }
 
 
-    public void addActivity(List<Activity> activity)throws ActivityAlreadyRegisteredException, ActivityIsNullException{
-        for (Activity activity :this.activities){ ActivityIsNullException("This activity does not exist!");}
-            activities.add(activity);
+
+    public void addActivity(List<Activity> activities)throws ActivityAlreadyRegisteredException, ActivityIsNullException {
+        for (Activity activity : activities) {
+            addActivity(activity);
         }
 
+    }
 
 
 
-
-    public void removeActivity(Activity activity){
+    public void removeActivity(Activity activity) throws ActivityIsNullException {
         if (activity == null){ throw new ActivityIsNullException("This activity does not exist!");}
         activities.remove(activity);
     }
