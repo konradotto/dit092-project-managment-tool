@@ -37,8 +37,12 @@ public class ProjectSchedule {
 
 	}
 
-	public void removeActivity(Activity activity) {
-		
+	public void removeActivity(Activity activity) throws ActivityIsNullException {
+        if (activity == null) {
+            throw new ActivityIsNullException("Project schedule can not remove NULL value from schedule");
+        }else {
+            activities.remove(activity);
+        }
 	}
 
 

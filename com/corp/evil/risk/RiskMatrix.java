@@ -29,11 +29,11 @@ public class RiskMatrix {
 
     @Override
     public String toString() {
-    	formatTable(true);
+    	return formatTable(true);
     }
     
     public String toStringText() {
-    	formatTable(false);
+    	return formatTable(false);
     }
     
     public String formatTable(boolean numeric) {
@@ -53,16 +53,13 @@ public class RiskMatrix {
 
             for (Risk risk : risks) {
                 sb.append(formatTableRow(new String[] {risk.getRiskName(), 
-                		String.valueOf(numeric ? risk.getProbability() : risk.getProbability().getText()),
-                        String.valueOf(numeric ? risk.getImpact() : risk.getImpact().getText()), 
+                		String.valueOf(numeric ? risk.getProbability().getProbability() : risk.getProbability().getText()),
+                        String.valueOf(numeric ? risk.getImpact().getImpact() : risk.getImpact().getText()),
                         String.valueOf(numeric ? risk.getRisk() : risk.getRiskString())}));
             }
         }
         return sb.toString();
     }
-
-    
-    
     
     
     private String formatTableRow(String[] columns) {

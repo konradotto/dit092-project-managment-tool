@@ -26,7 +26,7 @@ public class Risk {
      * @return product of probability and impact (risk)
      */
     public int getRisk() {
-        return getProbability() * getImpact();
+        return getProbability().getProbability() * getImpact().getImpact();
     }
 
     public String getRiskString() {
@@ -70,16 +70,16 @@ public class Risk {
         this.riskName = riskName;
     }
 
-    public int getProbability() {
-        return probability.ordinal() + 1;
+    public RiskProbability getProbability() {
+        return this.probability;
     }
 
     public void setProbability(int probability) throws RiskProbabilityNotDefinedException {
         this.probability = RiskProbability.valueOf(probability);
     }
 
-    public int getImpact() {
-        return impact.ordinal() + 1;
+    public RiskImpact getImpact() {
+        return this.impact;
     }
 
     public void setImpact(int impact) throws RiskImpactNotDefinedException {
