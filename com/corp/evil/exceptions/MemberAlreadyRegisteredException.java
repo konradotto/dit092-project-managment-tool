@@ -1,5 +1,5 @@
-public class MemberkAlreadyRegisteredException extends Exception {
-      public MemberkAlreadyRegisteredException(String message) {
-        super(message);
+public class MemberAlreadyRegisteredException extends Exception {
+        public MemberAlreadyRegisteredException(String message) {
+            super(message);
+        }
     }
-}
