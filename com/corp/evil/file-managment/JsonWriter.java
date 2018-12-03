@@ -1,6 +1,6 @@
 import java.io.File;
 
-public class JsonWriter {
+public final class JsonWriter {
 
     File file;
 
