@@ -66,24 +66,18 @@ public class Team {
         activities.remove(activity);
     }
 
-    public boolean teamContains(String id){
-        for (Member member : members) {
-            if(member != null && member.getID().equals(id)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean teamContains(Member member){
+        return members.contains(member);
     }
 
-    public Member retrieveMember (String id){
+    public Member retrieveMember (Member member){
+        Member result = null;
 
-        for (Member member: members){
-            if (member.getID().equals(id)){
-                return member;
-            }
+        for(Member temp : members) {
+            if (temp.equals(member)) {return temp;}
         }
 
-        return null;
+        return result;
     }
 
     @java.lang.Override
