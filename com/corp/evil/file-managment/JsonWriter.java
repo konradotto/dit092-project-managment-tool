@@ -2,10 +2,10 @@ import java.io.File;
 
 public final class JsonWriter {
 
-    File file;
+    private final File file;
 
     public JsonWriter(File f) {
-        this.file = f;
+        file = f;
     }
 
 }
