@@ -27,11 +27,15 @@ public class ProjectSchedule {
 	}
 
 	public void addActivity(Activity activity) {
+		if(activities.contains(activity)) {
+			throw new ActivityAlreadyRegisteredException("This activity already exists!");
+		}
+		else activities.add(activity);
 
 	}
 
 	public void removeActivity(Activity activity) {
-
+		
 	}
 
 
