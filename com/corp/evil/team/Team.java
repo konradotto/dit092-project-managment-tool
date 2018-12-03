@@ -22,7 +22,7 @@ public class Team {
     public void addMember(Member member) throws MemberIsNullException, MemberAlreadyRegisteredException {
         if (member == null) { throw new MemberIsNullException("This member does not exist!");
         } else if (members.contains(member)) {
-            throw new MemberAlreadyRegisteredException("One member cannot be added to the same group twice!");
+            throw new MemberAlreadyRegisteredException("The member is already registered!");
         } else {
             members.add(member);
         }
