@@ -13,5 +13,46 @@ public class Activity {
 		this.team = team;
 		this.budget = budget;
 	}
-	
+
+	//Accessor methods
+	public int getStartWeek() {
+		return startWeek;
+	}
+
+	public void setStartWeek(int startWeek) {
+		this.startWeek = startWeek;
+	}
+
+	public int getEndWeek() {
+		return endWeek;
+	}
+
+	public void setEndWeek(int endWeek) {
+		this.endWeek = endWeek;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
+	public Budget getBudget() {
+		return budget;
+	}
+
+	public void setBudget(Budget budget) {
+		this.budget = budget;
+	}
+	//End of Accessor methods
 }
