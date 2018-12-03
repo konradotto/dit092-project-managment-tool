@@ -2,6 +2,7 @@
 import java.time.Duration;
 import java.util.Objects;
 import java.util.UUID;
+import com.google.gson.*;
 
 public class Member {
 
@@ -16,11 +17,22 @@ public class Member {
         SALARY_PER_HOUR = salary;
         uuid = UUID.randomUUID().toString();
         timeSpent = Duration.ofHours(0);
+
+
     }
 
     public double calculateSalary(){
-
         return getTimeSpent()*getSALARY_PER_HOUR();
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "name='" + name + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", SALARY_PER_HOUR=" + SALARY_PER_HOUR +
+                ", timeSpent=" + timeSpent +
+               "Total Salary" + calculateSalary() +'}';
     }
 
     public void spendTime(long hours){

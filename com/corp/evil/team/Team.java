@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-import org.json.simple.*;
+import com.google.gson.*;
 
 public class Team {
 
@@ -58,7 +58,6 @@ public class Team {
         for (Activity activity : activities) {
             addActivity(activity);
         }
-
     }
 
 
@@ -87,7 +86,7 @@ public class Team {
         return "Team{" +
                 "name='" + name + '\'' +
                 ", members=" + members +
-                ", activitis=" + activities +
+                ", activities=" + activities +
                 '}';
     }
 
