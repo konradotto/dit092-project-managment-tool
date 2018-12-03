@@ -1,7 +1,7 @@
 # ignore the intellij project files
 .idea/
-com/corp/evil/view
+com/corp/evil/view/*
 com/corp/evil/components
-com/corp/evil/test
+com/corp/evil/test/*
 /bin/
 /out/*
