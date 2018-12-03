@@ -1,5 +1,6 @@
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Member {
@@ -34,4 +35,17 @@ public class Member {
     public void setName(String name) {this.name = name;}
     public void setTimeSpent(Duration timeSpent) {this.timeSpent = timeSpent;}
     public long getTimeSpent() {return timeSpent.toHours();}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Member member = (Member) o;
+        return Objects.equals(this.uuid, member.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.uuid);
+    }
 }
