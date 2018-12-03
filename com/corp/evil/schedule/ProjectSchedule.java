@@ -27,6 +27,9 @@ public class ProjectSchedule {
 	}
 
 	public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException {
+		if(activity = null) {
+			throw new ActivityIsNullException("Activity is NULL and cannot be added to the list of activities!");
+		}
 		if(activities.contains(activity)) {
 			throw new ActivityAlreadyRegisteredException("This activity already exists!");
 		}
