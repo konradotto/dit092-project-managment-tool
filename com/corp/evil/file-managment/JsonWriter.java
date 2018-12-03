@@ -20,9 +20,16 @@ public final class JsonWriter {
         fc = fcTemp;
     }
 
-    public static void pickFile() {
-        File file = fc.showOpenDialog(new Stage());
+    public static void setFile(File f) {
+        if (f == null) {
+            throw new NullPointerException("No file has been selected.");
+        }
+        file = f;
         fileSet = (file != null);
+    }
+
+    public static void pickFile() {
+        setFile(fc.showOpenDialog(new Stage()));
     }
 
     public static boolean write(String jsonText) {
@@ -39,6 +46,4 @@ public final class JsonWriter {
         }
         return successful;
     }
-
-
 }
