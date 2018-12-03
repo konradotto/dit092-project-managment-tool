@@ -29,6 +29,10 @@ public class RiskMatrix {
 
     @Override
     public String toString() {
+    	formatTable(true);
+    }
+    
+    public String formatTable(boolean numeric) {
         StringBuilder sb = new StringBuilder();
 
         if (risks.isEmpty()) {
@@ -45,12 +49,17 @@ public class RiskMatrix {
 
             for (Risk risk : risks) {
                 sb.append(formatTableRow(new String[] {risk.getRiskName(), String.valueOf(risk.getProbability()),
-                        String.valueOf(risk.getImpact()), String.valueOf(risk.getRisk())}));
+                        String.valueOf(numeric ? risk.getImpact() : risk.get ), 
+                        String.valueOf(risk.getRisk())}));
             }
         }
         return sb.toString();
     }
 
+    
+    
+    
+    
     private String formatTableRow(String[] columns) {
         String result = "";
 
