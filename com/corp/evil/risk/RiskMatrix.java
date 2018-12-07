@@ -100,6 +100,10 @@ public class RiskMatrix {
         }
     }
 
+    public List<Risk> getRisks() {
+        return risks;
+    }
+
     public static String fromJsonFile(File file) {
 
         // TODO: read json file to String
