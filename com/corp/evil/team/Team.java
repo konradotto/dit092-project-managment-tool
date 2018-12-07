@@ -1,13 +1,6 @@
-import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-
-import java.io.*;
-
 public class Team {
 
     private String name;
@@ -16,6 +9,7 @@ public class Team {
 
     public Team(){
         members = new ArrayList<>();
+        activities = new ArrayList<>();
         name = "";
 
     }
@@ -91,29 +85,21 @@ public class Team {
 
     @java.lang.Override
     public java.lang.String toString() {
-        return "Team{" +
-                "name='" + name + '\'' +
-                ", members=" + members +
-                ", activities=" + activities +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        String newline = System.lineSeparator();
+
+        sb.append(this.getName() + newline);
+        for (Member member : members){
+            sb.append(member.toString()+newline);
+        }
+        for (Activity activity: activities){
+            sb.append(activity.toString()+newline);
+        }
+        return sb.toString();
     }
 
     //GETTERS AND SETTERS
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
-
-
-    public List<Member> readJsonStreamMembers(Gson gson , InputStream in) throws IOException{
-        JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
-        List<Member> members = new ArrayList<>();
-        reader.beginArray();
-        while (reader.hasNext()) {
-            Member member = gson.fromJson(reader, Member.class);
-            members.add(member);
-        }
-        reader.endArray();
-        reader.close();
-        return members;
-    }
 
 }

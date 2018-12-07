@@ -28,7 +28,6 @@ public class Member {
     public String toString() {
         return "Member{" +
                 "name='" + name + '\'' +
-                ", uuid='" + uuid + '\'' +
                 ", SALARY_PER_HOUR=" + SALARY_PER_HOUR +
                 ", timeSpent=" + timeSpent +
                "Total Salary" + calculateSalary() +'}';
