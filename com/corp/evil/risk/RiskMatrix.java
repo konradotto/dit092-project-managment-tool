@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RiskMatrix {
     private final static int COLUMN_WIDTH = 15;
-    private final static int COLUMNS = 4;
+    private final static int COLUMNS = 5;
 
     private ArrayList<Risk> risks;
     private String lineSeparator = System.lineSeparator();
@@ -42,22 +42,31 @@ public class RiskMatrix {
         if (risks.isEmpty()) {
             sb.append("There are no risks registered in this Risk Matrix yet." + lineSeparator);
         } else {
-            sb.append("\tRisk Matrix" + lineSeparator);
+            
+            sb.append("\t\t\tRisk Matrix" + lineSeparator);
 
+            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(lineSeparator);
+            
             // format table content
-            sb.append(formatTableRow(new String[] {"Risk name:", "Probability:", "Impact:", "Risk:"}));
+            sb.append(formatTableRow(new String[] {"| Risk name:", "| Probability:", "| Impact:", "| Risk:", "|"}));
 
             // separator line
-            sb.append(String.join("", Collections.nCopies(COLUMNS * COLUMN_WIDTH, "-")));
+
+            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
             sb.append(lineSeparator);
 
             for (Risk risk : risks) {
-                sb.append(formatTableRow(new String[] {risk.getRiskName(), 
-                		String.valueOf(numeric ? risk.getProbability().getProbability() : risk.getProbability().getText()),
-                        String.valueOf(numeric ? risk.getImpact().getImpact() : risk.getImpact().getText()),
-                        String.valueOf(numeric ? risk.getRisk() : risk.getRiskString())}));
+                sb.append(formatTableRow(new String[] {"| " + risk.getRiskName(),
+                		"| " + String.valueOf(numeric ? risk.getProbability().getProbability() : risk.getProbability().getText()),
+                		"| " + String.valueOf(numeric ? risk.getImpact().getImpact() : risk.getImpact().getText()),
+                		"| " + String.valueOf(numeric ? risk.getRisk() : risk.getRiskString()), "|"}));
+
+                sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                sb.append(lineSeparator);
             }
         }
+        //test
         return sb.toString();
     }
     
@@ -65,10 +74,10 @@ public class RiskMatrix {
     private String formatTableRow(String[] columns) {
         String result = "";
 
-        for(int i = 0; i < COLUMNS; ++i) {
+        for(int i = 0; i < COLUMNS - 1; ++i) {
             result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
         }
-        result += String.format("%n");
+        result += String.format(columns[4] + "%n");
 
         return result;
     }
