@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public final class JsonWriter {
+public final class JsonReaderWriter {
 
     private static File file;
     private static final FileChooser fc;
@@ -41,7 +41,7 @@ public final class JsonWriter {
                 fw.write(jsonText);
                 successful = true;
             } catch (IOException e) {
-                System.err.println("IOException in JsonWriter.write(String jsonText)." +
+                System.err.println("IOException in JsonReaderWriter.write(String jsonText)." +
                         "Could not create a FileWriter for the selected file.");
                 e.printStackTrace();
             }
