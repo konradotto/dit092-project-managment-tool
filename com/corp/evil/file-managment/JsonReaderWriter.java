@@ -5,10 +5,13 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public final class JsonReaderWriter {
+
+    public final static Charset STANDARD_ENCODING = StandardCharsets.UTF_8;
 
     private static File file;
     private static final FileChooser fc;
