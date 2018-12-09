@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.ArrayList;
 
 public class ProjectSchedule {
@@ -11,19 +10,6 @@ public class ProjectSchedule {
 		this.startWeek = startWeek;
 		this.endWeek = endWeek;
 		activities = new ArrayList<Activity>();
-	}
-
-	public ProjectSchedule(File file) {
-		this(ProjectSchedule.fromJsonFile(file));
-	}
-
-	public ProjectSchedule(String jsonText) {
-		//TODO!!!
-	}
-
-	public static String fromJsonFile(File file) {
-		String jsonText = "TODO!";
-		return jsonText;
 	}
 
 	public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
@@ -43,6 +29,4 @@ public class ProjectSchedule {
             activities.remove(activity);
         }
 	}
-
-
 }
