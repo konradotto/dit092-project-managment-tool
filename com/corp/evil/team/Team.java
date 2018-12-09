@@ -1,7 +1,6 @@
+
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.*;
-
 public class Team {
 
     private String name;
@@ -9,6 +8,9 @@ public class Team {
     private ArrayList<Activity> activities;
 
     public Team(){
+        members = new ArrayList<>();
+        activities = new ArrayList<>();
+        name = "";
 
     }
 
@@ -31,7 +33,7 @@ public class Team {
     }
 
 
-    public void addMember(List<Member> members)throws MemberIsNullException, MemberAlreadyRegisteredException{
+    public void addMembers(List<Member> members)throws MemberIsNullException, MemberAlreadyRegisteredException{
         for (Member member :members){
             addMember(member);
         }
@@ -83,14 +85,21 @@ public class Team {
 
     @java.lang.Override
     public java.lang.String toString() {
-        return "Team{" +
-                "name='" + name + '\'' +
-                ", members=" + members +
-                ", activities=" + activities +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        String newline = System.lineSeparator();
+
+        sb.append(this.getName() + newline);
+        for (Member member : members){
+            sb.append(member.toString()+newline);
+        }
+        for (Activity activity: activities){
+            sb.append(activity.toString()+newline);
+        }
+        return sb.toString();
     }
 
     //GETTERS AND SETTERS
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
+
 }

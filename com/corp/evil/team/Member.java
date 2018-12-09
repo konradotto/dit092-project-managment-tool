@@ -2,7 +2,6 @@
 import java.time.Duration;
 import java.util.Objects;
 import java.util.UUID;
-import com.google.gson.*;
 
 public class Member {
 
@@ -29,7 +28,6 @@ public class Member {
     public String toString() {
         return "Member{" +
                 "name='" + name + '\'' +
-                ", uuid='" + uuid + '\'' +
                 ", SALARY_PER_HOUR=" + SALARY_PER_HOUR +
                 ", timeSpent=" + timeSpent +
                "Total Salary" + calculateSalary() +'}';
@@ -58,6 +56,6 @@ public class Member {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.uuid);
+        return Objects.hash(uuid);
     }
 }
