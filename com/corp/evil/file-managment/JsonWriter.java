@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -45,5 +47,17 @@ public final class JsonWriter {
             }
         }
         return successful;
+    }
+
+    // transforming a generic type into a Json-string
+    public static <T> String toJson(T classInstance) {
+        Gson gson = new GsonBuilder().create();
+        return gson.toJson(classInstance);
+    }
+
+    // transforming a json-string into an object of generic type
+    public static <T> T fromJson(String jsonText, Class<T> type) {
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(jsonText, type);
     }
 }
