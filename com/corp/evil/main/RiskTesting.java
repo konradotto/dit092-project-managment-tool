@@ -46,7 +46,7 @@ public class RiskTesting {
 
         System.out.println(rm.getRisks().get(0).equals(rm2.getRisks().get(0)));
 
-        RiskMatrix rm3 = new GsonBuilder().create().fromJson(JsonWriter.toJson(rm), RiskMatrix.class);
+        RiskMatrix rm3 = new GsonBuilder().create().fromJson(JsonReaderWriter.toJson(rm), RiskMatrix.class);
         System.out.println(rm3.toStringText());
     }
 }
