@@ -3,9 +3,10 @@ import com.google.gson.GsonBuilder;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public final class JsonReaderWriter {
 
@@ -28,6 +29,16 @@ public final class JsonReaderWriter {
         }
         file = f;
         fileSet = (file != null);
+    }
+
+    /**
+     *  Function to read any file as a String
+     *
+     *  @return String containing all characters of the passed file
+     */
+    private static String readFile(File f, Charset encoding) throws IOException {
+        byte[] encoded = Files.readAllBytes(Paths.get(f.getPath()));
+        return new String(encoded, encoding);
     }
 
     public static void pickFile() {
@@ -59,5 +70,10 @@ public final class JsonReaderWriter {
     public static <T> T fromJson(String jsonText, Class<T> type) {
         Gson gson = new GsonBuilder().create();
         return gson.fromJson(jsonText, type);
+    }
+
+    // transforming a file containing one class in Json format into a object of that class type
+    public static <T> T fromJsonFile(File f, Class<T> type, Charset encoding) throws IOException {
+        return fromJson(readFile(f, encoding), type);
     }
 }
