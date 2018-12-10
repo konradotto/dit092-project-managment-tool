@@ -1,11 +1,16 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Formattable;
 import java.util.List;
 public class Team {
 
     private String name;
     private ArrayList<Member> members;
     private ArrayList<Activity> activities;
+
+    private final static int COLUMN_WIDTH = 15;
+    private final static int COLUMNS = 5;
 
     public Team(){
         members = new ArrayList<>();
@@ -33,7 +38,7 @@ public class Team {
     }
 
 
-    public void addMembers(List<Member> members)throws MemberIsNullException, MemberAlreadyRegisteredException{
+    public void addMembers(List<Member> members)throws  MemberIsNullException, MemberAlreadyRegisteredException{
         for (Member member :members){
             addMember(member);
         }
@@ -85,16 +90,52 @@ public class Team {
 
     @java.lang.Override
     public java.lang.String toString() {
+        return formatTable(true);
+    }
+
+    private String formatTableRow(String[] columns) {
+        String result = "";
+
+        for(int i = 0; i < COLUMNS - 1; ++i) {
+            result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
+        }
+        result += String.format(columns[3] + "%n");
+
+        return result;
+    }
+
+
+    public String formatTable(boolean numeric) {
         StringBuilder sb = new StringBuilder();
         String newline = System.lineSeparator();
+        if (members.isEmpty()) {
+            sb.append("There are no members registered in this team yet." + newline);
+        } else {
 
-        sb.append(this.getName() + newline);
-        for (Member member : members){
-            sb.append(member.toString()+newline);
+            sb.append("\t\t\tRisk Matrix" + newline);
+
+            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(newline);
+
+            // format table content
+            sb.append(formatTableRow(new String[] {"| Member name:", "| Salary/h:", "| Time spent:", "| "}));
+
+            // separator line
+
+            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(newline);
+
+            for (Member member : members) {
+                sb.append(formatTableRow(new String[] {"| " + member.getName(),
+                        "| " + member.getSALARY_PER_HOUR(),
+                        "| " + member.getTimeSpent(),
+                        "| " }));
+
+                sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                sb.append(newline);
+            }
         }
-        for (Activity activity: activities){
-            sb.append(activity.toString()+newline);
-        }
+        //test
         return sb.toString();
     }
 
