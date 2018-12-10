@@ -1,10 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.WeekFields;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 public class ProjectSchedule {
 
@@ -39,6 +36,16 @@ public class ProjectSchedule {
         } else {
             activities.remove(activity);
         }
+    }
+
+    public List<Activity> getParticipation(Member member) {
+        List<Activity> result = new ArrayList<Activity>();
+        for (Activity act : this.activities) {
+            if (act.getTeam().contains(member)) {
+                result.add(act);
+            }
+        }
+        return result;
     }
 
     public static LocalDateTime getLocalDateTime(int year, int week, int day, int hour) {
