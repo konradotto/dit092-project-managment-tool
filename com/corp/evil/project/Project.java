@@ -14,7 +14,7 @@ public class Project {
     private Budget budget;
 
     public Project(String name, Team team, RiskMatrix riskMatrix, ProjectSchedule schedule, Budget budget) {
-        //this.setName(name);
+        this.setName(name);
         this.setTeam(team);
         this.setRiskMatrix(riskMatrix);
         this.setSchedule(schedule);
@@ -27,7 +27,9 @@ public class Project {
 
     public void setName(String name) {
         if (name == null || name.equals("")) {
-            this.name = "Unnamed Project " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_"));
+            if (this.name == null) {
+                this.name = "Unnamed Project " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_"));
+            }
         } else {
             this.name = name;
         }
@@ -37,9 +39,9 @@ public class Project {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(Collections.nCopies(getName().length() + 2 * MARGIN, "=") + LS);
-        sb.append(Collections.nCopies(MARGIN, " ") + getName() + LS);
-        sb.append(Collections.nCopies(getName().length() + 2 * MARGIN, "=") + LS + LS);
+        sb.append(String.join("", Collections.nCopies(getName().length() + 2 * MARGIN, "=")) + LS);
+        sb.append(String.join("", Collections.nCopies(MARGIN, " ")) + getName() + LS);
+        sb.append(String.join("", Collections.nCopies(getName().length() + 2 * MARGIN, "=")) + LS + LS);
 
         sb.append(team);
         sb.append(LS + LS);
