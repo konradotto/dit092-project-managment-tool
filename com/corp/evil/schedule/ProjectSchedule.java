@@ -14,6 +14,12 @@ public class ProjectSchedule {
     private LocalDateTime start;
     private LocalDateTime end;
 
+    public ProjectSchedule (ArrayList<Activity> activities) {
+        this.activities = activities;
+        this.getEndWeek();
+        this.getStartWeek();
+    }
+
     public ProjectSchedule(int startYear, int startWeek, int endYear, int endWeek, ArrayList<Activity> activities) {
         this.start = getLocalDateTime(startYear, startWeek, FIRST_WORKDAY, DAY_START_HOUR);
         this.end = getLocalDateTime(endYear, endWeek, LAST_WORKDAY, DAY_END_HOUR);
@@ -61,6 +67,8 @@ public class ProjectSchedule {
 
         return dt.withHour(hour).withMinute(0).withSecond(0).withNano(0);
     }
+
+
 
     public static int getWeek(LocalDateTime date) {
         WeekFields weekFields = WeekFields.of(Locale.getDefault());

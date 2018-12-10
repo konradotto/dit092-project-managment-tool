@@ -1,3 +1,7 @@
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.temporal.Temporal;
+import java.time.Period;
 public class Activity {
 	
 	private int startWeek;
@@ -5,7 +9,9 @@ public class Activity {
 	private String name;
 	private Team team;
 	private Budget budget;
-	
+	private final int LAST_WEEK_OF_YEAR = 52;
+
+
 	public Activity(String name, int startWeek, int endWeek, Team team, Budget budget) {
 		this.name = name;
 		this.startWeek = startWeek;
@@ -15,6 +21,18 @@ public class Activity {
 	}
 
 	//Accessor methods
+	public int getDuration(){
+		int durationPerWeek;
+		if (getStartWeek()>getEndWeek()){
+			int firstDur = LAST_WEEK_OF_YEAR - getStartWeek();
+			 durationPerWeek = firstDur + getEndWeek();
+		} else {
+			 durationPerWeek =  getEndWeek() - getStartWeek();
+		}
+		int durationPerHour = durationPerWeek * 20;
+		return durationPerHour;
+	}
+
 	public int getStartWeek() {
 		return startWeek;
 	}

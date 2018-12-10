@@ -34,6 +34,9 @@ public class Member {
     }
 
     public void spendTime(long hours){
+
+
+
         Duration spendTime = timeSpent.plusHours(hours);
         setTimeSpent(spendTime);
     }
