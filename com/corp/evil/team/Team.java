@@ -1,7 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Formattable;
+
 import java.util.List;
 public class Team {
 
@@ -90,7 +90,7 @@ public class Team {
 
     @java.lang.Override
     public java.lang.String toString() {
-        return formatTable(true);
+        return formatTable();
     }
 
     private String formatTableRow(String[] columns) {
@@ -105,36 +105,36 @@ public class Team {
     }
 
 
-    public String formatTable(boolean numeric) {
-        StringBuilder sb = new StringBuilder();
-        String newline = System.lineSeparator();
-        if (members.isEmpty()) {
-            sb.append("There are no members registered in this team yet." + newline);
-        } else {
+    public String formatTable() {
+            StringBuilder sb = new StringBuilder();
+            String newline = System.lineSeparator();
+            if (members.isEmpty()) {
+                sb.append("There are no members registered in this team yet." + newline);
+            } else {
 
-            sb.append("\t\t\tRisk Matrix" + newline);
-
-            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
-            sb.append(newline);
-
-            // format table content
-            sb.append(formatTableRow(new String[] {"| Member name:", "| Salary/h:", "| Time spent:", "| "}));
-
-            // separator line
-
-            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
-            sb.append(newline);
-
-            for (Member member : members) {
-                sb.append(formatTableRow(new String[] {"| " + member.getName(),
-                        "| " + member.getSALARY_PER_HOUR(),
-                        "| " + member.getTimeSpent(),
-                        "| " }));
+                sb.append("\t\t\t Team " + getName() + newline);
 
                 sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
                 sb.append(newline);
+
+                // format table content
+                sb.append(formatTableRow(new String[] {"| Member name:", "| Salary/h:", "| Time spent:", "| "}));
+
+                // separator line
+
+                sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                sb.append(newline);
+
+                for (Member member : members) {
+                    sb.append(formatTableRow(new String[] {"| " + member.getName(),
+                            "| " + member.getSALARY_PER_HOUR(),
+                            "| " + member.getTimeSpent(),
+                            "| " }));
+
+                    sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                    sb.append(newline);
+                }
             }
-        }
         //test
         return sb.toString();
     }
