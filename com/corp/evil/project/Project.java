@@ -66,6 +66,10 @@ public class Project {
         }
     }
 
+    public void addMember(Member member) throws MemberAlreadyRegisteredException, MemberIsNullException {
+        this.team.addMember(member);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
