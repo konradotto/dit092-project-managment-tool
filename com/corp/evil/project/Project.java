@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Project {
 
@@ -11,20 +13,27 @@ public class Project {
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
-    private Budget budget;
 
-    public Project(String name, Team team, RiskMatrix riskMatrix, ProjectSchedule schedule, Budget budget) {
+    public Project(String name, Team team, RiskMatrix riskMatrix, ProjectSchedule schedule) {
         this.setName(name);
         this.setTeam(team);
         this.setRiskMatrix(riskMatrix);
         this.setSchedule(schedule);
-        this.setBudget(budget);
+    }
+
+    public Budget getBudget() {
+        List<Budget> budgetList = new ArrayList<Budget>();
+        for (Activity task : schedule.getActivities()) {
+            budgetList.add(task.getBudget());
+        }
+
+        return new Budget(budgetList);
     }
 
     //TODO: implement (in budget)
     public double getEarnedValue() {
 
-        return 0.0;
+        return getBudget().getEarnedValue();
     }
 
     //TODO: implement (in Schedule)
@@ -45,6 +54,7 @@ public class Project {
 
         return 0.0;
     }
+
 
     public String getName() {
         return name;
@@ -75,7 +85,7 @@ public class Project {
         sb.append(team);
         sb.append(LS + LS);
 
-        sb.append(budget);
+        sb.append(getBudget());
         sb.append(LS + LS);
 
         sb.append(schedule);
@@ -108,13 +118,5 @@ public class Project {
 
     public void setSchedule(ProjectSchedule schedule) {
         this.schedule = schedule;
-    }
-
-    public Budget getBudget() {
-        return budget;
-    }
-
-    public void setBudget(Budget budget) {
-        this.budget = budget;
     }
 }
