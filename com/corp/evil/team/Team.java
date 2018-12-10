@@ -14,7 +14,6 @@ public class Team {
         members = new ArrayList<>();
         activities = new ArrayList<>();
         name = "";
-
     }
 
     public Team(String name, ArrayList<Member> members, ArrayList <Activity> activities)throws NameIsEmptyException {

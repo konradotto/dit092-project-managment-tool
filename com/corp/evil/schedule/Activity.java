@@ -1,7 +1,3 @@
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.temporal.Temporal;
-import java.time.Period;
 public class Activity {
 	
 	private int startWeek;
@@ -19,6 +15,8 @@ public class Activity {
 		this.team = team;
 		this.budget = budget;
 	}
+
+    //TODO: activity constructor without team
 
 	//Accessor methods
 	public int getDuration(){
