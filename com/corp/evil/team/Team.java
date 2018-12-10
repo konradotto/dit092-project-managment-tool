@@ -1,7 +1,5 @@
-
 import java.util.ArrayList;
 import java.util.Collections;
-
 import java.util.List;
 public class Team {
 
@@ -74,7 +72,7 @@ public class Team {
         activities.remove(activity);
     }
 
-    public boolean teamContains(Member member){
+    public boolean contains(Member member) {
         return members.contains(member);
     }
 
