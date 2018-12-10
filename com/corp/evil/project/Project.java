@@ -21,6 +21,37 @@ public class Project {
         this.setBudget(budget);
     }
 
+    //TODO: implement (in budget)
+    public double getEarnedValue() {
+
+        return 0.0;
+    }
+
+    //TODO: implement (in Schedule)
+    public double getTimeSpent(Member member) {
+
+        return 0.0;
+    }
+
+    //TODO: implement
+    public double getCostVariance() {
+
+
+        return 0.0;
+    }
+
+    //TODO: implement
+    public double getScheduleVariance() {
+
+        return 0.0;
+    }
+
+    //TODO: implement
+    public String getParticipation(Member member) {
+
+        return null;
+    }
+
     public String getName() {
         return name;
     }
@@ -28,7 +59,7 @@ public class Project {
     public void setName(String name) {
         if (name == null || name.equals("")) {
             if (this.name == null) {
-                this.name = "Unnamed Project " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_"));
+                this.name = "Unnamed Project " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             }
         } else {
             this.name = name;
