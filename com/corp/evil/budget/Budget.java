@@ -2,6 +2,8 @@ import java.util.List;
 
 public class Budget {
 
+    private final static String LS = System.lineSeparator();
+
     private final static double DEFAULT_COST_SCHEDULED = 0;
     private final static double DEFAULT_COST_PERFORMED = 0;
     private final static double DEFAULT_PERCENT_COMPLETED = 0;
@@ -25,5 +27,17 @@ public class Budget {
 
     public Budget(List<Budget> budgets) {
 
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Budget:" + LS);
+        sb.append("Cost of work scheduled: \t" + costOfWorkScheduled);
+        sb.append("Cost of work performed: \t" + costOfWorkPerformed);
+        sb.append("Completion: \t\t" + percentCompleted);
+
+        return sb.toString();
     }
 }
