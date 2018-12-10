@@ -112,7 +112,7 @@ public class Team {
                 sb.append("There are no members registered in this team yet." + newline);
             } else {
 
-                sb.append("\t\t\tRisk Matrix" + newline);
+                sb.append("\t\t\t Team " + getName() + newline);
 
                 sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
                 sb.append(newline);
