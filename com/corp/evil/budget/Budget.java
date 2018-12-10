@@ -3,6 +3,7 @@ import java.util.List;
 public class Budget {
 
     private final static String LS = System.lineSeparator();
+    private final static String CURRENCY = "$";
 
     private final static double DEFAULT_COST_SCHEDULED = 0;
     private final static double DEFAULT_COST_PERFORMED = 0;
@@ -34,9 +35,9 @@ public class Budget {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Budget:" + LS);
-        sb.append("Cost of work scheduled: \t" + costOfWorkScheduled);
-        sb.append("Cost of work performed: \t" + costOfWorkPerformed);
-        sb.append("Completion: \t\t" + percentCompleted);
+        sb.append("Cost of work scheduled: \t" + CURRENCY + " " + costOfWorkScheduled + LS);
+        sb.append("Cost of work performed: \t" + CURRENCY + " " + costOfWorkPerformed + LS);
+        sb.append("Completion: \t\t\t\t" + percentCompleted + " %" + LS);
 
         return sb.toString();
     }
