@@ -13,9 +13,6 @@ public class Budget {
     private double costOfWorkPerformed;
     private double percentCompleted;
 
-    private double earnedValue;
-
-
     public Budget(double costScheduled, double costPerformed, double percentCompleted) {
         this.costOfWorkScheduled = costScheduled;
         this.costOfWorkPerformed = costPerformed;
@@ -26,8 +23,17 @@ public class Budget {
         this(DEFAULT_COST_SCHEDULED, DEFAULT_COST_PERFORMED, DEFAULT_PERCENT_COMPLETED);
     }
 
-    public Budget(List<Budget> budgets) {
 
+    public Budget(List<Budget> budgets) {
+        costOfWorkScheduled = costOfWorkPerformed = percentCompleted = 0.0;
+
+        double totalHours = 0.0;
+        int length = budgets.size();
+        for (Budget temp : budgets) {
+            costOfWorkScheduled += temp.getCostOfWorkScheduled();
+            costOfWorkPerformed += temp.getCostOfWorkPerformed();
+            percentCompleted += (temp.getPercentCompleted() / length);
+        }
     }
 
     @Override
@@ -40,5 +46,33 @@ public class Budget {
         sb.append("Completion: \t\t\t\t" + percentCompleted + " %" + LS);
 
         return sb.toString();
+    }
+
+    public double getEarnedValue() {
+        return costOfWorkScheduled * (percentCompleted / 100.0);
+    }
+
+    public double getCostOfWorkScheduled() {
+        return costOfWorkScheduled;
+    }
+
+    public void setCostOfWorkScheduled(double costOfWorkScheduled) {
+        this.costOfWorkScheduled = costOfWorkScheduled;
+    }
+
+    public double getCostOfWorkPerformed() {
+        return costOfWorkPerformed;
+    }
+
+    public void setCostOfWorkPerformed(double costOfWorkPerformed) {
+        this.costOfWorkPerformed = costOfWorkPerformed;
+    }
+
+    public double getPercentCompleted() {
+        return percentCompleted;
+    }
+
+    public void setPercentCompleted(double percentCompleted) {
+        this.percentCompleted = percentCompleted;
     }
 }
