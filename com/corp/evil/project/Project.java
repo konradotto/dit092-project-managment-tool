@@ -46,12 +46,6 @@ public class Project {
         return 0.0;
     }
 
-    //TODO: implement
-    public String getParticipation(Member member) {
-
-        return null;
-    }
-
     public String getName() {
         return name;
     }
