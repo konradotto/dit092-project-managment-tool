@@ -9,9 +9,12 @@ public class ProjectSchedule {
     private final static int LAST_WORKDAY = Calendar.FRIDAY;
     private final static int DAY_START_HOUR = 8;
     private final static int DAY_END_HOUR = 17;
+    private final int LAST_WEEK_OF_YEAR = 52;
 
     private final static int COLUMN_WIDTH = 15;
     private final static int COLUMNS = 5;
+
+
 
     private ArrayList<Activity> activities;
     private LocalDateTime start;
@@ -96,7 +99,6 @@ public class ProjectSchedule {
         //test
         return sb.toString();
     }
-
 
 
     public List<Activity> getParticipation(Member member) {

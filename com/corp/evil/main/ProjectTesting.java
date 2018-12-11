@@ -3,10 +3,9 @@ import java.util.ArrayList;
 public class ProjectTesting {
 
     public static void main(String[] args) throws RiskAlreadyRegisteredException, RiskIsNullException, RiskProbabilityNotDefinedException, RiskImpactNotDefinedException, NameIsEmptyException, MemberAlreadyRegisteredException, MemberIsNullException {
-        ProjectSchedule schedule = new ProjectSchedule(2018, 48, 2019, 3,
-                new ArrayList<Activity>());
+        ProjectSchedule schedule = new ProjectSchedule(2018, 48, 2019, 3, new ArrayList<Activity>());
 
-        Project broject = new Project("", new Team(), new RiskMatrix(), schedule);
+        Project broject = new Project("prdd", new Team(), new RiskMatrix(), schedule);
 
         System.out.println(broject);
         broject.getTeam().addMember(new Member("Dude", 5000));

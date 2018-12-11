@@ -142,7 +142,7 @@ public class Team {
 
 
 
-    public double timeSpent(){
+    public double timeSpentPercentage(){
 
         double sumOfDurations = 0;
         for (Activity activity: activities){
