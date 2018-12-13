@@ -150,4 +150,25 @@ public class Team {
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
 
+
+
+    public double timeSpentPercentage(){
+
+        double sumOfDurations = 0;
+        for (Activity activity: activities){
+
+            sumOfDurations += activity.getDuration();
+        }
+        double sumOfTimeSpent = 0;
+        for (Member member: members){
+            sumOfTimeSpent +=member.getTimeSpent();
+        }
+
+        return sumOfTimeSpent/sumOfDurations;
+
+
+    }
+
+
+
 }

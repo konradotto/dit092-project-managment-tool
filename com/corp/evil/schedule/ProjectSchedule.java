@@ -9,6 +9,12 @@ public class ProjectSchedule {
     private final static int LAST_WORKDAY = Calendar.FRIDAY;
     private final static int DAY_START_HOUR = 8;
     private final static int DAY_END_HOUR = 17;
+    private final int LAST_WEEK_OF_YEAR = 52;
+
+    private final static int COLUMN_WIDTH = 15;
+    private final static int COLUMNS = 5;
+
+
 
     private ArrayList<Activity> activities;
     private LocalDateTime start;
@@ -90,6 +96,57 @@ public class ProjectSchedule {
             activities.remove(activity);
         }
     }
+
+    @java.lang.Override
+    public java.lang.String toString() {
+        return formatTable();
+    }
+
+    private String formatTableRow(String[] columns) {
+        String result = "";
+
+        for(int i = 0; i < COLUMNS - 1; ++i) {
+            result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
+        }
+        result += String.format(columns[3] + "%n");
+
+        return result;
+    }
+
+    public String formatTable() {
+        StringBuilder sb = new StringBuilder();
+        String newline = System.lineSeparator();
+        if (activities.isEmpty()) {
+            sb.append("There are no activities registered in this team yet." + newline);
+        } else {
+
+            sb.append("\t\t\t TASKS " + newline);
+
+            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(newline);
+
+            // format table content
+            sb.append(formatTableRow(new String[] {"| Task name:", "| Start Week:", "| End Week:", "| "}));
+
+            // separator line
+
+            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(newline);
+
+            for (Activity activity : activities) {
+                sb.append(formatTableRow(new String[] {"| " + activity.getName(),
+                        "| " + activity.getStartWeek(),
+                        "| " + activity.getEndWeek(),
+                        "| " }));
+
+                sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                sb.append(newline);
+            }
+        }
+        //test
+        return sb.toString();
+    }
+
 
     public List<Activity> getParticipation(Member member) {
         List<Activity> result = new ArrayList<Activity>();
