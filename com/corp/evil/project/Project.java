@@ -1,8 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Project {
 
@@ -21,19 +19,12 @@ public class Project {
         this.setSchedule(schedule);
     }
 
-    public Budget getBudget() {
-        List<Budget> budgetList = new ArrayList<Budget>();
-        for (Activity task : schedule.getActivities()) {
-            budgetList.add(task.getBudget());
-        }
+    public String getBudget() {
+        StringBuilder sb = new StringBuilder();
 
-        return new Budget(budgetList);
-    }
+        sb.append("Earned Value: " + schedule.getEarnedValue() + LS);
 
-    //TODO: implement (in budget)
-    public double getEarnedValue() {
-
-        return getBudget().getEarnedValue();
+        return sb.toString();
     }
 
     //TODO: implement (in Schedule)
@@ -74,6 +65,19 @@ public class Project {
         this.team.addMember(member);
     }
 
+    public boolean addActivity(String name, int startWeek, int endWeek, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
+
+        // make sure the members are in the team
+        for (Member member : team.getMembers()) {
+            if (!team.getMembers().contains(member)) {
+                return false;
+            }
+        }
+
+        schedule.addActivity(new Activity(name, startWeek, endWeek, team));
+        return true;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -95,6 +99,7 @@ public class Project {
 
         return sb.toString();
     }
+
 
     public Team getTeam() {
         return team;
