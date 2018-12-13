@@ -27,6 +27,53 @@ public class ProjectSchedule {
         this.activities = activities;
     }
 
+    public double getEarnedValue() {
+        double completion = 0.0;
+        double budgetAtCompletion = 0.0;
+        long totalDuration = 0;
+
+
+        for (Activity act : activities) {
+            long duration = (long) act.getDuration();
+            totalDuration += duration;
+            completion += act.getPercentCompleted() * duration;         // weight completion of activities with their expected duration
+            budgetAtCompletion += act.getCostOfWorkScheduled();         // sum up the expected costs
+        }
+
+        completion /= (double) totalDuration;                           // normalize after completions are weighted
+
+        return budgetAtCompletion * (completion / 100.0);
+    }
+
+    public double getCostVariance() {
+
+        double budgetedCost = 0;
+        double actualCost = 0;
+
+        for (Activity act : activities) {
+            budgetedCost += act.getCostOfWorkScheduled() * act.getPercentCompleted();
+            actualCost += act.getCostOfWorkPerformed();
+        }
+
+        return budgetedCost - actualCost;
+    }
+
+    public double getScheduledCost() {
+        double scheduledCost = 0;
+
+        for (Activity act : activities) {
+            scheduledCost += act.getPercentScheduled() * act.getCostOfWorkScheduled();
+        }
+
+        return scheduledCost;
+    }
+
+    public double getScheduleVariance() {
+
+        return getEarnedValue() - getScheduledCost();
+    }
+
+
     public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
         if (activity == null) {
             throw new ActivityIsNullException("Activity is NULL and cannot be added to the list of activities!");
