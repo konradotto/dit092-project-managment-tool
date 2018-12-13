@@ -85,6 +85,10 @@ public class Team {
         return result;
     }
 
+    public List<Member> getMembers() {
+        return members;
+    }
+
     @java.lang.Override
     public java.lang.String toString() {
         return formatTable();
