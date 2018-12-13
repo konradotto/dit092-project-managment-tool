@@ -1,4 +1,3 @@
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ScheduleTesting {
@@ -12,8 +11,8 @@ public class ScheduleTesting {
         t1.setName("name");
         t1.addMember(m1);
 
-        Activity a1 = new Activity("planning", 12, 20, t1, null);
-        Activity a2 = new Activity("testing", 21, 30, t1, null);
+        Activity a1 = new Activity("planning", 12, 20, t1);
+        Activity a2 = new Activity("testing", 21, 30, t1);
         schedule.addActivity(a1);
         schedule.addActivity(a2);
 
