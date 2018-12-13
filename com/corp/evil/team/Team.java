@@ -101,6 +101,12 @@ public class Team {
         return result;
     }
 
+    public void workOnActivity(Member member, Activity activity, long timeSpent, long timeScheduled) {
+        member.spendTime(timeSpent);
+        double cost = timeSpent * member.getSALARY_PER_HOUR();
+        activity.spendTime(timeScheduled, cost);
+    }
+
 
     public String formatTable() {
             StringBuilder sb = new StringBuilder();
