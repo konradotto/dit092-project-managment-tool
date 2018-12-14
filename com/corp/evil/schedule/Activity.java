@@ -7,8 +7,6 @@ public class Activity {
 
     private int startWeek;
     private int endWeek;
-    private int endYear;
-    private int startYear;
     private String name;
     private Team team;
     private Budget budget;
@@ -18,11 +16,12 @@ public class Activity {
     private double costOfWorkScheduled;
     private double costOfWorkPerformed;
     private double percentCompleted;
+    private int num;
 
     private Map<Member, Long> timeSpent;
 
 
-    public Activity(String name, int startWeek, int startYear, int endWeek, int endYear, Team team) {
+    public Activity(String name, int startWeek, int endWeek, Team team) {
         this.name = name;
         this.startWeek = startWeek;
         this.endWeek = endWeek;
@@ -30,8 +29,8 @@ public class Activity {
         this.costOfWorkScheduled = scheduledCost();
         this.costOfWorkPerformed = 0.0;
         this.percentCompleted = 0.0;
-        this.startYear = startYear;
-        this.endYear = endYear;
+
+        this.num = 0;
 
         this.timeSpent = new TreeMap<Member, Long>();
 
@@ -44,10 +43,17 @@ public class Activity {
         }
     }
 
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 
 
 
-    //TODO: activity constructor without team
+//TODO: activity constructor without team
 
     //Accessor methods
     public int getDuration() {
@@ -74,21 +80,6 @@ public class Activity {
         return costOfWorkPerformed;
     }
 
-    public int getEndYear() {
-        return endYear;
-    }
-
-    public void setEndYear(int endYear) {
-        this.endYear = endYear;
-    }
-
-    public int getStartYear() {
-        return startYear;
-    }
-
-    public void setStartYear(int startYear) {
-        this.startYear = startYear;
-    }
 
     public double getPercentScheduled() {
 
