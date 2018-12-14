@@ -1,4 +1,3 @@
-import java.util.Calendar;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -45,10 +44,10 @@ public class Activity {
     public int getDuration() {
         int weeks;
         if (getStartWeek() > getEndWeek()) {
-            int firstDur = LAST_WEEK_OF_YEAR - getStartWeek();
+            int firstDur = LAST_WEEK_OF_YEAR - getStartWeek() + 1;
             weeks = firstDur + getEndWeek();
         } else {
-            weeks = getEndWeek() - getStartWeek();
+            weeks = getEndWeek() - getStartWeek() + 1;
         }
         int hours = weeks * 20;
         return hours;
@@ -67,21 +66,9 @@ public class Activity {
     }
 
     public double getPercentScheduled() {
-        Calendar cal = Calendar.getInstance();
-        int week = cal.get(Calendar.WEEK_OF_YEAR);
-        int day = cal.get(Calendar.DAY_OF_WEEK);
 
-        return getPercentSchedule(week, day);
-    }
-
-    public double getPercentSchedule(int week, int day) {
-        int totalWeeks = (endWeek >= startWeek) ? (endWeek - startWeek + 1) :
-                (endWeek + LAST_WEEK_OF_YEAR) - startWeek + 1;
-        int weeksPassed = (week >= startWeek) ? week - startWeek : (week + LAST_WEEK_OF_YEAR) - startWeek;
-
-        int daysPassed = (day < Calendar.SATURDAY) ? (day - Calendar.SUNDAY) : DAYS_IN_WORKWEEK;
-
-        return (weeksPassed + (daysPassed / DAYS_IN_WORKWEEK)) / totalWeeks;
+        //TODO
+        return 0;
     }
 
     public double scheduledCost() {
@@ -90,11 +77,19 @@ public class Activity {
         for (Member member : team.getMembers()) {
             averageSalary += member.getSALARY_PER_HOUR();
         }
-        return (averageSalary /= teamSize) * getDuration();
+        averageSalary /= teamSize;
+        System.err.println("Schedule Cost()");
+        System.err.println(team.getName());
+        System.err.println("Average Salary: " + averageSalary);
+        System.err.println("Team Size: " + teamSize);
+        System.err.println("Duration: " + getDuration());
+
+        return (averageSalary) * getDuration();
     }
 
-    public void spendTime(long timeScheduled, double cost) {
+    public void spendTime(long timeScheduled, long timeSpent, double cost) {
         costOfWorkPerformed += cost;
+        costOfWorkScheduled += timeSpent;
         percentCompleted += ((double) timeScheduled) / ((double) getDuration()) * 100.0;
     }
 

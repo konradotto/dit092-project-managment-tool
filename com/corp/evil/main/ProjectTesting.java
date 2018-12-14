@@ -59,11 +59,11 @@ public class ProjectTesting {
     public static void createTestProject() throws NameIsEmptyException, MemberIsNullException, MemberAlreadyRegisteredException, ActivityAlreadyRegisteredException, ActivityIsNullException {
 
         Project testProject = new Project("Test Project", new Team(), new RiskMatrix(), new ProjectSchedule());
-        Member bjorn = new Member("Björn Borg", 450);
+        Member bjorn = new Member("Björn Borg", 10000);
         testProject.addMember(bjorn);
         Member zlatan = new Member("Zlatan Ibrahimovic", 70000);
         testProject.addMember(zlatan);
-        Member ingrid = new Member("Ingrid Bergmann", 4900);
+        Member ingrid = new Member("Ingrid Bergmann", 790);
         testProject.addMember(ingrid);
         Member greta = new Member("Greta Garbo", 790);
         testProject.addMember(greta);
@@ -71,27 +71,33 @@ public class ProjectTesting {
         testProject.addMember(alfred);
 
         Team swedishNationalTeam = new Team();
+        swedishNationalTeam.addMember(bjorn);
         swedishNationalTeam.setName("Team Zlatan");
         swedishNationalTeam.addMember(zlatan);
 
-        testProject.addActivity("Invent Dynamite", 51, 2, swedishNationalTeam);
+        Activity act2 = new Activity("Invent Dynamite", 49, 49, swedishNationalTeam);
+        testProject.getSchedule().addActivity(act2);
 
         Team anotherTeam = new Team();
-
-
-        testProject.addActivity("tHis iS an aCtiVitY", 30, 52, anotherTeam);
         anotherTeam.addMember(greta);
         anotherTeam.addMember(bjorn);
         anotherTeam.addMember(ingrid);
+        anotherTeam.setName("Cheap Workforce");
+
+
+        //testProject.addActivity("tHis iS an aCtiVitY", 30, 52, anotherTeam);
 
         Activity act = new Activity("Being lame", 44, 5, anotherTeam);
-        testProject.getSchedule().addActivity(act);
+        //testProject.getSchedule().addActivity(act);
 
-        anotherTeam.workOnActivity(zlatan, act, 12, 5);
-        anotherTeam.workOnActivity(greta, act, 15, 20);
+        //anotherTeam.workOnActivity(zlatan, act, 12, 5);
+        //anotherTeam.workOnActivity(greta, act, 20, 20);
+
+        swedishNationalTeam.workOnActivity(zlatan, act2, 15, 19);
 
         System.out.println(testProject);
-        System.out.println(testProject.getCostVariance());
+        System.out.println(String.format("%.2f", testProject.getCostVariance()));
+        System.out.println(String.format("%.2f", testProject.getScheduleVariance()));
 
         //JsonReaderWriter.setFile(new File("testProject.json"));
         //JsonReaderWriter.write(JsonReaderWriter.toJson(testProject));

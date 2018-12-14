@@ -4,7 +4,7 @@ public class Print{
 
     private static StringBuilder sb = new StringBuilder();
     private static String newline = System.lineSeparator();
-    Scanner input = new Scanner(System.in);
+    private static Scanner input = new Scanner(System.in);
 
     public static int printStartMenu() {
 
@@ -81,6 +81,36 @@ public class Print{
         sb.setLength(0);
 
         return input.nextInt();
+    }
+
+    public static Member addMember() {
+
+        // Todo: ask for member information and add him/her
+
+
+        return null;
+
+    }
+
+    public static Member chooseMember() {
+
+        //TODO: print all members and let the user pick one
+
+        return null;
+    }
+
+    public static Activity createActivity() {
+
+        // TODO: ask for activity properties and create new activity according to them
+
+        return null;
+    }
+
+    public static Activity removeActivity() {
+
+        // TODO: print options to chose the activity to be removed
+
+        return null;
     }
 }
 

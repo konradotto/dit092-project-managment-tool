@@ -1,34 +1,20 @@
-import java.util.Collections;
-
-
 public class ConsoleProgram {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
 
-        choice = printStartMenu();
+        // print start menu and choose whether to load or create a new project
+        Project project = loadOrNewProject(Print.printStartMenu());
 
-        switch (choice) {
-
-            case 1:
-                // load existing project
-                //toString oject print
-                break;
-
-            case 2:
-                // load default project
-                //toString oject print
-                break;
-        }
 
         do {
 
-            choice = printEditingMenu();
+            int choice = Print.printEditing();
 
             switch (choice) {
 
                 case 1:
-                    String name = printEditingName();
-                    setProjectName(name);
+                    String name = Print.printEditingName();
+                    project.setName(name);
                     break;
 
                 case 2:
@@ -36,23 +22,23 @@ public class ConsoleProgram {
                     // EDITING TEAM
                     do {
                         // print team Team.formattable();
-                        choice = printEditingTeam();
+                        choice = Print.printEditingTeam();
 
                         switch (choice) {
 
                             case 1:
-                                addMember();
+                                project.addMember(Print.addMember());
                             case 2:
-                                removeMember();
+                                project.removeMember(Print.chooseMember());
                                 break;
                             case 3:
-                                addActivity();
+                                project.getSchedule().addActivity(Print.createActivity());
                                 break;
                             case 4:
-                                removeActivity();
+                                project.getSchedule().removeActivity(Print.removeActivity());
                                 break;
                             case 5:
-                                workOnActivity();
+                                project.workOnActivity();
                                 break;
 
                         }
@@ -62,7 +48,7 @@ public class ConsoleProgram {
                             case 3:
                         //print riskmatrix
 
-                        choice = printEditingRiskMatrix();
+                        choice = Print.printEditingRiskMatrix();
 
                         switch (choice) {
 
@@ -80,29 +66,46 @@ public class ConsoleProgram {
                             // EDITING SCHEDULE
                             case 4:
 
-                                choice = printEditingSchedule();
-                                switch(choice)
-                                case 1:
-                                    //print how to add
-                                    addActivity();
+                                choice = Print.printEditingSchedule();
+                                switch (choice)
+                            case 1:
+                                //print how to add
+                                addActivity();
                                 break;
-                                case 2:
-                                    //print how to remove
-                                    removeActivity();
-                                    break;
+                            case 2:
+                                //print how to remove
+                                removeActivity();
+                                break;
 
 
-                                break;
+                            break;
                         }
-                        while (choice != 6)
+                        while (choice != 6) ;
 
                     }
             }
         }
+    }
 
+    private static Project loadOrNewProject(int choice) {
+        Project project = null;
 
+        switch (choice) {
 
+            case 1:
+                // load existing project
+                //toString oject print
+                break;
 
+            case 2:
+                // load default project
+                //toString oject print
+                break;
 
+            default:
+                // decide on default behaviour
+        }
 
-
+        return project;
+    }
+}

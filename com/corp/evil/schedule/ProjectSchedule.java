@@ -50,7 +50,12 @@ public class ProjectSchedule {
             budgetAtCompletion += act.getCostOfWorkScheduled();         // sum up the expected costs
         }
 
-        completion /= (double) totalDuration;                           // normalize after completions are weighted
+        completion /= (double) totalDuration;
+
+        System.err.println("Total Duration: " + totalDuration);
+        System.err.println("Completion: " + completion);
+        System.err.println("Budget at Completion: " + budgetAtCompletion);
+        // normalize after completions are weighted
 
         return budgetAtCompletion * (completion / 100.0);
     }
@@ -61,7 +66,7 @@ public class ProjectSchedule {
         double actualCost = 0;
 
         for (Activity act : activities) {
-            budgetedCost += act.getCostOfWorkScheduled() * act.getPercentCompleted();
+            budgetedCost += act.getCostOfWorkScheduled() * act.getPercentCompleted() / 100.0;
             actualCost += act.getCostOfWorkPerformed();
         }
 
@@ -72,6 +77,10 @@ public class ProjectSchedule {
         double scheduledCost = 0;
 
         for (Activity act : activities) {
+            System.err.println(act.getName());
+            System.err.println("Percent: " + act.getPercentCompleted());
+            System.err.println("Cost scheduled total: " + act.getCostOfWorkScheduled());
+            System.err.println("Cost scheduled by now: " + act.getPercentScheduled() * act.getCostOfWorkScheduled());
             scheduledCost += act.getPercentScheduled() * act.getCostOfWorkScheduled();
         }
 

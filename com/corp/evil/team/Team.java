@@ -116,7 +116,7 @@ public class Team {
 
         member.spendTime(timeSpent);
         double cost = timeSpent * member.getSALARY_PER_HOUR();
-        activity.spendTime(timeScheduled, cost);
+        activity.spendTime(timeScheduled, timeSpent, cost);
 
         return true;
     }

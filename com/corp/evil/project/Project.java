@@ -93,6 +93,10 @@ public class Project {
         return sb.toString();
     }
 
+    public void removeMember(Member member) {
+        //TODO: remove the passed member
+    }
+
 
     public Team getTeam() {
         return team;
