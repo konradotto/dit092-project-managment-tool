@@ -109,7 +109,7 @@ public class ProjectSchedule {
     private String formatTableRow(String[] columns) {
         String result = "";
 
-        for(int i = 0; i < COLUMNS - 2; ++i) {
+        for(int i = 0; i < COLUMNS ; ++i) {
             result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
         }
         result += String.format(columns[columns.length - 1] + "%n");
@@ -126,15 +126,15 @@ public class ProjectSchedule {
 
             sb.append("\t\t\t TASKS " + newline);
 
-            sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
+            sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
             sb.append(newline);
 
             // format table content
-            sb.append(formatTableRow(new String[]{"| Task name:", "| Start Week:", "| End Week:", "| Percent Completed:", "|"}));
+            sb.append(formatTableRow(new String[]{"| Task name:", "| Start Week:", "| End Week:", "| Percent Completed:","| Teams: ", "|"}));
 
             // separator line
 
-            sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
+            sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
             sb.append(newline);
 
             for (Activity activity : activities) {
@@ -142,10 +142,11 @@ public class ProjectSchedule {
                         "| " + activity.getStartWeek(),
                         "| " + activity.getEndWeek(),
                         "| " + String.format("%.2f", activity.getPercentCompleted()),
+                        "| " + activity.getTeam().getName(),
                         "|"
                 }));
 
-                sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
+                sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
                 sb.append(newline);
             }
         }
