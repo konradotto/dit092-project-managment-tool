@@ -105,10 +105,20 @@ public class Team {
         return result;
     }
 
-    public void workOnActivity(Member member, Activity activity, long timeSpent, long timeScheduled) {
+    public boolean workOnActivity(Member member, Activity activity, long timeSpent, long timeScheduled) {
+        if (!members.contains(member)) {
+            System.err.println("Member not in team.");
+            return false;
+        }
+
+        // TODO: prevent to spend more scheduled time than needed for the task
+
+
         member.spendTime(timeSpent);
         double cost = timeSpent * member.getSALARY_PER_HOUR();
         activity.spendTime(timeScheduled, cost);
+
+        return true;
     }
 
 

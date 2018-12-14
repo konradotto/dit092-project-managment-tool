@@ -20,6 +20,10 @@ public class ProjectSchedule {
     private LocalDateTime start;
     private LocalDateTime end;
 
+    public ProjectSchedule() {
+        this.activities = new ArrayList<Activity>();
+    }
+
     public ProjectSchedule (ArrayList<Activity> activities) {
         this.activities = activities;
         this.getEndWeek();
@@ -137,7 +141,7 @@ public class ProjectSchedule {
                 sb.append(formatTableRow(new String[] {"| " + activity.getName(),
                         "| " + activity.getStartWeek(),
                         "| " + activity.getEndWeek(),
-                        "| " }));
+                        "| " + activity.getPercentCompleted()}));
 
                 sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
                 sb.append(newline);

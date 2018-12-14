@@ -3,7 +3,9 @@ import com.google.gson.GsonBuilder;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,16 +16,14 @@ public final class JsonReaderWriter {
     public final static Charset STANDARD_ENCODING = StandardCharsets.UTF_8;
 
     private static File file;
-    private static final FileChooser fc;
     private static boolean fileSet = false;
 
     // initialise final file chooser (used to select a file)
-    static {
-        FileChooser fcTemp = new FileChooser();
-        fcTemp.setTitle("Pick a JSON-file to save to.");
-        fcTemp.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
 
-        fc = fcTemp;
+
+    public static <T> boolean save(T classInstance) {
+        pickFile();
+        return write(toJson(classInstance));
     }
 
     public static void setFile(File f) {
@@ -45,7 +45,12 @@ public final class JsonReaderWriter {
     }
 
     public static void pickFile() {
-        setFile(fc.showOpenDialog(new Stage()));
+        FileChooser fcTemp = new FileChooser();
+        fcTemp.setTitle("Pick a JSON-file to save to.");
+
+        setFile(fcTemp.showOpenDialog(new Stage()));
+        //fc.showOpenDialog(new Stage());
+        //setFile(fc.showOpenDialog(new Stage()));
     }
 
     public static boolean write(String jsonText) {

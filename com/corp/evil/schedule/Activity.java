@@ -1,4 +1,6 @@
 import java.util.Calendar;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Activity {
 
@@ -14,6 +16,8 @@ public class Activity {
     private double costOfWorkPerformed;
     private double percentCompleted;
 
+    private Map<Member, Long> timeSpent;
+
 
     public Activity(String name, int startWeek, int endWeek, Team team) {
         this.name = name;
@@ -23,6 +27,8 @@ public class Activity {
         this.costOfWorkScheduled = scheduledCost();
         this.costOfWorkPerformed = 0.0;
         this.percentCompleted = 0.0;
+
+        this.timeSpent = new TreeMap<Member, Long>();
 
         try {
             team.addActivity(this);
