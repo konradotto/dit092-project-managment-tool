@@ -75,7 +75,9 @@ public class ProjectTesting {
         swedishNationalTeam.setName("Team Zlatan");
         swedishNationalTeam.addMember(zlatan);
 
-        testProject.addActivity("Invent Dynamite", 2018,51, 2, 2019, swedishNationalTeam);
+
+        Activity act2 = new Activity("Invent Dynamite", 2018, 51, 2, 2019, swedishNationalTeam);
+        testProject.getSchedule().addActivity(act2);
 
         Team anotherTeam = new Team();
 
