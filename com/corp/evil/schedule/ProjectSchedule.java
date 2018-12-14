@@ -92,6 +92,15 @@ public class ProjectSchedule {
         return getEarnedValue() - getScheduledCost();
     }
 
+    public void sorter(){
+
+            activities.sort(Comparator.comparingInt(Activity::getStartWeek));
+            activities.sort(Comparator.comparingInt(Activity::getStartYear));
+
+        }
+
+
+
 
     public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
         if (activity == null) {
@@ -110,8 +119,8 @@ public class ProjectSchedule {
         }
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return formatTable();
     }
 
@@ -146,7 +155,13 @@ public class ProjectSchedule {
             sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
             sb.append(newline);
 
+            this.sorter();
+
+
             for (Activity activity : activities) {
+
+
+
                 sb.append(formatTableRow(new String[] {"| " + activity.getName(),
                         "| " + activity.getStartWeek(),
                         "| " + activity.getEndWeek(),
