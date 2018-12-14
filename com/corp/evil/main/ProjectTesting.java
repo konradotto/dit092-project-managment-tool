@@ -91,6 +91,7 @@ public class ProjectTesting {
         anotherTeam.workOnActivity(greta, act, 15, 20);
 
         System.out.println(testProject);
+        System.out.println(testProject.getCostVariance());
 
         //JsonReaderWriter.setFile(new File("testProject.json"));
         //JsonReaderWriter.write(JsonReaderWriter.toJson(testProject));

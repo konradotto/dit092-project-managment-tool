@@ -27,23 +27,16 @@ public class Project {
         return sb.toString();
     }
 
-    //TODO: implement (in Schedule)
     public double getTimeSpent(Member member) {
-
-        return 0.0;
+        return member.getTimeSpent();
     }
 
-    //TODO: implement
     public double getCostVariance() {
-
-
-        return 0.0;
+        return schedule.getCostVariance();
     }
 
-    //TODO: implement
     public double getScheduleVariance() {
-
-        return 0.0;
+        return schedule.getScheduleVariance();
     }
 
 

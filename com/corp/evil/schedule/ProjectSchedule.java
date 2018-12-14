@@ -112,7 +112,7 @@ public class ProjectSchedule {
         for(int i = 0; i < COLUMNS - 1; ++i) {
             result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
         }
-        result += String.format(columns[3] + "%n");
+        result += String.format(columns[columns.length - 1] + "%n");
 
         return result;
     }
@@ -130,7 +130,7 @@ public class ProjectSchedule {
             sb.append(newline);
 
             // format table content
-            sb.append(formatTableRow(new String[] {"| Task name:", "| Start Week:", "| End Week:", "| "}));
+            sb.append(formatTableRow(new String[]{"| Task name:", "| Start Week:", "| End Week:", "| Percent Completed:", "|"}));
 
             // separator line
 
@@ -141,7 +141,9 @@ public class ProjectSchedule {
                 sb.append(formatTableRow(new String[] {"| " + activity.getName(),
                         "| " + activity.getStartWeek(),
                         "| " + activity.getEndWeek(),
-                        "| " + activity.getPercentCompleted()}));
+                        "| " + String.format("%.2f", activity.getPercentCompleted()),
+                        "|"
+                }));
 
                 sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
                 sb.append(newline);

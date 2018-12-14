@@ -95,7 +95,7 @@ public class Activity {
 
     public void spendTime(long timeScheduled, double cost) {
         costOfWorkPerformed += cost;
-        percentCompleted += ((double) timeScheduled) / ((double) getDuration());
+        percentCompleted += ((double) timeScheduled) / ((double) getDuration()) * 100.0;
     }
 
     public int getStartWeek() {
