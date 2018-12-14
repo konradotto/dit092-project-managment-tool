@@ -109,7 +109,7 @@ public class ProjectSchedule {
     private String formatTableRow(String[] columns) {
         String result = "";
 
-        for(int i = 0; i < COLUMNS - 1; ++i) {
+        for(int i = 0; i < COLUMNS - 2; ++i) {
             result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
         }
         result += String.format(columns[3] + "%n");
@@ -126,7 +126,7 @@ public class ProjectSchedule {
 
             sb.append("\t\t\t TASKS " + newline);
 
-            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
             sb.append(newline);
 
             // format table content
@@ -134,7 +134,7 @@ public class ProjectSchedule {
 
             // separator line
 
-            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
             sb.append(newline);
 
             for (Activity activity : activities) {
@@ -143,7 +143,7 @@ public class ProjectSchedule {
                         "| " + activity.getEndWeek(),
                         "| " + activity.getPercentCompleted()}));
 
-                sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
                 sb.append(newline);
             }
         }
