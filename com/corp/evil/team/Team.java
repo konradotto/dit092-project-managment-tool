@@ -7,7 +7,7 @@ public class Team {
     private ArrayList<Member> members;
     private ArrayList<Activity> activities;
 
-    private final static int COLUMN_WIDTH = 15;
+    private final static int COLUMN_WIDTH = 30;
     private final static int COLUMNS = 5;
 
     public Team(){
@@ -97,7 +97,7 @@ public class Team {
     private String formatTableRow(String[] columns) {
         String result = "";
 
-        for(int i = 0; i < COLUMNS - 1; ++i) {
+        for(int i = 0; i < COLUMNS - 2; ++i) {
             result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
         }
         result += String.format(columns[3] + "%n");
@@ -121,24 +121,23 @@ public class Team {
 
                 sb.append("\t\t\t Team " + getName() + newline);
 
-                sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
                 sb.append(newline);
 
                 // format table content
-                sb.append(formatTableRow(new String[] {"| Member name:", "| Salary/h:", "| Time spent:", "| "}));
+                sb.append(formatTableRow(new String[] {"| Member name:", "| Salary/h:", "| Time spent:", "|"}));
 
                 // separator line
 
-                sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH + 1, "-")));
                 sb.append(newline);
 
                 for (Member member : members) {
                     sb.append(formatTableRow(new String[] {"| " + member.getName(),
                             "| " + member.getSALARY_PER_HOUR(),
-                            "| " + member.getTimeSpent(),
-                            "| " }));
+                            "| " + member.getTimeSpent(), "|"}));
 
-                    sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                    sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
                     sb.append(newline);
                 }
             }
