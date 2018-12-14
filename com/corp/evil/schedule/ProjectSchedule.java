@@ -15,7 +15,7 @@ public class ProjectSchedule {
     private final static int COLUMN_WIDTH = 25;
     private final static int COLUMNS = 5;
 
-    private ArrayList<Team> teams;
+
     private ArrayList<Activity> activities;
     private LocalDateTime start;
     private LocalDateTime end;
@@ -40,25 +40,6 @@ public class ProjectSchedule {
         this.activities = activities;
     }
 
-    public void addTeam(Team team) throws TeamAlreadyRegisteredException, TeamIsNullException{
-        if (team == null) { throw new TeamIsNullException("This team does not exist!");
-        } else if (teams.contains(team)) {
-            throw new TeamAlreadyRegisteredException("A team with same name exists already!");
-        } else {
-            teams.add(team);
-        }
-    }
-
-    public void addTeam(List<Team> teams)throws TeamAlreadyRegisteredException, TeamIsNullException {
-        for (Team team : teams) {
-            addTeam(team);
-        }
-    }
-
-    public void removeTeam(Team team) throws TeamIsNullException {
-        if (team == null){ throw new TeamIsNullException("This team does not exist!");}
-        teams.remove(team);
-    }
 
 
 
