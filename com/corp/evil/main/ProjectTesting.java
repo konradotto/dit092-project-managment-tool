@@ -34,7 +34,7 @@ public class ProjectTesting {
         broject.addMember(theDude);
         Team team1 = new Team();
         team1.addMember(dude);
-        Activity act1 = new Activity("Test Activity", 12, 18, team1);
+        Activity act1 = new Activity("Test Activity", 2018,12, 18, 2018, team1);
         broject.getSchedule().addActivity(act1);
         System.out.println(broject);
         System.out.println(broject.getSchedule().getEarnedValue());
@@ -74,17 +74,17 @@ public class ProjectTesting {
         swedishNationalTeam.setName("Team Zlatan");
         swedishNationalTeam.addMember(zlatan);
 
-        testProject.addActivity("Invent Dynamite", 51, 2, swedishNationalTeam);
+        testProject.addActivity("Invent Dynamite", 2018,51, 2, 2019, swedishNationalTeam);
 
         Team anotherTeam = new Team();
 
 
-        testProject.addActivity("tHis iS an aCtiVitY", 30, 52, anotherTeam);
+        testProject.addActivity("tHis iS an aCtiVitY", 2018,30, 52, 2018, anotherTeam);
         anotherTeam.addMember(greta);
         anotherTeam.addMember(bjorn);
         anotherTeam.addMember(ingrid);
 
-        Activity act = new Activity("Being lame", 44, 5, anotherTeam);
+        Activity act = new Activity("Being lame", 2017,44, 5, 2018, anotherTeam);
         testProject.getSchedule().addActivity(act);
 
         anotherTeam.workOnActivity(zlatan, act, 12, 5);

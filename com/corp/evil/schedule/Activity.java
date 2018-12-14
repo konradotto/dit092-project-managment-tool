@@ -1,4 +1,5 @@
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -6,6 +7,8 @@ public class Activity {
 
     private int startWeek;
     private int endWeek;
+    private int endYear;
+    private int startYear;
     private String name;
     private Team team;
     private Budget budget;
@@ -19,7 +22,7 @@ public class Activity {
     private Map<Member, Long> timeSpent;
 
 
-    public Activity(String name, int startWeek, int endWeek, Team team) {
+    public Activity(String name, int startWeek, int startYear, int endWeek, int endYear, Team team) {
         this.name = name;
         this.startWeek = startWeek;
         this.endWeek = endWeek;
@@ -27,6 +30,8 @@ public class Activity {
         this.costOfWorkScheduled = scheduledCost();
         this.costOfWorkPerformed = 0.0;
         this.percentCompleted = 0.0;
+        this.startYear = startYear;
+        this.endYear = endYear;
 
         this.timeSpent = new TreeMap<Member, Long>();
 
@@ -38,6 +43,9 @@ public class Activity {
             e.printStackTrace();
         }
     }
+
+
+
 
     //TODO: activity constructor without team
 
@@ -64,6 +72,22 @@ public class Activity {
 
     public double getCostOfWorkPerformed() {
         return costOfWorkPerformed;
+    }
+
+    public int getEndYear() {
+        return endYear;
+    }
+
+    public void setEndYear(int endYear) {
+        this.endYear = endYear;
+    }
+
+    public int getStartYear() {
+        return startYear;
+    }
+
+    public void setStartYear(int startYear) {
+        this.startYear = startYear;
     }
 
     public double getPercentScheduled() {

@@ -58,7 +58,7 @@ public class Project {
         this.team.addMember(member);
     }
 
-    public boolean addActivity(String name, int startWeek, int endWeek, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
+    public boolean addActivity(String name, int startYear, int startWeek, int endWeek, int endYear, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
 
         // make sure the members are in the team
         for (Member member : team.getMembers()) {
@@ -67,7 +67,7 @@ public class Project {
             }
         }
 
-        schedule.addActivity(new Activity(name, startWeek, endWeek, team));
+        schedule.addActivity(new Activity(name, startYear, startWeek, endWeek, endYear, team));
         return true;
     }
 

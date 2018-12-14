@@ -11,7 +11,7 @@ public class TeamTesting{
     Team t1 = new Team("lil pump", members, activities);
 
     Member m1 = new Member(" ", 100.0);
-        //Activity a1 = new Activity("A lil pump activity", 12, 20, t1, null);
+    Activity a1 = new Activity("A lil pump activity", 12, 2017 ,  20, 2018, t1);
 
 
         //System.out.println(a1.getDuration());
