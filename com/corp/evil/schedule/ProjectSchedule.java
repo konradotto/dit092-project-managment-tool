@@ -11,14 +11,16 @@ public class ProjectSchedule {
     private final static int DAY_END_HOUR = 17;
     private final int LAST_WEEK_OF_YEAR = 52;
 
+
     private final static int COLUMN_WIDTH = 25;
     private final static int COLUMNS = 5;
-
 
 
     private ArrayList<Activity> activities;
     private LocalDateTime start;
     private LocalDateTime end;
+    private int startYear;
+
 
     public ProjectSchedule() {
         this.activities = new ArrayList<Activity>();
@@ -33,8 +35,39 @@ public class ProjectSchedule {
     public ProjectSchedule(int startYear, int startWeek, int endYear, int endWeek, ArrayList<Activity> activities) {
         this.start = getLocalDateTime(startYear, startWeek, FIRST_WORKDAY, DAY_START_HOUR);
         this.end = getLocalDateTime(endYear, endWeek, LAST_WORKDAY, DAY_END_HOUR);
+        this.startYear = startYear;
 
         this.activities = activities;
+    }
+
+
+
+
+    public int getStartYear() {
+        return startYear;
+    }
+
+    public void sort(){
+
+
+        int x=0;
+        for (Activity activity: activities){
+            if (activity.getStartWeek()>activity.getEndWeek()){
+                x = getStartYear();
+                activity.setNum(x);
+            }
+            else {
+                x =getStartYear()+1;
+                activity.setNum(x);
+            }
+        }
+
+        activities.sort(Comparator.comparingInt(Activity::getStartWeek));
+        activities.sort(Comparator.comparingInt(Activity::getNum));
+
+
+
+
     }
 
     public double getEarnedValue() {
@@ -92,16 +125,6 @@ public class ProjectSchedule {
         return getEarnedValue() - getScheduledCost();
     }
 
-    public void sorter(){
-
-            activities.sort(Comparator.comparingInt(Activity::getStartWeek));
-            activities.sort(Comparator.comparingInt(Activity::getStartYear));
-
-        }
-
-
-
-
     public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
         if (activity == null) {
             throw new ActivityIsNullException("Activity is NULL and cannot be added to the list of activities!");
@@ -155,7 +178,7 @@ public class ProjectSchedule {
             sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
             sb.append(newline);
 
-            this.sorter();
+            this.sort();
 
 
             for (Activity activity : activities) {
@@ -202,7 +225,6 @@ public class ProjectSchedule {
 
         return dt.withHour(hour).withMinute(0).withSecond(0).withNano(0);
     }
-
 
 
     public static int getWeek(LocalDateTime date) {
