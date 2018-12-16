@@ -24,9 +24,9 @@ public class Print {
     }
 
     private static int readInt() {
-        String in = input.nextLine();
         int choice = DEFAULT;
         do {
+            String in = input.nextLine();
             try {
                 choice = Integer.parseInt(in);
             } catch (NumberFormatException e) {
