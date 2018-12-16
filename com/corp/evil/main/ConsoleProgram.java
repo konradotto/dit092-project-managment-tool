@@ -1,11 +1,45 @@
 public class ConsoleProgram {
 
-    public static void main(String[] args) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
+    private final static int SUCCESS = 42;
 
+    private final static int LOAD = 1;
+    private final static int NEW = 2;
+
+    public static void main(String[] args) {
+        run();
+    }
+
+    private static int run() {
         // print start menu and choose whether to load or create a new project
         Project project = loadOrNewProject(Print.printStartMenu());
 
 
+        return SUCCESS;
+    }
+
+    private static Project loadOrNewProject(int choice) {
+        Project project = null;
+
+        switch (Print.printStartMenu()) {
+            case LOAD:
+
+                break;
+            case NEW:
+                // load default project
+                //toString oject print
+                break;
+            default:
+                // decide on default behaviour
+        }
+
+        return project;
+    }
+}
+
+
+
+
+/*
         do {
 
             int choice = Print.printEditing();
@@ -84,28 +118,4 @@ public class ConsoleProgram {
 
                     }
             }
-        }
-    }
-
-    private static Project loadOrNewProject(int choice) {
-        Project project = null;
-
-        switch (choice) {
-
-            case 1:
-                // load existing project
-                //toString oject print
-                break;
-
-            case 2:
-                // load default project
-                //toString oject print
-                break;
-
-            default:
-                // decide on default behaviour
-        }
-
-        return project;
-    }
-}
+        }*/

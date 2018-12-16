@@ -82,7 +82,7 @@ public class ProjectTesting {
         Team anotherTeam = new Team();
 
 
-        testProject.addActivity("tHis iS an aCtiVitY", 2018,30, 52, 2018, anotherTeam);
+        testProject.addActivity("tHis iS an aCtiVitY", 30, 2018, 52, 2018, anotherTeam);
         anotherTeam.addMember(greta);
         anotherTeam.addMember(bjorn);
         anotherTeam.addMember(ingrid);
