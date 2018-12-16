@@ -5,6 +5,9 @@ class myScanner {
 
     static String readLine(String string){
         System.out.println(string);
+        while (!input.hasNext()){
+            System.out.println(string);
+        }
         return input.nextLine();
     }
 
