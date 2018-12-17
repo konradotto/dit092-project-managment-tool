@@ -1,37 +1,35 @@
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 public class Print {
 
-    private final static int DEFAULT = 0;
-    private final static int PROJECT_LOADED = 1;
-    private final static int IO_EXCEPTION = -1;
-    private final static int PROJECT_STARTED = 2;
+    private static final int DEFAULT = 0;
+    private static final int PROJECT_LOADED = 1;
+    private static final int IO_EXCEPTION = -1;
+    private static final int PROJECT_STARTED = 2;
 
     // reasons to quit
-    private final static int NO_PROJECT = 1;
+    private static final int NO_PROJECT = 1;
 
     private static StringBuilder sb = new StringBuilder();
     private static String newline = System.lineSeparator();
-    private final static PrintStream out = System.out;
-    private final static Scanner input = new Scanner(System.in);
+    private static final PrintStream out = System.out;
 
     public static int printStartMenu() {
 
         sb.append("Welcome to the Project Planning Software of Evil Corp" + newline);
-        sb.append("Press one of the follwing options from the list" + newline);
+        sb.append("Choose one of the following options" + newline);
         sb.append("➤ 1. Load a existing project" + newline);
-        sb.append("➤ 2. Create an empty project");
+        sb.append("➤ 2. Create a new project");
 
         out.println(sb);
         sb.setLength(0);
 
-        return readInt();
+        return myScanner.readInt();
     }
 
     public static int loadProject() {
-        Project project = null;
+        Project project;
         try {
             project = JsonReaderWriter.load(Project.class);
         } catch (IOException e) {
@@ -49,121 +47,99 @@ public class Print {
         return PROJECT_STARTED;
     }
 
-    private static int readInt() {
-        int choice = DEFAULT;
-        do {
-            String in = input.nextLine();
-            try {
-                choice = Integer.parseInt(in);
-            } catch (NumberFormatException e) {
-                out.println("The input could not be parsed to an Integer. Try again.");
-            }
-        } while (choice == DEFAULT);
 
-        return choice;
-    }
-
-    public static int printEditing() {
-        sb.append("Choose what you want to edit" + newline);
-        sb.append("➤ 1. Project Name" + newline);
-        sb.append("➤ 2. Project Team" + newline);
-        sb.append("➤ 3. Project riskMatrix" + newline);
-        sb.append("➤ 4. Project Schedule" + newline);
-        sb.append("➤ 5. Exit" + newline);
-
+    public static int printPrimaryMeny() {
+        sb.append("Choose an option from below" + newline);
+        sb.append("➤ 1. Project" + newline);
+        sb.append("➤ 2. Teams and Members" + newline);
+        sb.append("➤ 3. Tasks Management" + newline);
+        sb.append("➤ 4. Risks Management" + newline);
+        sb.append("➤ 5. Budget" + newline);
+        sb.append("➤ 6. Save and Exit" + newline);
         System.out.println(sb);
         sb.setLength(0);
-
-        return input.nextInt();
+        return myScanner.readInt();
     }
 
-    public static String printEditingName() {
-
-        sb.append("Please enter a new name for your project: "+newline);
-
+    public static int printProjectMenu() {
+        sb.append("➤ 1. Print Project" + newline);
+        sb.append("➤ 2. Edit Project ..." + newline);
         System.out.println(sb);
         sb.setLength(0);
-
-        return input.nextLine();
+        return myScanner.readInt();
     }
 
-    public void printAllTeams(){
-
-        //System.out.println(Team.getName());
-    }
-
-    public static int printEditingTeam() {
-
-        //TODO Add a method to retrive desired team
-
-        sb.append("Choose what you want to edit"+newline);
-        sb.append("➤ 1. Add member "+newline);
-        sb.append("➤ 2. Remove member "+newline);
-        sb.append("➤ 3. Add activity "+newline);
-        sb.append("➤ 4. Remove activity "+newline);
-
+    public static int printEditProjectMenu() {
+        sb.append("➤ 1. Update the project's name" + newline);
+        sb.append("➤ 2. Update the project's end date" + newline);
         System.out.println(sb);
         sb.setLength(0);
-
-        return input.nextInt();
+        return myScanner.readInt();
     }
 
-    public static int printEditingRiskMatrix() {
 
+    public static int printTeamMenu() {
+        sb.append("➤ 1. Print All Members" + newline);
+        sb.append("➤ 2. Print All Teams" + newline);
+        sb.append("➤ 3. Add member to the project" + newline);
+        sb.append("➤ 4. Update member's information" + newline);
+        sb.append("➤ 5. Remove member from the project" + newline);
+        sb.append("➤ 6. Create a sub-team" + newline);
+        sb.append("➤ 7. Edit a sub-team" + newline);
+        System.out.println(sb);
+        sb.setLength(0);
+        return myScanner.readInt();
+    }
+
+    public static int printEditSubTeamMenu() {
         sb.append("Choose what you want to edit"+newline);
-        sb.append("➤ 1. Add risk"+newline);
-        sb.append("➤ 2. Remove risk"+newline);
-
-        System.out.println(sb.toString());
+        sb.append("➤ 1. Update the team's name "+newline);
+        sb.append("➤ 2. Add a member"+newline);
+        sb.append("➤ 3. Remove a member "+newline);
+        sb.append("➤ 4. Add activity "+newline);
+        sb.append("➤ 5. Remove activity "+newline);
+        System.out.println(sb);
         sb.setLength(0);
-
-        return input.nextInt();
+        return myScanner.readInt();
     }
 
-    public static int printEditingSchedule() {
-
-        sb.append("Choose what you want to edit"+newline);
-        sb.append("➤ 1. Add activity"+newline);
-        sb.append("➤ 2. Remove activity"+newline);
-
-
-        System.out.println(sb.toString());
+    public static int printEditMemberMenu() {
+        sb.append("➤ 1. Update the member's name" + newline);
+        sb.append("➤ 2. Update the members's salary" + newline);
+        System.out.println(sb);
         sb.setLength(0);
-
-        return input.nextInt();
+        return myScanner.readInt();
     }
 
-    public static Member addMember() {
-
-       /*
-        sb.append("Please enter the name of your new member:");
-        System.out.println(sb.toString());
+    public static int printTasksMenu() {
+        sb.append("➤ 1. Print All Tasks" + newline);
+        sb.append("➤ 2. Add a task" + newline);
+        sb.append("➤ 3. Edit a task" + newline);
+        sb.append("➤ 4. Remove a task" + newline);
+        sb.append("➤ 5. Assign a task to a team" + newline);
+        sb.append("➤ 6. Update the time spent on a task" + newline);
+        System.out.println(sb);
         sb.setLength(0);
-        String name = input.nextLine();
-        sb.append("Please enter the salary of the new member:");
-        out.println(sb.toString());
+        return myScanner.readInt();
+    }
+
+    public static int printRiskMenu() {
+        sb.append("Choose an option from below"+newline);
+        sb.append("➤ 1. Print the Risk Matrix"+newline);
+        sb.append("➤ 2. Add a risk"+newline);
+        sb.append("➤ 3. Remove a risk"+newline);
+        System.out.println(sb);
         sb.setLength(0);
-        double salary = input.nextDouble();
-
-        try {
-            Member member = new Member(name, salary);
-        } catch (NameIsEmptyException e) {
-            e.printStackTrace();
-        }
-        // Todo: ask for member information and add him/her
+        return myScanner.readInt();
+    }
 
 
-        */
-
-
-       String name = myScanner.readLine("Please enter the name of your new member:");
-
-       double salary = myScanner.readDouble("Please enter the salary of the new member:");
-
+    public static Member readMember() {
+        String name = myScanner.readLine("Please enter the name of your new member:");
+        double salary = myScanner.readDouble("Please enter the salary of the new member:");
         try {
             Member member = new Member(name, salary);
             return member;
-
         } catch (NameIsEmptyException e) {
             e.printStackTrace();
         }

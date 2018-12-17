@@ -37,6 +37,18 @@ class myScanner {
         return x;
     }
 
+    static int readInt(){
+        while (!(input.hasNextInt())){
+            System.out.println("Please enter an integer!");
+            input.nextLine();
+        }
+        int x = input.nextInt();
+        input.nextLine();
+        return x;
+    }
+
+
+
     static void printDone(){
         System.out.println("Done!");
     }
