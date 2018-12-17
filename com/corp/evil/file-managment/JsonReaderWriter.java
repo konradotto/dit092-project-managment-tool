@@ -50,6 +50,8 @@ public final class JsonReaderWriter {
         chooser.setDialogTitle("select a JSON-project to load");
 
         chooser.setFileFilter(filter);
+        frame.toFront();
+        frame.setAlwaysOnTop(true);
         frame.requestFocus();
         chooser.showOpenDialog(frame);
         File jsonFile = chooser.getSelectedFile();
