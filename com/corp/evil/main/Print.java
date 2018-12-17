@@ -115,9 +115,9 @@ public class Print {
         return input.nextLine();
     }
 
-    public static void printAllTeams(){
+    public void printAllTeams(){
 
-        System.out.println(Team.getName());
+        //System.out.println(Team.getName());
     }
 
     public static int printEditingTeam() {
@@ -142,7 +142,7 @@ public class Print {
         sb.append("➤ 1. Add risk"+newline);
         sb.append("➤ 2. Remove risk"+newline);
 
-        System.out.println(sb);
+        System.out.println(sb.toString());
         sb.setLength(0);
 
         return input.nextInt();
@@ -155,7 +155,7 @@ public class Print {
         sb.append("➤ 2. Remove activity"+newline);
 
 
-        System.out.println(sb);
+        System.out.println(sb.toString());
         sb.setLength(0);
 
         return input.nextInt();
@@ -163,6 +163,20 @@ public class Print {
 
     public static Member addMember() {
 
+        sb.append("Please enter the name of your new member:");
+        System.out.println(sb.toString());
+        sb.setLength(0);
+        String name = input.nextLine();
+        sb.append("Please enter the salary of the new member:");
+        out.println(sb.toString());
+        sb.setLength(0);
+        double salary = input.nextDouble();
+
+        try {
+            Member member = new Member(name, salary);
+        } catch (NameIsEmptyException e) {
+            e.printStackTrace();
+        }
         // Todo: ask for member information and add him/her
 
 
@@ -175,7 +189,7 @@ public class Print {
         team.getMembers();
 
         sb.append("Choose a member to remove by enter his/her name");
-
+        System.out.println(sb.toString());
 
 
         //TODO: print all members and let the user pick one

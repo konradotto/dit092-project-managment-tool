@@ -157,7 +157,7 @@ public class Team {
     }
 
     //GETTERS AND SETTERS
-    public static String getName() {return name;}
+    public String getName() {return name;}
     public void setName(String name) {this.name = name;}
 
 
