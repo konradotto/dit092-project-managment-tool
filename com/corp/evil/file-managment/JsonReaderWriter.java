@@ -3,7 +3,6 @@ import com.google.gson.GsonBuilder;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +17,23 @@ public final class JsonReaderWriter {
 
     private static File file;
     private static boolean fileSet = false;
+
+    private static JFrame frame;
+
+    private static void init() {
+        setFrame();
+        bringToFront();
+    }
+
+    public static void setFrame() {
+        frame = new JFrame();
+        frame.setVisible(false);
+    }
+
+    private static void bringToFront() {
+        frame.setExtendedState(JFrame.ICONIFIED);
+        frame.setExtendedState(JFrame.NORMAL);
+    }
 
     // initialise final file chooser (used to select a file)
 
@@ -46,15 +62,7 @@ public final class JsonReaderWriter {
     }
 
     public static void pickFile() {
-        JFileChooser chooser = new JFileChooser() {
-            @Override
-            protected JDialog createDialog(Component parent) throws HeadlessException {
-                // intercept the dialog created by JFileChooser
-                JDialog dialog = super.createDialog(parent);
-                dialog.setModal(true);  // set modality (or setModalityType)
-                return dialog;
-            }
-        };
+        JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File("."));
         chooser.setDialogTitle("select a JSON-project to load");
 
@@ -77,7 +85,9 @@ public final class JsonReaderWriter {
             }
         };
         chooser.setFileFilter(filter);
-        chooser.showSaveDialog(null);
+        chooser.grabFocus();
+        chooser.showSaveDialog(frame);
+        chooser.grabFocus();
         setFile(chooser.getSelectedFile());
     }
 
