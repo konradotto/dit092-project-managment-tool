@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Comparator;
+
 public class Team {
 
     private String name;
@@ -122,6 +124,10 @@ public class Team {
         return true;
     }
 
+    public void alphaSort() {
+       members.sort(Comparator.comparing(Member::getName));
+    }
+
 
     public String formatTable() {
             StringBuilder sb = new StringBuilder();
@@ -142,6 +148,8 @@ public class Team {
 
                 sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH + 1, "-")));
                 sb.append(newline);
+
+                alphaSort();
 
                 for (Member member : members) {
                     sb.append(formatTableRow(new String[] {"| " + member.getName(),
