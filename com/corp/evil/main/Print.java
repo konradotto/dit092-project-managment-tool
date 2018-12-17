@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
 
 public class Print {
 
@@ -131,6 +132,32 @@ public class Print {
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
+    }
+
+    public static Project createProject(){
+        String name = myScanner.readLine("Please enter the name of your new project:");
+        int startYear = myScanner.readInt("Please enter the start year of your project.");
+        int endYear = myScanner.readInt("Please enter the end year of your project.");
+        int startWeek = myScanner.readInt("Please enter the start week of your project.");
+        int endWeek = myScanner.readInt("Please enter the end week of your project.");
+
+        ProjectSchedule schedule = new ProjectSchedule(startYear, startWeek, endYear, endWeek);
+
+        Project project = new Project(name, schedule);
+
+        return project;
+    }
+
+    public static String addName(){
+        String name = myScanner.readLine("Enter the name");
+        return name;
+    }
+
+    public static LocalDateTime ender(){
+        int endYear = myScanner.readInt("Please enter the end year of your project.");
+        int endWeek = myScanner.readInt("Please enter the end week of your project.");
+        LocalDateTime date = ProjectSchedule.getLocalDateTime(endYear, endWeek, ProjectSchedule.LAST_WORKDAY, ProjectSchedule.DAY_END_HOUR);
+        return date;
     }
 
 

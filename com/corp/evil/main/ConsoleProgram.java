@@ -24,8 +24,8 @@ public class ConsoleProgram {
             switch (position) {
                 case PROJECT:       // print start menu and choose whether to load or create a new project
                     position = loadOrNewProject();
-                    System.out.println(project);
-                    break;
+                    primaryMenu();
+                break;
                 case MAIN:
                     //????
 
@@ -38,13 +38,31 @@ public class ConsoleProgram {
         return SUCCESS;
     }
 
+    public static void primaryMenu(){
+        switch (Print.printPrimaryMeny()) {
+            case 1:
+                projectMenu();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+        }
+    }
+
     private static int loadOrNewProject() {
         switch (Print.printStartMenu()) {
             case LOAD:
                 Print.loadProject();
                 break;
             case NEW:
-                Print.startProject();
+                createProject();
                 break;
             default:
                 proceed = false;
@@ -53,9 +71,43 @@ public class ConsoleProgram {
         return 0;
     }
 
+    private static void projectMenu(){
+        int x = Print.printProjectMenu();
+        while (!(x == 1 || x == 2)){
+            x = Print.printProjectMenu();
+        }
+        if (x == 1){
+            project.toString();
+        }
+        else {
+            editProject();
+        }
+    }
+
+    public static void editProject(){
+        int x = Print.printEditProjectMenu();
+        while (!(x == 1 || x == 2)){
+            x = Print.printEditProjectMenu();
+        }
+        if (x == 1){
+            project.setName(Print.addName());
+        }
+        else {
+
+            project.getSchedule().setEnd(Print.ender());
+        }
+    }
+
+
+
     public static void setProject(Project pro) {
         project = pro;
     }
+
+    public static void createProject() {
+        setProject(Print.createProject());
+    }
+
 }
 
 

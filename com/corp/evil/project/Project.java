@@ -15,11 +15,11 @@ public class Project {
     private ProjectSchedule schedule;
     private List<Team> teams;
 
-    public Project(String name) {
+    public Project(String name, ProjectSchedule schedule) {
         this.setName(name);
+        this.setSchedule(schedule);
         this.setTeam(new Team());
         this.setRiskMatrix(new RiskMatrix());
-        this.setSchedule(new ProjectSchedule());
         this.teams = new ArrayList<>();
     }
 

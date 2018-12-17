@@ -6,9 +6,9 @@ import java.util.*;
 public class ProjectSchedule {
 
     private final static int FIRST_WORKDAY = Calendar.MONDAY;
-    private final static int LAST_WORKDAY = Calendar.FRIDAY;
+    public final static int LAST_WORKDAY = Calendar.FRIDAY;
     private final static int DAY_START_HOUR = 8;
-    private final static int DAY_END_HOUR = 17;
+    public final static int DAY_END_HOUR = 17;
     private final int LAST_WEEK_OF_YEAR = 52;
 
 

@@ -7,7 +7,7 @@ class myScanner {
         System.out.println(string);
         String x = input.nextLine();
 
-        while (x.isBlank()){
+       while (x.isEmpty()){
             System.out.println(string);
             x=input.nextLine();
         }
@@ -27,7 +27,7 @@ class myScanner {
     }
 
     static int readInt(String string){
-        System.out.println("Type the option number: ");
+        System.out.println(string);
         while (!(input.hasNextInt())){
             System.out.println(string);
             input.nextLine();
