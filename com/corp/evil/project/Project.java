@@ -12,6 +12,13 @@ public class Project {
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
 
+    public Project(String name) {
+        this.setName(name);
+        this.setTeam(new Team());
+        this.setRiskMatrix(new RiskMatrix());
+        this.setSchedule(new ProjectSchedule());
+    }
+
     public Project(String name, Team team, RiskMatrix riskMatrix, ProjectSchedule schedule) {
         this.setName(name);
         this.setTeam(team);
