@@ -3,6 +3,7 @@ import com.google.gson.GsonBuilder;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,30 +19,41 @@ public final class JsonReaderWriter {
     private static File file;
     private static boolean fileSet = false;
 
-    private static JFrame frame;
+    private final static FileFilter filter = new FileFilter() {
 
-    private static void init() {
-        setFrame();
-        bringToFront();
-    }
+        @Override
+        public boolean accept(File file) {
+            if (file.isDirectory()) {
+                return false;
+            } else {
+                String filename = file.getName().toLowerCase();
+                return filename.endsWith(".json");
+            }
+        }
 
-    public static void setFrame() {
-        frame = new JFrame();
-        frame.setVisible(true);
-    }
+        @Override
+        public String getDescription() {
+            return "JSON Files (*.json)";
+        }
+    };
 
-    private static void bringToFront() {
-        frame.toFront();
-        frame.setExtendedState(JFrame.ICONIFIED);
-        frame.setExtendedState(JFrame.NORMAL);
-    }
-
-    // initialise final file chooser (used to select a file)
-
+    private final static Frame frame = new Frame();
 
     public static <T> boolean save(T classInstance) {
         pickFile();
         return write(toJson(classInstance));
+    }
+
+    public static <T> T load(Class<T> type) throws IOException {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File("."));
+        chooser.setDialogTitle("select a JSON-project to load");
+
+        chooser.setFileFilter(filter);
+        frame.requestFocus();
+        chooser.showOpenDialog(frame);
+        File jsonFile = chooser.getSelectedFile();
+        return fromJsonFile(jsonFile, type);
     }
 
     public static void setFile(File f) {
@@ -66,27 +78,8 @@ public final class JsonReaderWriter {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File("."));
         chooser.setDialogTitle("select a JSON-project to load");
-
-
-        FileFilter filter = new FileFilter() {
-
-            @Override
-            public boolean accept(File file) {
-                if (file.isDirectory()) {
-                    return false;
-                } else {
-                    String filename = file.getName().toLowerCase();
-                    return filename.endsWith(".json");
-                }
-            }
-
-            @Override
-            public String getDescription() {
-                return "JSON Files (*.json)";
-            }
-        };
         chooser.setFileFilter(filter);
-        bringToFront();
+
         chooser.showSaveDialog(frame);
         setFile(chooser.getSelectedFile());
     }
