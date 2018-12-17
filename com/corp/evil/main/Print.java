@@ -1,6 +1,3 @@
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -35,33 +32,8 @@ public class Print {
 
     public static int loadProject() {
         Project project = null;
-
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File("."));
-        chooser.setDialogTitle("select a JSON-project to load");
-        FileFilter filter = new FileFilter() {
-
-            @Override
-            public boolean accept(File file) {
-                if (file.isDirectory()) {
-                    return false;
-                } else {
-                    String filename = file.getName().toLowerCase();
-                    return filename.endsWith(".json");
-                }
-            }
-
-            @Override
-            public String getDescription() {
-                return "JSON Files (*.json)";
-            }
-        };
-        chooser.setFileFilter(filter);
-        chooser.showOpenDialog(null);
-        File jsonFile = chooser.getSelectedFile();
-
         try {
-            project = JsonReaderWriter.fromJsonFile(jsonFile, Project.class);
+            project = JsonReaderWriter.load(Project.class);
         } catch (IOException e) {
             return IO_EXCEPTION;
         }
