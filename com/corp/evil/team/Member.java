@@ -1,5 +1,6 @@
 
 import java.time.Duration;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -36,6 +37,8 @@ public class Member {
     public void spendTime(long hours){
         setTimeSpent(timeSpent.plusHours(hours));
     }
+
+
 
     //GETTERS AND SETTERS
     public String getName() {return name;}

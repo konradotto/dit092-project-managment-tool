@@ -16,7 +16,7 @@ public class ScheduleTesting {
         Member m2 = new Member("lil wayne", 100.0);
         Team t2 = new Team();
 
-        Activity a1 = new Activity("planning", 35, 2017, 20, 2018, t1);
+        Activity a1 = new Activity("planning", 35 , 2017, 20, 2018, t1);
         Activity a2 = new Activity("testing", 21, 2019, 30, 2018, t2);
         schedule.addActivity(a1);
         schedule.addActivity(a2);
