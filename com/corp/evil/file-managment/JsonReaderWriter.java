@@ -3,6 +3,7 @@ import com.google.gson.GsonBuilder;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -45,9 +46,18 @@ public final class JsonReaderWriter {
     }
 
     public static void pickFile() {
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new JFileChooser() {
+            @Override
+            protected JDialog createDialog(Component parent) throws HeadlessException {
+                // intercept the dialog created by JFileChooser
+                JDialog dialog = super.createDialog(parent);
+                dialog.setModal(true);  // set modality (or setModalityType)
+                return dialog;
+            }
+        };
         chooser.setCurrentDirectory(new File("."));
         chooser.setDialogTitle("select a JSON-project to load");
+
 
         FileFilter filter = new FileFilter() {
 
