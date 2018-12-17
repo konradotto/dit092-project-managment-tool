@@ -1,6 +1,8 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Project {
 
@@ -11,6 +13,7 @@ public class Project {
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
+    private ArrayList<Team> teams;
 
     public Project(String name) {
         this.setName(name);
@@ -76,6 +79,29 @@ public class Project {
 
         schedule.addActivity(new Activity(name, startWeek, startYear, endWeek, endYear, team));
         return true;
+    }
+
+    public void addTeam(Team team) throws TeamAlreadyRegisteredException, TeamIsNullException {
+        if (team == null) {
+            throw new TeamIsNullException("This team does not exist!");
+        } else if (teams.contains(team)) {
+            throw new TeamAlreadyRegisteredException("A team with same name exists already!");
+        } else {
+            teams.add(team);
+        }
+    }
+
+    public void addTeam(List<Team> teams) throws TeamAlreadyRegisteredException, TeamIsNullException {
+        for (Team team : teams) {
+            addTeam(team);
+        }
+    }
+
+    public void removeTeam(Team team) throws TeamIsNullException {
+        if (team == null) {
+            throw new TeamIsNullException("This team does not exist!");
+        }
+        teams.remove(team);
     }
 
     @Override
