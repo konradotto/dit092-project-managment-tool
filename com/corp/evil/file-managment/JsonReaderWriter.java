@@ -27,10 +27,11 @@ public final class JsonReaderWriter {
 
     public static void setFrame() {
         frame = new JFrame();
-        frame.setVisible(false);
+        frame.setVisible(true);
     }
 
     private static void bringToFront() {
+        frame.toFront();
         frame.setExtendedState(JFrame.ICONIFIED);
         frame.setExtendedState(JFrame.NORMAL);
     }
@@ -85,9 +86,8 @@ public final class JsonReaderWriter {
             }
         };
         chooser.setFileFilter(filter);
-        chooser.grabFocus();
+        bringToFront();
         chooser.showSaveDialog(frame);
-        chooser.grabFocus();
         setFile(chooser.getSelectedFile());
     }
 
