@@ -21,6 +21,10 @@ public class Activity {
     private Map<Member, Long> timeSpent;
 
 
+    public Activity(String name, int startWeek, int startYear, int endWeek, int endYear) {
+        this(name, startWeek, startYear, endWeek, endYear, null);
+    }
+
     public Activity(String name, int startWeek, int startYear, int endWeek, int endYear, Team team) {
         this.name = name;
         this.startWeek = startWeek;
