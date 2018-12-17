@@ -135,6 +135,7 @@ public class Print {
 
     public static Member addMember() {
 
+       /*
         sb.append("Please enter the name of your new member:");
         System.out.println(sb.toString());
         sb.setLength(0);
@@ -152,8 +153,21 @@ public class Print {
         // Todo: ask for member information and add him/her
 
 
-        return null;
+        */
 
+
+       String name = myScanner.readLine("Please enter the name of your new member:");
+
+       double salary = myScanner.readDouble("Please enter the salary of the new member:");
+
+        try {
+            Member member = new Member(name, salary);
+            return member;
+
+        } catch (NameIsEmptyException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static Member chooseMember(Team team) {

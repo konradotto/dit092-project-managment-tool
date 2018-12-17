@@ -19,12 +19,19 @@ public class ProjectSchedule {
     private ArrayList<Activity> activities;
     private LocalDateTime start;
     private LocalDateTime end;
-    private int startYear;
 
 
     public ProjectSchedule() {
         this.activities = new ArrayList<Activity>();
     }
+
+    public ProjectSchedule(int startYear, int startWeek, int endYear, int endWeek){
+        this.start = getLocalDateTime(startYear, startWeek, FIRST_WORKDAY, DAY_START_HOUR);
+        this.end = getLocalDateTime(endYear, endWeek, LAST_WORKDAY, DAY_END_HOUR);
+        this.activities = new ArrayList<Activity>();
+
+    }
+
 
     public ProjectSchedule (ArrayList<Activity> activities) {
         this.activities = activities;
@@ -35,17 +42,9 @@ public class ProjectSchedule {
     public ProjectSchedule(int startYear, int startWeek, int endYear, int endWeek, ArrayList<Activity> activities) {
         this.start = getLocalDateTime(startYear, startWeek, FIRST_WORKDAY, DAY_START_HOUR);
         this.end = getLocalDateTime(endYear, endWeek, LAST_WORKDAY, DAY_END_HOUR);
-        this.startYear = startYear;
-
         this.activities = activities;
     }
 
-
-
-
-    public int getStartYear() {
-        return startYear;
-    }
 
     public void sort(){
 
