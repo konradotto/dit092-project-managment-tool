@@ -13,13 +13,14 @@ public class Project {
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
-    private ArrayList<Team> teams;
+    private List<Team> teams;
 
     public Project(String name) {
         this.setName(name);
         this.setTeam(new Team());
         this.setRiskMatrix(new RiskMatrix());
         this.setSchedule(new ProjectSchedule());
+        this.teams = new ArrayList<>();
     }
 
     public Project(String name, Team team, RiskMatrix riskMatrix, ProjectSchedule schedule) {
