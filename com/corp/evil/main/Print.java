@@ -1,34 +1,103 @@
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Scanner;
 
-public class Print{
+public class Print {
+
+    private final static int DEFAULT = 0;
+    private final static int PROJECT_LOADED = 1;
+    private final static int IO_EXCEPTION = -1;
+    private final static int PROJECT_STARTED = 2;
+
+    // reasons to quit
+    private final static int NO_PROJECT = 1;
 
     private static StringBuilder sb = new StringBuilder();
     private static String newline = System.lineSeparator();
-    private static Scanner input = new Scanner(System.in);
+    private final static PrintStream out = System.out;
+    private final static Scanner input = new Scanner(System.in);
 
     public static int printStartMenu() {
 
-        sb.append("Welcome to the Project Planning Software of Evil Corp"+newline);
-        sb.append("Press one of the follwing options from the list"+newline);
-        sb.append("➤ 1. Load a existing project"+newline);
-        sb.append("➤ 2. Create a project");
+        sb.append("Welcome to the Project Planning Software of Evil Corp" + newline);
+        sb.append("Press one of the follwing options from the list" + newline);
+        sb.append("➤ 1. Load a existing project" + newline);
+        sb.append("➤ 2. Create an empty project");
 
-
-        System.out.println(sb);
+        out.println(sb);
         sb.setLength(0);
 
-        return input.nextInt();
+        return readInt();
+    }
+
+    public static int loadProject() {
+        Project project = null;
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File("."));
+        chooser.setDialogTitle("select a JSON-project to load");
+        FileFilter filter = new FileFilter() {
+
+            @Override
+            public boolean accept(File file) {
+                if (file.isDirectory()) {
+                    return false;
+                } else {
+                    String filename = file.getName().toLowerCase();
+                    return filename.endsWith(".json");
+                }
+            }
+
+            @Override
+            public String getDescription() {
+                return "JSON Files (*.json)";
+            }
+        };
+        chooser.setFileFilter(filter);
+        chooser.showOpenDialog(null);
+        File jsonFile = chooser.getSelectedFile();
+
+        try {
+            project = JsonReaderWriter.fromJsonFile(jsonFile, Project.class);
+        } catch (IOException e) {
+            return IO_EXCEPTION;
+        }
+
+        ConsoleProgram.setProject(project);
+        return PROJECT_LOADED;
+    }
+
+    public static int startProject() {
+        Project project = null;
+
+        ConsoleProgram.setProject(project);
+        return PROJECT_STARTED;
+    }
+
+    private static int readInt() {
+        int choice = DEFAULT;
+        do {
+            String in = input.nextLine();
+            try {
+                choice = Integer.parseInt(in);
+            } catch (NumberFormatException e) {
+                out.println("The input could not be parsed to an Integer. Try again.");
+            }
+        } while (choice == DEFAULT);
+
+        return choice;
     }
 
     public static int printEditing() {
-
-
-        sb.append("Choose what you want to edit"+newline);
-        sb.append("➤ 1. Project Name"+newline);
-        sb.append("➤ 2. Project Team"+newline);
-        sb.append("➤ 3. Project riskMatrix"+newline);
-        sb.append("➤ 4. Project Schedule"+newline);
-        sb.append("➤ 5. Exit"+newline);
+        sb.append("Choose what you want to edit" + newline);
+        sb.append("➤ 1. Project Name" + newline);
+        sb.append("➤ 2. Project Team" + newline);
+        sb.append("➤ 3. Project riskMatrix" + newline);
+        sb.append("➤ 4. Project Schedule" + newline);
+        sb.append("➤ 5. Exit" + newline);
 
         System.out.println(sb);
         sb.setLength(0);
@@ -126,7 +195,6 @@ public class Print{
         // TODO: print options to chose the activity to be removed
 
         return null;
-
     }
 }
 
