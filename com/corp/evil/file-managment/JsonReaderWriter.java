@@ -32,6 +32,8 @@ public final class JsonReaderWriter {
 
     private static void bringToFront() {
         frame.toFront();
+        frame.setAlwaysOnTop(true);
+
         frame.setExtendedState(JFrame.ICONIFIED);
         frame.setExtendedState(JFrame.NORMAL);
     }
