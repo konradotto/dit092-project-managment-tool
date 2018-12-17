@@ -49,23 +49,8 @@ public class ProjectSchedule {
 
     public void sort(){
 
-
-        int x=0;
-        for (Activity activity: activities){
-            if (activity.getStartWeek()>activity.getEndWeek()){
-                x = getStartYear();
-                activity.setNum(x);
-            }
-            else {
-                x =getStartYear()+1;
-                activity.setNum(x);
-            }
-        }
-
         activities.sort(Comparator.comparingInt(Activity::getStartWeek));
-        activities.sort(Comparator.comparingInt(Activity::getNum));
-
-
+        activities.sort(Comparator.comparingInt(Activity::getStartYear));
 
 
     }

@@ -84,4 +84,9 @@ public final class JsonReaderWriter {
     public static <T> T fromJsonFile(File f, Class<T> type, Charset encoding) throws IOException {
         return fromJson(readFile(f, encoding), type);
     }
+
+    // transforming a file containing one class in Json format into a object of that class type
+    public static <T> T fromJsonFile(File f, Class<T> type) throws IOException {
+        return fromJsonFile(f, type, STANDARD_ENCODING);
+    }
 }

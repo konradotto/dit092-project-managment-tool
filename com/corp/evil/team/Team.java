@@ -7,6 +7,7 @@ public class Team {
     private ArrayList<Member> members;
     private ArrayList<Activity> activities;
 
+
     private final static int COLUMN_WIDTH = 30;
     private final static int COLUMNS = 5;
 

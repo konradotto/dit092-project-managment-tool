@@ -1,38 +1,58 @@
 public class ConsoleProgram {
 
+    private final static int NO_PROJECT = -1;
+
+    private final static int PROJECT = 1;
+    private final static int MAIN = 2;
     private final static int SUCCESS = 42;
 
     private final static int LOAD = 1;
     private final static int NEW = 2;
+
+    private static Project project;
+    private static boolean proceed = true;
 
     public static void main(String[] args) {
         run();
     }
 
     private static int run() {
-        // print start menu and choose whether to load or create a new project
-        Project project = loadOrNewProject(Print.printStartMenu());
+        // set entry point for the console program
+        int position = PROJECT;
 
+        do {
+            switch (position) {
+                case PROJECT:       // print start menu and choose whether to load or create a new project
+                    position = loadOrNewProject();
+                    break;
+                case MAIN:
+
+                    break;
+                default:
+                    break;
+            }
+        } while (proceed);
 
         return SUCCESS;
     }
 
-    private static Project loadOrNewProject(int choice) {
-        Project project = null;
-
+    private static int loadOrNewProject() {
         switch (Print.printStartMenu()) {
             case LOAD:
-
+                Print.loadProject();
                 break;
             case NEW:
-                // load default project
-                //toString oject print
+                Print.startProject();
                 break;
             default:
-                // decide on default behaviour
+                proceed = false;
+                return NO_PROJECT;
         }
+        return 0;
+    }
 
-        return project;
+    public static void setProject(Project pro) {
+        project = pro;
     }
 }
 
@@ -46,13 +66,14 @@ public class ConsoleProgram {
 
             switch (choice) {
 
-                case 1:
+                case 1: //edit project name
                     String name = Print.printEditingName();
                     project.setName(name);
                     break;
 
                 case 2:
-
+                    //print all teams
+                    printAllTeams();
                     // EDITING TEAM
                     do {
                         // print team Team.formattable();
@@ -88,11 +109,11 @@ public class ConsoleProgram {
 
                             case 1:
                                 //add risk - print how
-                                addRisk();
+                                project.addRisk();
                                 break;
                             case 2:
                                 //remove risk - print how
-                                removeRisk();
+                                project.removeRisk();
                                 break;
 
                             break;
@@ -104,11 +125,11 @@ public class ConsoleProgram {
                                 switch (choice)
                             case 1:
                                 //print how to add
-                                addActivity();
+                                project.addActivity();
                                 break;
                             case 2:
                                 //print how to remove
-                                removeActivity();
+                                project.removeActivity();
                                 break;
 
 
