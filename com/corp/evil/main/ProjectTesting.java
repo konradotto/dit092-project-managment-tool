@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class ProjectTesting {
 
-    public static void main(String[] args) throws NameIsEmptyException, MemberAlreadyRegisteredException, MemberIsNullException, ActivityAlreadyRegisteredException, ActivityIsNullException {
+    public static void main(String[] args) throws NameIsEmptyException, MemberAlreadyRegisteredException, MemberIsNullException, ActivityAlreadyRegisteredException, ActivityIsNullException, RiskImpactNotDefinedException, RiskIsNullException, RiskProbabilityNotDefinedException, RiskAlreadyRegisteredException {
 
-
-        createTestProject();
+        testSomething();
+        //createTestProject();
 
 
     }
@@ -32,6 +32,8 @@ public class ProjectTesting {
 
         Member theDude = new Member("The dude", 500);
         broject.addMember(theDude);
+
+        boolean saved = JsonReaderWriter.save(broject);
         Team team1 = new Team();
         team1.addMember(dude);
         Activity act1 = new Activity("Test Activity",12, 18, team1);
@@ -47,6 +49,8 @@ public class ProjectTesting {
         System.out.println(broject.getSchedule().getEarnedValue());
         System.out.println(broject.getSchedule().getCostVariance());
         System.out.println(broject.getSchedule().getScheduleVariance());
+
+        System.out.println(saved);
     }
 
     private static void loadProject() throws IOException {
