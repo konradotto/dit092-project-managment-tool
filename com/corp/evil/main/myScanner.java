@@ -5,10 +5,14 @@ class myScanner {
 
     static String readLine(String string){
         System.out.println(string);
-        while (!input.hasNext()){
+        String x = input.nextLine();
+
+        while (x.isBlank()){
             System.out.println(string);
+            x=input.nextLine();
         }
-        return input.nextLine();
+
+        return x;
     }
 
     static double readDouble(String string){
@@ -22,8 +26,12 @@ class myScanner {
         return x;
     }
 
-    static int readInt(){
+    static int readInt(String string){
         System.out.println("Type the option number: ");
+        while (!(input.hasNextInt())){
+            System.out.println(string);
+            input.nextLine();
+        }
         int x = input.nextInt();
         input.nextLine();
         return x;

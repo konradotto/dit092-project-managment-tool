@@ -36,7 +36,7 @@ public class ProjectTesting {
         boolean saved = JsonReaderWriter.save(broject);
         Team team1 = new Team();
         team1.addMember(dude);
-        Activity act1 = new Activity("Test Activity",12, 18, team1);
+        Activity act1 = new Activity("Test Activity",12, 2019,18,2019, team1);
         broject.getSchedule().addActivity(act1);
         System.out.println(broject);
         System.out.println(broject.getSchedule().getEarnedValue());
@@ -80,13 +80,13 @@ public class ProjectTesting {
         swedishNationalTeam.addMember(zlatan);
 
 
-        Activity act2 = new Activity("Invent Dynamite", 51, 2, swedishNationalTeam);
+        Activity act2 = new Activity("Invent Dynamite", 51, 2018, 2,2019, swedishNationalTeam);
         testProject.getSchedule().addActivity(act2);
 
         Team anotherTeam = new Team();
 
 
-        testProject.addActivity("tHis iS an aCtiVitY",30, 52,  anotherTeam);
+        testProject.addActivity("tHis iS an aCtiVitY",30, 2018,51,2018,  anotherTeam);
         anotherTeam.addMember(greta);
         anotherTeam.addMember(bjorn);
         anotherTeam.addMember(ingrid);
@@ -95,7 +95,7 @@ public class ProjectTesting {
 
         //testProject.addActivity("tHis iS an aCtiVitY", 30, 52, anotherTeam);
 
-        Activity act = new Activity("Being lame",44, 5, anotherTeam);
+        Activity act = new Activity("Being lame",44, 2018, 2,2019, anotherTeam);
         testProject.getSchedule().addActivity(act);
 
         //anotherTeam.workOnActivity(zlatan, act, 12, 5);
