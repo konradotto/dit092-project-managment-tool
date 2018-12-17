@@ -18,6 +18,24 @@ public final class JsonReaderWriter {
     private static File file;
     private static boolean fileSet = false;
 
+    private static JFrame frame;
+
+    private static void init() {
+        setFrame();
+        bringToFront();
+    }
+
+    public static void setFrame() {
+        frame = new JFrame();
+        frame.setVisible(true);
+    }
+
+    private static void bringToFront() {
+        frame.toFront();
+        frame.setExtendedState(JFrame.ICONIFIED);
+        frame.setExtendedState(JFrame.NORMAL);
+    }
+
     // initialise final file chooser (used to select a file)
 
 
@@ -49,6 +67,7 @@ public final class JsonReaderWriter {
         chooser.setCurrentDirectory(new File("."));
         chooser.setDialogTitle("select a JSON-project to load");
 
+
         FileFilter filter = new FileFilter() {
 
             @Override
@@ -67,7 +86,8 @@ public final class JsonReaderWriter {
             }
         };
         chooser.setFileFilter(filter);
-        chooser.showSaveDialog(null);
+        bringToFront();
+        chooser.showSaveDialog(frame);
         setFile(chooser.getSelectedFile());
     }
 
