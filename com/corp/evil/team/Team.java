@@ -7,6 +7,7 @@ public class Team {
     private ArrayList<Member> members;
     private ArrayList<Activity> activities;
 
+
     private final static int COLUMN_WIDTH = 30;
     private final static int COLUMNS = 5;
 
@@ -156,7 +157,7 @@ public class Team {
     }
 
     //GETTERS AND SETTERS
-    public String getName() {return name;}
+    public static String getName() {return name;}
     public void setName(String name) {this.name = name;}
 
 

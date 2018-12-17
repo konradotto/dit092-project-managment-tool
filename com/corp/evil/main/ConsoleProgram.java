@@ -46,13 +46,14 @@ public class ConsoleProgram {
 
             switch (choice) {
 
-                case 1:
+                case 1: //edit project name
                     String name = Print.printEditingName();
                     project.setName(name);
                     break;
 
                 case 2:
-
+                    //print all teams
+                    printAllTeams();
                     // EDITING TEAM
                     do {
                         // print team Team.formattable();
@@ -88,11 +89,11 @@ public class ConsoleProgram {
 
                             case 1:
                                 //add risk - print how
-                                addRisk();
+                                project.addRisk();
                                 break;
                             case 2:
                                 //remove risk - print how
-                                removeRisk();
+                                project.removeRisk();
                                 break;
 
                             break;
@@ -104,11 +105,11 @@ public class ConsoleProgram {
                                 switch (choice)
                             case 1:
                                 //print how to add
-                                addActivity();
+                                project.addActivity();
                                 break;
                             case 2:
                                 //print how to remove
-                                removeActivity();
+                                project.removeActivity();
                                 break;
 
 

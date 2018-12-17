@@ -1,54 +1,36 @@
-import java.io.PrintStream;
 import java.util.Scanner;
 
-public class Print {
-
-    private final static int DEFAULT = 0;
+public class Print{
 
     private static StringBuilder sb = new StringBuilder();
     private static String newline = System.lineSeparator();
-    private final static PrintStream out = System.out;
-    private final static Scanner input = new Scanner(System.in);
+    private static Scanner input = new Scanner(System.in);
 
     public static int printStartMenu() {
 
-        sb.append("Welcome to the Project Planning Software of Evil Corp" + newline);
-        sb.append("Press one of the follwing options from the list" + newline);
-        sb.append("➤ 1. Load a existing project" + newline);
-        sb.append("➤ 2. Create an empty project");
+        sb.append("Welcome to the Project Planning Software of Evil Corp"+newline);
+        sb.append("Press one of the follwing options from the list"+newline);
+        sb.append("➤ 1. Load a existing project"+newline);
+        sb.append("➤ 2. Create a project");
 
-        out.println(sb);
+
+        System.out.println(sb);
         sb.setLength(0);
 
-        return readInt();
-    }
-
-    private static int readInt() {
-        String in = input.nextLine();
-        int choice = DEFAULT;
-        do {
-            try {
-                choice = Integer.parseInt(in);
-            } catch (NumberFormatException e) {
-                out.println("The input could not be parsed to an Integer. Try again.");
-            }
-        } while (choice == DEFAULT);
-
-        return choice;
+        return input.nextInt();
     }
 
     public static int printEditing() {
 
 
-        sb.append("Choose what you want to edit" + newline);
-        sb.append("➤ 1. Project Name" + newline);
-        sb.append("➤ 2. Project Team" + newline);
-        sb.append("➤ 3. Project riskMatrix" + newline);
-        sb.append("➤ 4. Project Schedule" + newline);
-        sb.append("➤ 5. Exit" + newline);
+        sb.append("Choose what you want to edit"+newline);
+        sb.append("➤ 1. Project Name"+newline);
+        sb.append("➤ 2. Project Team"+newline);
+        sb.append("➤ 3. Project riskMatrix"+newline);
+        sb.append("➤ 4. Project Schedule"+newline);
+        sb.append("➤ 5. Exit"+newline);
 
         System.out.println(sb);
-
         sb.setLength(0);
 
         return input.nextInt();
@@ -56,7 +38,7 @@ public class Print {
 
     public static String printEditingName() {
 
-        sb.append("Please enter a new name for your project: " + newline);
+        sb.append("Please enter a new name for your project: "+newline);
 
         System.out.println(sb);
         sb.setLength(0);
@@ -64,11 +46,20 @@ public class Print {
         return input.nextLine();
     }
 
+    public static void printAllTeams(){
+
+        System.out.println(Team.getName());
+    }
+
     public static int printEditingTeam() {
 
-        sb.append("Choose what you want to edit" + newline);
-        sb.append("➤ 1. Add member " + newline);
-        sb.append("➤ 2. Remove member " + newline);
+        //TODO Add a method to retrive desired team
+
+        sb.append("Choose what you want to edit"+newline);
+        sb.append("➤ 1. Add member "+newline);
+        sb.append("➤ 2. Remove member "+newline);
+        sb.append("➤ 3. Add activity "+newline);
+        sb.append("➤ 4. Remove activity "+newline);
 
         System.out.println(sb);
         sb.setLength(0);
@@ -78,9 +69,9 @@ public class Print {
 
     public static int printEditingRiskMatrix() {
 
-        sb.append("Choose what you want to edit" + newline);
-        sb.append("➤ 1. Add risk" + newline);
-        sb.append("➤ 2. Remove risk" + newline);
+        sb.append("Choose what you want to edit"+newline);
+        sb.append("➤ 1. Add risk"+newline);
+        sb.append("➤ 2. Remove risk"+newline);
 
         System.out.println(sb);
         sb.setLength(0);
@@ -90,9 +81,9 @@ public class Print {
 
     public static int printEditingSchedule() {
 
-        sb.append("Choose what you want to edit" + newline);
-        sb.append("➤ 1. Add activity" + newline);
-        sb.append("➤ 2. Remove activity" + newline);
+        sb.append("Choose what you want to edit"+newline);
+        sb.append("➤ 1. Add activity"+newline);
+        sb.append("➤ 2. Remove activity"+newline);
 
 
         System.out.println(sb);
@@ -110,7 +101,13 @@ public class Print {
 
     }
 
-    public static Member chooseMember() {
+    public static Member chooseMember(Team team) {
+
+        team.getMembers();
+
+        sb.append("Choose a member to remove by enter his/her name");
+
+
 
         //TODO: print all members and let the user pick one
 
@@ -129,6 +126,7 @@ public class Print {
         // TODO: print options to chose the activity to be removed
 
         return null;
+
     }
 }
 
