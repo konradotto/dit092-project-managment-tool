@@ -24,6 +24,7 @@ public class ConsoleProgram {
             switch (position) {
                 case PROJECT:       // print start menu and choose whether to load or create a new project
                     position = loadOrNewProject();
+                    System.out.println(project);
                     break;
                 case MAIN:
 

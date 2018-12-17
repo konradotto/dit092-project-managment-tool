@@ -1,8 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -45,12 +45,30 @@ public final class JsonReaderWriter {
     }
 
     public static void pickFile() {
-        FileChooser fcTemp = new FileChooser();
-        fcTemp.setTitle("Pick a JSON-file to save to.");
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File("."));
+        chooser.setDialogTitle("select a JSON-project to load");
 
-        setFile(fcTemp.showOpenDialog(new Stage()));
-        //fc.showOpenDialog(new Stage());
-        //setFile(fc.showOpenDialog(new Stage()));
+        FileFilter filter = new FileFilter() {
+
+            @Override
+            public boolean accept(File file) {
+                if (file.isDirectory()) {
+                    return false;
+                } else {
+                    String filename = file.getName().toLowerCase();
+                    return filename.endsWith(".json");
+                }
+            }
+
+            @Override
+            public String getDescription() {
+                return "JSON Files (*.json)";
+            }
+        };
+        chooser.setFileFilter(filter);
+        chooser.showSaveDialog(null);
+        setFile(chooser.getSelectedFile());
     }
 
     public static boolean write(String jsonText) {

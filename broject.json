@@ -1,0 +1,68 @@
+{
+  "name": "Unnamed Project 2018-12-17",
+  "team": {
+    "name": "",
+    "members": [
+      {
+        "name": "Dude",
+        "uuid": "94df6ff3-182e-4144-b449-b67a5d6f1733",
+        "SALARY_PER_HOUR": 5000.0,
+        "timeSpent": {
+          "seconds": 0,
+          "nanos": 0
+        }
+      },
+      {
+        "name": "The dude",
+        "uuid": "c35829c1-03ba-4b63-af5b-622f18fd820b",
+        "SALARY_PER_HOUR": 500.0,
+        "timeSpent": {
+          "seconds": 0,
+          "nanos": 0
+        }
+      }
+    ],
+    "activities": []
+  },
+  "riskMatrix": {
+    "risks": [
+      {
+        "riskName": "Death",
+        "probability": "VERY_LIKELY",
+        "impact": "VERY_HIGH"
+      }
+    ],
+    "lineSeparator": "\n"
+  },
+  "schedule": {
+    "LAST_WEEK_OF_YEAR": 52,
+    "activities": [],
+    "start": {
+      "date": {
+        "year": 2018,
+        "month": 11,
+        "day": 26
+      },
+      "time": {
+        "hour": 8,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "end": {
+      "date": {
+        "year": 2019,
+        "month": 1,
+        "day": 18
+      },
+      "time": {
+        "hour": 17,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "startYear": 2018
+  }
+}
