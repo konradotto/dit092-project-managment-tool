@@ -97,7 +97,7 @@ public class ConsoleProgram {
     }
 
     public static void taskAssigner(){
-        Activity task = Print.removeActivity();
+        Activity task = Print.readActivity();
         Team team = Print.readTeam();
 
         try {
