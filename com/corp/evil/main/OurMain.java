@@ -1,3 +1,4 @@
+/*
 public class OurMain {
 
     public static void main(String[] args) throws ActivityAlreadyRegisteredException, MemberAlreadyRegisteredException, ActivityIsNullException, MemberIsNullException, NameIsEmptyException {
@@ -8,3 +9,4 @@ public class OurMain {
         ProjectTesting.createTestProject();
     }
 }
+*/

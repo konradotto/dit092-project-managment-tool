@@ -1,14 +1,12 @@
 public class ConsoleProgram {
 
-    private final static int NO_PROJECT = -1;
+    private static final int NO_PROJECT = -1;
 
-    private final static int PROJECT = 1;
-    private final static int MAIN = 2;
-    private final static int SUCCESS = 42;
-
-    private final static int LOAD = 1;
-    private final static int NEW = 2;
-
+    private static final int PROJECT = 1;
+    private static final int MAIN = 2;
+    private static final int SUCCESS = 42;
+    private static final int LOAD = 1;
+    private static final int NEW = 2;
     private static Project project;
     private static boolean proceed = true;
 
@@ -47,6 +45,7 @@ public class ConsoleProgram {
                 teamMenu();
                 break;
             case 3:
+                taskManager();
                 break;
             case 4:
                 riskManager();
@@ -55,7 +54,8 @@ public class ConsoleProgram {
                 project.getBudget();
                 break;
             case 6:
-                taskManager();
+                // TODO save and exit method
+                // TODO loop
                 break;
             default:
                 break;
@@ -76,7 +76,7 @@ public class ConsoleProgram {
                     e.printStackTrace();
                 }
                 break;
-            case 3:
+            case 3://TODO Edit task menu and method
                 break;
             case 4:
                 taskRemover();
@@ -86,19 +86,23 @@ public class ConsoleProgram {
                 break;
             case 6:
                 taskTimeSetter();
+                //TODO loop
         }
     }
 
     public static void taskTimeSetter(){
-        Activity task = retrieveActivity("Enter which activity you wish to set a time to: ");
+        Activity task = Print.readActivity();
+
+        // TODO logic for workOnActivty method
     }
 
     public static void taskAssigner(){
-        Activity task = retrieveActivity("Enter which activity you wish to assign to a team: ");
-        Team team = retrieveTeam("Enter which team you want to assign the task to: ");
+        Activity task = Print.removeActivity();
+        Team team = Print.readTeam();
 
         try {
             team.addActivity(task);
+            task.setTeam(team);
         } catch (ActivityAlreadyRegisteredException e) {
             e.printStackTrace();
         } catch (ActivityIsNullException e) {
@@ -107,7 +111,7 @@ public class ConsoleProgram {
     }
 
     public static void taskRemover(){
-        Activity task  = retrieveActivity(myScanner.readLine("Enter the task you wish to remove: "));
+        Activity task  = Print.readActivity();
         try {
             project.getSchedule().removeActivity(task);
         } catch (ActivityIsNullException e) {
@@ -116,20 +120,9 @@ public class ConsoleProgram {
 
     }
 
-    public static Activity retrieveActivity(String name){
-        for (Activity activity : project.getSchedule().getActivities()) {
-            if (activity.getName().equals(name)) {
-                return activity;
-            }
-        }
-        return null;
-    }
-
-
-
     private static void riskManager(){
         int x = Print.printRiskMenu();
-        while (!(x == 1 || x == 2)){
+        while (!(x == 1 || x == 2 || x==3)){
             x = Print.printRiskMenu();
         }
         if (x == 1){
@@ -145,25 +138,15 @@ public class ConsoleProgram {
                 e.printStackTrace();
             }
         } else {
-            Risk risk = retrieveRisk(myScanner.readLine("Enter the risk you want to remove"));
+            Risk risk = Print.readRisk();
             try {
                 project.getRiskMatrix().removeRisk(risk);
             } catch (RiskIsNullException e) {
                 e.printStackTrace();
             }
         }
+        //TODO maybe a do-while instead of a while? + loop
     }
-
-    public static Risk retrieveRisk(String name) {
-        for (Risk risk : project.getRiskMatrix().getRisks()) {
-            if (risk.getRiskName().equals(name)) {
-                return risk;
-            }
-        }
-        return null;
-    }
-
-
 
     private static void teamMenu(){
         switch (Print.printTeamMenu()) {
@@ -176,7 +159,7 @@ public class ConsoleProgram {
                 }
                 break;
             case 3:
-                Member member = Print.readMember();
+                Member member = Print.createMember();
                 try {
                     project.getTeam().addMember(member);
                 } catch (MemberIsNullException e) {
@@ -189,17 +172,18 @@ public class ConsoleProgram {
                 editMember();
                 break;
             case 5:
-                Member member1 = retrieveMember(myScanner.readLine("Enter the members name: "));
+                Member member1 = Print.readMember();
                 project.removeMember(member1);
                 break;
             case 6:
-                Print.readTeam();
+                Print.createTeam();
                 break;
             case 7:
                 editTeam();
                 break;
             default:
                 break;
+                //TODO loop
         }
     }
 
@@ -208,7 +192,7 @@ public class ConsoleProgram {
         while (!(x == 1 || x == 2)){
             x = Print.printEditMemberMenu();
         }
-        Member member = retrieveMember(myScanner.readLine("Enter the members name: "));
+        Member member = Print.readMember();
         if (x == 1){
 
             member.setName(myScanner.readLine("Enter the members new name: "));
@@ -223,12 +207,12 @@ public class ConsoleProgram {
         while (!(x == 1 || x == 2 || x == 3)){
             x = Print.printEditSubTeamMenu();
         }
-        Team team = retrieveTeam(myScanner.readLine("Enter the teams name: "));
+        Team team = Print.readTeam();
         if (x == 1){
             team.setName(myScanner.readLine("Enter the teams new name: "));
         }
         else if (x == 2) {
-            Member member = retrieveMember(myScanner.readLine("Enter the members name: "));
+            Member member = Print.readMember();
             try {
                 team.addMember(member);
             } catch (MemberIsNullException e) {
@@ -237,7 +221,7 @@ public class ConsoleProgram {
                 e.printStackTrace();
             }
         } else {
-            Member member = retrieveMember(myScanner.readLine("Enter the members name: "));
+            Member member = Print.readMember();
             try {
                 team.removeMember(member);
             } catch (MemberIsNullException e) {
@@ -263,6 +247,25 @@ public class ConsoleProgram {
         }
         return null;
     }
+
+    public static Activity retrieveActivity(String name){
+        for (Activity activity : project.getSchedule().getActivities()) {
+            if (activity.getName().equals(name)) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+    public static Risk retrieveRisk(String name) {
+        for (Risk risk : project.getRiskMatrix().getRisks()) {
+            if (risk.getRiskName().equals(name)) {
+                return risk;
+            }
+        }
+        return null;
+    }
+
 
     private static int loadOrNewProject() {
         switch (Print.printStartMenu()) {
@@ -290,6 +293,9 @@ public class ConsoleProgram {
         else {
             editProject();
         }
+
+        //TODO maybe a do-while instead of a while? + loop
+
     }
 
     public static void editProject(){
@@ -301,12 +307,9 @@ public class ConsoleProgram {
             project.setName(Print.addName());
         }
         else {
-
             project.getSchedule().setEnd(Print.ender());
         }
     }
-
-
 
     public static void setProject(Project pro) {
         project = pro;

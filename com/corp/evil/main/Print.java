@@ -133,7 +133,7 @@ public class Print {
     }
 
     public static Activity createActivity(){
-        String name = myScanner.readLine("Enter the name of the risk: ");
+        String name = myScanner.readLine("Enter the name of the task: ");
         int startWeek = myScanner.readInt("Enter the start week: ");
         int startYear = myScanner.readInt("Enter the start Year: ");
         int endWeek = myScanner.readInt("Enter the end week: ");
@@ -184,7 +184,7 @@ public class Print {
     }
 
 
-    public static Member readMember() {
+    public static Member createMember() {
         String name = myScanner.readLine("Please enter the name of your new member:");
         double salary = myScanner.readDouble("Please enter the salary of the new member:");
         try {
@@ -196,14 +196,68 @@ public class Print {
         return null;
     }
 
-    public static Team readTeam() {
+    public static Team createTeam() {
      String name = myScanner.readLine("Enter the name of the team: ");
             Team team = new Team(name);
             return team;
 
     }
 
+    public static Member readMember(){
+        String option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the member's name\n2) By choosing a member from the list");
+        while (!(option.equals("1") || option.equals("2"))){
+            option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the member's name\n2) By choosing a member from the list");
+        }
+        switch (option) {
+            case "1":
+                return ConsoleProgram.retrieveMember(addName());
+            default:
+                //TODO method for retrieving a member from a list of members
+                return null;
+        }
+    }
 
+    public static Team readTeam(){
+        String option = myScanner.readLine("Choose how to retrieve a team:\n1) By entering the team's name\n2) By choosing a team from the list");
+        while (!(option.equals("1") || option.equals("2"))){
+            option = myScanner.readLine("Choose how to retrieve a team:\n1) By entering the team's name\n2) By choosing a team from the list");
+        }
+        switch (option) {
+            case "1":
+                return ConsoleProgram.retrieveTeam(addName());
+            default:
+                //TODO method for retrieving a team from a list of teams
+                return null;
+        }
+    }
+
+    public static Activity readActivity(){
+        String option = myScanner.readLine("Choose how to retrieve a task:\n1) By typing the task's name\n2) By choosing a task from the list");
+        while (!(option.equals("1") || option.equals("2"))){
+            option = myScanner.readLine("Choose how to retrieve a task:\n1) By typing the tasks's name\n2) By choosing a task from the list");
+        }
+        switch (option) {
+            case "1":
+                return ConsoleProgram.retrieveActivity(addName());
+            default:
+                //TODO method for retrieving an activity from a list of activities
+                return null;
+        }
+    }
+
+    public static Risk readRisk(){
+        String option = myScanner.readLine("Choose how to retrieve a risk:\n1) By entering the risk's name\n2) By choosing a risk from the list");
+        while (!(option.equals("1") || option.equals("2"))){
+            option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the risk's name\n2) By choosing a risk from the list");
+        }
+        switch (option) {
+            case "1":
+                return ConsoleProgram.retrieveRisk(addName());
+            default:
+                //TODO method for retrieving a risk from a list of risks
+                return null;
+        }
+    }
 
 
     public static Member chooseMember(Team team) {
