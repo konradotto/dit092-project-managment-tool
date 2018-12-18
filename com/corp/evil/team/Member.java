@@ -8,7 +8,7 @@ public class Member {
 
     private String name;
     private final String uuid;
-    private final double SALARY_PER_HOUR;
+    private double SALARY_PER_HOUR;
     private Duration timeSpent;
 
     Member(String name, double salary)throws NameIsEmptyException{
@@ -38,7 +38,9 @@ public class Member {
         setTimeSpent(timeSpent.plusHours(hours));
     }
 
-
+    public void setSALARY_PER_HOUR(double SALARY_PER_HOUR) {
+        this.SALARY_PER_HOUR = SALARY_PER_HOUR;
+    }
 
     //GETTERS AND SETTERS
     public String getName() {return name;}

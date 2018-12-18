@@ -13,10 +13,10 @@ public class Team {
     private final static int COLUMN_WIDTH = 30;
     private final static int COLUMNS = 5;
 
-    public Team(){
+    public Team(String name){
         members = new ArrayList<>();
         activities = new ArrayList<>();
-        name = "";
+        this.name = name;
     }
 
     public Team(String name, ArrayList<Member> members, ArrayList <Activity> activities)throws NameIsEmptyException {
@@ -136,7 +136,7 @@ public class Team {
                 sb.append("There are no members registered in this team yet." + newline);
             } else {
 
-                sb.append("\t\t\t Team " + getName() + newline);
+                sb.append("\t\t\t Team: " + getName() + newline);
 
                 sb.append(String.join("", Collections.nCopies((COLUMNS-2) * COLUMN_WIDTH +1, "-")));
                 sb.append(newline);

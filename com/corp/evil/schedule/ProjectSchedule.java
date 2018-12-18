@@ -186,6 +186,7 @@ public class ProjectSchedule {
     }
 
 
+
     public List<Activity> getParticipation(Member member) {
         List<Activity> result = new ArrayList<Activity>();
         for (Activity act : this.activities) {

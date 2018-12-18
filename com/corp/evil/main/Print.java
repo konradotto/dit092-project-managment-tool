@@ -13,7 +13,7 @@ public class Print {
     private static final int NO_PROJECT = 1;
 
     private static StringBuilder sb = new StringBuilder();
-    private static String newline = System.lineSeparator();
+    public static String newline = System.lineSeparator();
     private static final PrintStream out = System.out;
 
     public static int printStartMenu() {
@@ -97,8 +97,6 @@ public class Print {
         sb.append("➤ 1. Update the team's name "+newline);
         sb.append("➤ 2. Add a member"+newline);
         sb.append("➤ 3. Remove a member "+newline);
-        sb.append("➤ 4. Add activity "+newline);
-        sb.append("➤ 5. Remove activity "+newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -132,6 +130,31 @@ public class Print {
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
+    }
+
+    public static Activity createActivity(){
+        String name = myScanner.readLine("Enter the name of the risk: ");
+        int startWeek = myScanner.readInt("Enter the start week: ");
+        int startYear = myScanner.readInt("Enter the start Year: ");
+        int endWeek = myScanner.readInt("Enter the end week: ");
+        int endYear = myScanner.readInt("Enter the end year: ");
+
+        return new Activity(name, startWeek, startYear, endWeek, endYear);
+    }
+
+    public static Risk createRisk(){
+        String name = myScanner.readLine("Enter the name of the risk: ");
+        int probability = myScanner.readInt("Enter risk probability: ");
+        int impact = myScanner.readInt("Enter risk impact: ");
+        Risk risk = null;
+        try {
+            risk = new Risk(name, probability, impact);
+        } catch (RiskProbabilityNotDefinedException e) {
+            e.printStackTrace();
+        } catch (RiskImpactNotDefinedException e) {
+            e.printStackTrace();
+        }
+        return risk;
     }
 
     public static Project createProject(){
@@ -173,6 +196,16 @@ public class Print {
         return null;
     }
 
+    public static Team readTeam() {
+     String name = myScanner.readLine("Enter the name of the team: ");
+            Team team = new Team(name);
+            return team;
+
+    }
+
+
+
+
     public static Member chooseMember(Team team) {
 
         team.getMembers();
@@ -186,12 +219,6 @@ public class Print {
         return null;
     }
 
-    public static Activity createActivity() {
-
-        // TODO: ask for activity properties and create new activity according to them
-
-        return null;
-    }
 
     public static Activity removeActivity() {
 

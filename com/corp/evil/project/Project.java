@@ -13,12 +13,12 @@ public class Project {
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
-    private List<Team> teams;
+    private ArrayList<Team> teams;
 
     public Project(String name, ProjectSchedule schedule) {
         this.setName(name);
         this.setSchedule(schedule);
-        this.setTeam(new Team());
+        this.setTeam(new Team(name));
         this.setRiskMatrix(new RiskMatrix());
         this.teams = new ArrayList<>();
     }
@@ -131,6 +131,9 @@ public class Project {
         //TODO: remove the passed member
     }
 
+    public ArrayList<Team> getTeams(){
+        return this.teams;
+    }
 
     public Team getTeam() {
         return team;
