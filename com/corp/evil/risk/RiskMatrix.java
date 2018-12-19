@@ -109,7 +109,7 @@ public class RiskMatrix {
         }
     }
 
-    public List<Risk> getRisks() {
+    public ArrayList<Risk> getRisks() {
         return risks;
     }
 

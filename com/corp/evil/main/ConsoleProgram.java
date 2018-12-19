@@ -122,7 +122,7 @@ public class ConsoleProgram {
 
     private static void riskManager(){
         int x = Print.printRiskMenu();
-        while (!(x == 1 || x == 2 || x==3)){
+        while (!((x == 1) || (x == 2) || (x == 3))){
             x = Print.printRiskMenu();
         }
         if (x == 1){
@@ -266,7 +266,6 @@ public class ConsoleProgram {
         return null;
     }
 
-
     private static int loadOrNewProject() {
         switch (Print.printStartMenu()) {
             case LOAD:
@@ -304,7 +303,7 @@ public class ConsoleProgram {
             x = Print.printEditProjectMenu();
         }
         if (x == 1){
-            project.setName(Print.addName());
+            project.setName(Print.enterName());
         }
         else {
             project.getSchedule().setEnd(Print.ender());
@@ -315,94 +314,13 @@ public class ConsoleProgram {
         project = pro;
     }
 
+    public static Project getProject() {
+        return ConsoleProgram.project;
+    }
+
     public static void createProject() {
         setProject(Print.createProject());
     }
 
 
 }
-
-
-
-
-/*
-        do {
-
-            int choice = Print.printEditing();
-
-            switch (choice) {
-
-                case 1: //edit project name
-                    String name = Print.printEditingName();
-                    project.setName(name);
-                    break;
-
-                case 2:
-                    //print all teams
-                    printAllTeams();
-                    // EDITING TEAM
-                    do {
-                        // print team Team.formattable();
-                        choice = Print.printEditingTeam();
-
-                        switch (choice) {
-
-                            case 1:
-                                project.addMember(Print.addMember());
-                            case 2:
-                                project.removeMember(Print.chooseMember());
-                                break;
-                            case 3:
-                                project.getSchedule().addActivity(Print.createActivity());
-                                break;
-                            case 4:
-                                project.getSchedule().removeActivity(Print.removeActivity());
-                                break;
-                            case 5:
-                                project.workOnActivity();
-                                break;
-
-                        }
-                        while (choice != 6)
-
-                            // EDITING RISKMATRIX
-                            case 3:
-                        //print riskmatrix
-
-                        choice = Print.printEditingRiskMatrix();
-
-                        switch (choice) {
-
-                            case 1:
-                                //add risk - print how
-                                project.addRisk();
-                                break;
-                            case 2:
-                                //remove risk - print how
-                                project.removeRisk();
-                                break;
-
-                            break;
-
-                            // EDITING SCHEDULE
-                            case 4:
-
-                                choice = Print.printEditingSchedule();
-                                switch (choice)
-                            case 1:
-                                //print how to add
-                                project.addActivity();
-                                break;
-                            case 2:
-                                //print how to remove
-                                project.removeActivity();
-                                break;
-
-
-                            break;
-                        }
-                        while (choice != 6) ;
-
-                    }
-            }
-        }*/

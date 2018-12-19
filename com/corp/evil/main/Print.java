@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Print {
 
@@ -171,7 +173,7 @@ public class Print {
         return project;
     }
 
-    public static String addName(){
+    public static String enterName(){
         String name = myScanner.readLine("Enter the name");
         return name;
     }
@@ -210,12 +212,24 @@ public class Print {
         }
         switch (option) {
             case "1":
-                return ConsoleProgram.retrieveMember(addName());
+                return ConsoleProgram.retrieveMember(enterName());
             default:
-                //TODO method for retrieving a member from a list of members
-                return null;
+                return readMemberFromList();
         }
     }
+
+
+    public static Member readMemberFromList(){
+        ArrayList<Member> members = ConsoleProgram.getProject().getTeam().getMembers();
+        members.sort(Comparator.comparing(Member::getName));
+        for (int i = 0; i<members.size();i++){
+            System.out.println(i+") "+members.get(i).getName());
+        }
+        int j = myScanner.readInt("Choose a member from the list: ");
+        return members.get(j);
+
+    }
+
 
     public static Team readTeam(){
         String option = myScanner.readLine("Choose how to retrieve a team:\n1) By entering the team's name\n2) By choosing a team from the list");
@@ -224,11 +238,20 @@ public class Print {
         }
         switch (option) {
             case "1":
-                return ConsoleProgram.retrieveTeam(addName());
+                return ConsoleProgram.retrieveTeam(enterName());
             default:
-                //TODO method for retrieving a team from a list of teams
-                return null;
+                return readTeamFromList();
         }
+    }
+
+    public static Team readTeamFromList() {
+        ArrayList<Team> teams = ConsoleProgram.getProject().getTeams();
+        teams.sort(Comparator.comparing(Team::getName));
+        for (int i = 0; i < teams.size(); i++) {
+            System.out.println(i + ") " + teams.get(i).getName());
+        }
+        int j = myScanner.readInt("Choose a team from the list: ");
+        return teams.get(j);
     }
 
     public static Activity readActivity(){
@@ -238,11 +261,20 @@ public class Print {
         }
         switch (option) {
             case "1":
-                return ConsoleProgram.retrieveActivity(addName());
+                return ConsoleProgram.retrieveActivity(enterName());
             default:
-                //TODO method for retrieving an activity from a list of activities
-                return null;
+              return readActivityFromList();
         }
+    }
+
+    public static Activity readActivityFromList() {
+        ArrayList<Activity> activities = ConsoleProgram.getProject().getSchedule().getActivities();
+        activities.sort(Comparator.comparing(Activity::getName));
+        for (int i = 0; i < activities.size(); i++) {
+            System.out.println(i + ") " + activities.get(i).getName());
+        }
+        int j = myScanner.readInt("Choose an activity from the list: ");
+        return activities.get(j);
     }
 
     public static Risk readRisk(){
@@ -252,15 +284,23 @@ public class Print {
         }
         switch (option) {
             case "1":
-                return ConsoleProgram.retrieveRisk(addName());
+                return ConsoleProgram.retrieveRisk(enterName());
             default:
-                //TODO method for retrieving a risk from a list of risks
-                return null;
+                return readRiskFromList();
         }
     }
 
+    public static Risk readRiskFromList() {
+        ArrayList<Risk> risks = ConsoleProgram.getProject().getRiskMatrix().getRisks();
+        risks.sort(Comparator.comparing(Risk::getRiskName));
+        for (int i = 0; i < risks.size(); i++) {
+            System.out.println(i + ") " + risks.get(i).getRiskName());
+        }
+        int j = myScanner.readInt("Choose a risk from the list: ");
+        return risks.get(j);
+    }
 
-    public static Member chooseMember(Team team) {
+        public static Member chooseMember(Team team) {
 
         team.getMembers();
 

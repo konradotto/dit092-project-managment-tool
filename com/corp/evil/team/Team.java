@@ -88,7 +88,7 @@ public class Team {
         return result;
     }
 
-    public List<Member> getMembers() {
+    public ArrayList<Member> getMembers() {
         return members;
     }
 
