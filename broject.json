@@ -1,11 +1,11 @@
 {
-  "name": "Unnamed Project 2018-12-17",
+  "name": "Unnamed Project 2018-12-19",
   "team": {
-    "name": "",
+    "name": "Project Team",
     "members": [
       {
         "name": "Dude",
-        "uuid": "94df6ff3-182e-4144-b449-b67a5d6f1733",
+        "uuid": "e6b9d501-e0c2-4c75-84ef-065b7063cdda",
         "SALARY_PER_HOUR": 5000.0,
         "timeSpent": {
           "seconds": 0,
@@ -14,7 +14,7 @@
       },
       {
         "name": "The dude",
-        "uuid": "c35829c1-03ba-4b63-af5b-622f18fd820b",
+        "uuid": "c5d927bf-4259-49cb-9dcc-187e5c15dba1",
         "SALARY_PER_HOUR": 500.0,
         "timeSpent": {
           "seconds": 0,
@@ -62,7 +62,6 @@
         "second": 0,
         "nano": 0
       }
-    },
-    "startYear": 2018
+    }
   }
 }

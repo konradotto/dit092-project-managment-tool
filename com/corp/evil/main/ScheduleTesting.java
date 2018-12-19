@@ -8,13 +8,12 @@ public class ScheduleTesting {
         System.out.println(schedule);
 
         Member m1 = new Member("lil pump", 100.0);
-        Team t1 = new Team();
-        t1.setName("team 1");
+        Team t1 = new Team("Team 1");
         t1.addMember(m1);
 
 
         Member m2 = new Member("lil wayne", 100.0);
-        Team t2 = new Team();
+        Team t2 = new Team("t2");
 
         Activity a1 = new Activity("planning", 35 , 2017, 20, 2018, t1);
         Activity a2 = new Activity("testing", 21, 2019, 30, 2018, t2);

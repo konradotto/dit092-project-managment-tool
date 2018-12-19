@@ -1,5 +1,3 @@
-import org.apache.commons.lang3.StringUtils;
-
 class myScanner {
 
     private static java.util.Scanner input = new java.util.Scanner(System.in);
@@ -8,7 +6,7 @@ class myScanner {
         System.out.println(string);
         String x = input.nextLine();
 
-       while (StringUtils.isBlank(x)){
+        while (x.trim().length() == 0) {
             System.out.println(string);
             x=input.nextLine();
         }
