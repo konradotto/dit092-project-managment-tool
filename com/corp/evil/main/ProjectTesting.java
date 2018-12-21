@@ -33,18 +33,17 @@ public class ProjectTesting {
         Member theDude = new Member("The dude", 500);
         broject.addMember(theDude);
 
-        boolean saved = JsonReaderWriter.save(broject);
         Team team1 = new Team("Team 1");
         team1.addMember(dude);
         Activity act1 = new Activity("Test Activity",12, 2019,18,2019, team1);
         broject.getSchedule().addActivity(act1);
+        boolean saved = JsonReaderWriter.save(broject);
         System.out.println(broject);
         System.out.println(broject.getSchedule().getEarnedValue());
         System.out.println(broject.getSchedule().getCostVariance());
         System.out.println(broject.getSchedule().getScheduleVariance());
 
         team1.workOnActivity(theDude, act1, 5, 12);
-        saved = JsonReaderWriter.save(broject);
 
         System.out.println(broject);
         System.out.println(broject.getSchedule().getEarnedValue());

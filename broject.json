@@ -5,7 +5,7 @@
     "members": [
       {
         "name": "Dude",
-        "uuid": "e6b9d501-e0c2-4c75-84ef-065b7063cdda",
+        "uuid": "8e83d7cf-0734-4c0d-9208-45a347a29d83",
         "SALARY_PER_HOUR": 5000.0,
         "timeSpent": {
           "seconds": 0,
@@ -14,15 +14,14 @@
       },
       {
         "name": "The dude",
-        "uuid": "c5d927bf-4259-49cb-9dcc-187e5c15dba1",
+        "uuid": "36e05c01-2083-47e5-b9b1-06e85987c7b8",
         "SALARY_PER_HOUR": 500.0,
         "timeSpent": {
           "seconds": 0,
           "nanos": 0
         }
       }
-    ],
-    "activities": []
+    ]
   },
   "riskMatrix": {
     "risks": [
@@ -36,7 +35,34 @@
   },
   "schedule": {
     "LAST_WEEK_OF_YEAR": 52,
-    "activities": [],
+    "activities": [
+      {
+        "startWeek": 12,
+        "endWeek": 18,
+        "endYear": 2019,
+        "startYear": 2019,
+        "name": "Test Activity",
+        "team": {
+          "name": "Team 1",
+          "members": [
+            {
+              "name": "Dude",
+              "uuid": "8e83d7cf-0734-4c0d-9208-45a347a29d83",
+              "SALARY_PER_HOUR": 5000.0,
+              "timeSpent": {
+                "seconds": 0,
+                "nanos": 0
+              }
+            }
+          ]
+        },
+        "costOfWorkScheduled": 700000.0,
+        "costOfWorkPerformed": 0.0,
+        "percentCompleted": 0.0,
+        "num": 0,
+        "timeSpent": {}
+      }
+    ],
     "start": {
       "date": {
         "year": 2018,

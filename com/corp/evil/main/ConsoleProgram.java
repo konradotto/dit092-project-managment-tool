@@ -1,5 +1,6 @@
 public class ConsoleProgram {
 
+    // constants
     private static final int NO_PROJECT = -1;
 
     private static final int PROJECT = 1;
@@ -7,6 +8,19 @@ public class ConsoleProgram {
     private static final int SUCCESS = 42;
     private static final int LOAD = 1;
     private static final int NEW = 2;
+
+    private static final int PRINT_PROJET = 1;
+    private static final int EDIT_PROJECT = 2;
+
+    private static final int PRIMARY_PROJECT = 1;
+    private static final int PRIMARY_TEAM = 2;
+    private static final int PRIMARY_TASK = 3;
+    private static final int PRIMARY_RISK = 4;
+    private static final int PRIMARY_BUDGET = 5;
+    private static final int PRIMARY_SAVE_EXIT = 6;
+
+
+
     private static Project project;
     private static boolean proceed = true;
 
@@ -22,10 +36,9 @@ public class ConsoleProgram {
             switch (position) {
                 case PROJECT:       // print start menu and choose whether to load or create a new project
                     position = loadOrNewProject();
-                    primaryMenu();
-                break;
+                    break;
                 case MAIN:
-                    //????
+                    primaryMenu();
 
                     break;
                 default:
@@ -36,24 +49,24 @@ public class ConsoleProgram {
         return SUCCESS;
     }
 
-    public static void primaryMenu(){
+    public static void primaryMenu() {
         switch (Print.printPrimaryMeny()) {
-            case 1:
+            case PRIMARY_PROJECT:
                 projectMenu();
                 break;
-            case 2:
+            case PRIMARY_TEAM:
                 teamMenu();
                 break;
-            case 3:
+            case PRIMARY_TASK:
                 taskManager();
                 break;
-            case 4:
+            case PRIMARY_RISK:
                 riskManager();
                 break;
-            case 5:
+            case PRIMARY_BUDGET:
                 project.getBudget();
                 break;
-            case 6:
+            case PRIMARY_SAVE_EXIT:
                 // TODO save and exit method
                 // TODO loop
                 break;
@@ -62,8 +75,8 @@ public class ConsoleProgram {
         }
     }
 
-    public static void taskManager(){
-        switch (Print.printTasksMenu()){
+    public static void taskManager() {
+        switch (Print.printTasksMenu()) {
             case 1:
                 project.getSchedule().toString();
                 break;
@@ -90,13 +103,13 @@ public class ConsoleProgram {
         }
     }
 
-    public static void taskTimeSetter(){
+    public static void taskTimeSetter() {
         Activity task = Print.readActivity();
 
         // TODO logic for workOnActivty method
     }
 
-    public static void taskAssigner(){
+    public static void taskAssigner() {
         Activity task = Print.readActivity();
         Team team = Print.readTeam();
 
@@ -110,8 +123,8 @@ public class ConsoleProgram {
         }
     }
 
-    public static void taskRemover(){
-        Activity task  = Print.readActivity();
+    public static void taskRemover() {
+        Activity task = Print.readActivity();
         try {
             project.getSchedule().removeActivity(task);
         } catch (ActivityIsNullException e) {
@@ -120,15 +133,14 @@ public class ConsoleProgram {
 
     }
 
-    private static void riskManager(){
+    private static void riskManager() {
         int x = Print.printRiskMenu();
-        while (!((x == 1) || (x == 2) || (x == 3))){
+        while (!((x == 1) || (x == 2) || (x == 3))) {
             x = Print.printRiskMenu();
         }
-        if (x == 1){
+        if (x == 1) {
             project.getRiskMatrix().toString();
-        }
-        else if(x == 2){
+        } else if (x == 2) {
             Risk risk = Print.createRisk();
             try {
                 project.getRiskMatrix().addRisk(risk);
@@ -148,13 +160,13 @@ public class ConsoleProgram {
         //TODO maybe a do-while instead of a while? + loop
     }
 
-    private static void teamMenu(){
+    private static void teamMenu() {
         switch (Print.printTeamMenu()) {
             case 1:
                 System.out.println(project.getTeam().toString() + Print.newline);
                 break;
             case 2:
-                for(Team team : project.getTeams()){
+                for (Team team : project.getTeams()) {
                     System.out.println(team.toString() + Print.newline);
                 }
                 break;
@@ -183,35 +195,33 @@ public class ConsoleProgram {
                 break;
             default:
                 break;
-                //TODO loop
+            //TODO loop
         }
     }
 
-    private static void editMember(){
+    private static void editMember() {
         int x = Print.printEditMemberMenu();
-        while (!(x == 1 || x == 2)){
+        while (!(x == 1 || x == 2)) {
             x = Print.printEditMemberMenu();
         }
         Member member = Print.readMember();
-        if (x == 1){
+        if (x == 1) {
 
             member.setName(myScanner.readLine("Enter the members new name: "));
-        }
-        else {
+        } else {
             member.setSALARY_PER_HOUR(myScanner.readDouble("Enter the members new salary: "));
         }
     }
 
-    private static void editTeam(){
+    private static void editTeam() {
         int x = Print.printEditSubTeamMenu();
-        while (!(x == 1 || x == 2 || x == 3)){
+        while (!(x == 1 || x == 2 || x == 3)) {
             x = Print.printEditSubTeamMenu();
         }
         Team team = Print.readTeam();
-        if (x == 1){
+        if (x == 1) {
             team.setName(myScanner.readLine("Enter the teams new name: "));
-        }
-        else if (x == 2) {
+        } else if (x == 2) {
             Member member = Print.readMember();
             try {
                 team.addMember(member);
@@ -230,25 +240,25 @@ public class ConsoleProgram {
         }
     }
 
-    public static Member retrieveMember(String name){
-        for(Member member : project.getTeam().getMembers()){
-            if(member.getName().equals(name)){
+    public static Member retrieveMember(String name) {
+        for (Member member : project.getTeam().getMembers()) {
+            if (member.getName().equals(name)) {
                 return member;
             }
         }
         return null;
     }
 
-    public static Team retrieveTeam(String name){
-        for(Team team : project.getTeams()){
-            if(team.getName().equals(name)){
+    public static Team retrieveTeam(String name) {
+        for (Team team : project.getTeams()) {
+            if (team.getName().equals(name)) {
                 return team;
             }
         }
         return null;
     }
 
-    public static Activity retrieveActivity(String name){
+    public static Activity retrieveActivity(String name) {
         for (Activity activity : project.getSchedule().getActivities()) {
             if (activity.getName().equals(name)) {
                 return activity;
@@ -278,34 +288,30 @@ public class ConsoleProgram {
                 proceed = false;
                 return NO_PROJECT;
         }
-        return 0;
+        return MAIN;
     }
 
-    private static void projectMenu(){
-        int x = Print.printProjectMenu();
-        while (!(x == 1 || x == 2)){
+    private static void projectMenu() {
+        int x;
+        do {
             x = Print.printProjectMenu();
-        }
-        if (x == 1){
-            project.toString();
-        }
-        else {
+        } while (!(x == PRINT_PROJET || x == EDIT_PROJECT));
+
+        if (x == PRINT_PROJET) {
+            Print.printProject(project);
+        } else if (x == EDIT_PROJECT) {
             editProject();
         }
-
-        //TODO maybe a do-while instead of a while? + loop
-
     }
 
-    public static void editProject(){
+    public static void editProject() {
         int x = Print.printEditProjectMenu();
-        while (!(x == 1 || x == 2)){
+        while (!(x == 1 || x == 2)) {
             x = Print.printEditProjectMenu();
         }
-        if (x == 1){
+        if (x == 1) {
             project.setName(Print.enterName());
-        }
-        else {
+        } else {
             project.getSchedule().setEnd(Print.ender());
         }
     }

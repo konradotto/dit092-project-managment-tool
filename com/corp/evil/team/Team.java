@@ -7,7 +7,7 @@ public class Team {
 
     private String name;
     private ArrayList<Member> members;
-    private ArrayList<Activity> activities;
+    //private ArrayList<Activity> activities;
 
 
     private final static int COLUMN_WIDTH = 30;
@@ -15,7 +15,7 @@ public class Team {
 
     public Team(String name){
         members = new ArrayList<>();
-        activities = new ArrayList<>();
+        //activities = new ArrayList<>();
         this.name = name;
     }
 
@@ -23,7 +23,7 @@ public class Team {
         if (name.isEmpty()){ throw new NameIsEmptyException("The field name cannot be empty!"); }
         this.name = name;
         this.members = members;
-        this.activities = activities;
+        //this.activities = activities;
 
     }
 
@@ -52,10 +52,11 @@ public class Team {
 
     public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException{
         if (activity == null) { throw new ActivityIsNullException("This activity does not exist!");
-        } else if (activities.contains(activity)) {
+        } else if (false) {//activities.contains(activity)) {
             throw new ActivityAlreadyRegisteredException("An activity with same name exists already!");
         } else {
-            activities.add(activity);
+            System.out.println("hi");
+            //activities.add(activity);
         }
     }
 
@@ -71,7 +72,7 @@ public class Team {
 
     public void removeActivity(Activity activity) throws ActivityIsNullException {
         if (activity == null){ throw new ActivityIsNullException("This activity does not exist!");}
-        activities.remove(activity);
+        //activities.remove(activity);
     }
 
     public boolean contains(Member member) {
@@ -173,10 +174,10 @@ public class Team {
     public double timeSpentPercentage(){
 
         double sumOfDurations = 0;
-        for (Activity activity: activities){
+        /*for (Activity activity: activities){
 
             sumOfDurations += activity.getDuration();
-        }
+        }*/
         double sumOfTimeSpent = 0;
         for (Member member: members){
             sumOfTimeSpent +=member.getTimeSpent();

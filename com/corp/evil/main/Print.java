@@ -52,6 +52,7 @@ public class Print {
 
 
     public static int printPrimaryMeny() {
+        // Specify String representation of primary menu
         sb.append("Choose an option from below" + newline);
         sb.append("➤ 1. Project" + newline);
         sb.append("➤ 2. Teams and Members" + newline);
@@ -59,8 +60,10 @@ public class Print {
         sb.append("➤ 4. Risks Management" + newline);
         sb.append("➤ 5. Budget" + newline);
         sb.append("➤ 6. Save and Exit" + newline);
-        System.out.println(sb);
+
+        out.println(sb);
         sb.setLength(0);
+
         return myScanner.readInt();
     }
 
@@ -311,6 +314,10 @@ public class Print {
         //TODO: print all members and let the user pick one
 
         return null;
+    }
+
+    public static void printProject(Project project) {
+        out.println(project);
     }
 
 
