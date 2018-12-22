@@ -16,9 +16,6 @@ public final class JsonReaderWriter {
 
     public final static Charset STANDARD_ENCODING = StandardCharsets.UTF_8;
 
-    private static File file;
-    private static boolean fileSet = false;
-
     private final static FileFilter filter = new FileFilter() {
 
         @Override
@@ -39,9 +36,12 @@ public final class JsonReaderWriter {
 
     private final static Frame frame = new Frame();
 
+    public static <T> boolean save(T classInstance, File file) {
+        return write(toJson(classInstance), file);
+    }
+
     public static <T> boolean save(T classInstance) {
-        pickFile();
-        return write(toJson(classInstance));
+        return save(classInstance, pickFile());
     }
 
     public static <T> T load(Class<T> type) throws IOException {
@@ -58,14 +58,6 @@ public final class JsonReaderWriter {
         return fromJsonFile(jsonFile, type);
     }
 
-    public static void setFile(File f) {
-        if (f == null) {
-            throw new NullPointerException("No file has been selected.");
-        }
-        file = f;
-        fileSet = (file != null);
-    }
-
     /**
      *  Function to read any file as a String
      *
@@ -76,19 +68,19 @@ public final class JsonReaderWriter {
         return new String(encoded, encoding);
     }
 
-    public static void pickFile() {
+    public static File pickFile() {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File("."));
         chooser.setDialogTitle("select a JSON-project to load");
         chooser.setFileFilter(filter);
 
         chooser.showSaveDialog(frame);
-        setFile(chooser.getSelectedFile());
+        return chooser.getSelectedFile();
     }
 
-    public static boolean write(String jsonText) {
+    public static boolean write(String jsonText, File file) {
         boolean successful = false;
-        if (fileSet) {
+        if (file != null) {
             try (FileWriter fw = new FileWriter(file)) {
                 fw.write(jsonText);
                 successful = true;

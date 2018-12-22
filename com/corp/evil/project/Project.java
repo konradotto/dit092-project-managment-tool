@@ -1,3 +1,4 @@
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -6,53 +7,59 @@ import java.util.List;
 
 public class Project {
 
+    // constants
     private final static int MARGIN = 3;
     private final static String LS = System.lineSeparator();
 
+    // member variables
     private String name;
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
     private ArrayList<Team> teams;
 
+    private File file;
+
+    /**
+     * Almost empty constructor taking only a name and a schedule as parameters.
+     * This allows to create projects which only have a name and a startWeek
+     * (+potentially already a set of activities which are pending execution).
+     * This way you can first do approximate planning of the demand within a project before
+     * assigning a team that is suited to it. The risks and further activities can easily
+     * be added after creation.
+     *
+     * @param name     String specifying the project name
+     * @param schedule ProjectSchedule defining at least a preliminary start year and week as well as
+     *                 end year and week
+     */
     public Project(String name, ProjectSchedule schedule) {
         this.setName(name);
         this.setSchedule(schedule);
         this.setTeam(new Team(name));
         this.setRiskMatrix(new RiskMatrix());
         this.teams = new ArrayList<>();
+
+        onChange();         // save all changes
     }
 
+
+    /**
+     * Constructor for a project where the team, risk matrix and project schedule are already
+     * worked out to a certain degree.
+     *
+     * @param name       String specifying the project name
+     * @param team       Team of people working on the project. Can be extended to the needs.
+     *                   Only these people should can be used for working on activities
+     * @param riskMatrix RiskMatrix with risks for this project
+     * @param schedule   ProjectSchedule defining the temporal project outlines
+     */
     public Project(String name, Team team, RiskMatrix riskMatrix, ProjectSchedule schedule) {
         this.setName(name);
         this.setTeam(team);
         this.setRiskMatrix(riskMatrix);
         this.setSchedule(schedule);
-    }
 
-    public String getBudget() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Earned Value: " + schedule.getEarnedValue() + LS);
-
-        return sb.toString();
-    }
-
-    public double getTimeSpent(Member member) {
-        return member.getTimeSpent();
-    }
-
-    public double getCostVariance() {
-        return schedule.getCostVariance();
-    }
-
-    public double getScheduleVariance() {
-        return schedule.getScheduleVariance();
-    }
-
-
-    public String getName() {
-        return name;
+        onChange();
     }
 
     public void setName(String name) {
@@ -63,10 +70,12 @@ public class Project {
         } else {
             this.name = name;
         }
+        onChange();
     }
 
     public void addMember(Member member) throws MemberAlreadyRegisteredException, MemberIsNullException {
         this.team.addMember(member);
+        onChange();
     }
 
     public boolean addActivity(String name, int startWeek, int startYear, int endWeek, int endYear, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
@@ -79,6 +88,7 @@ public class Project {
         }
 
         schedule.addActivity(new Activity(name, startWeek, startYear, endWeek, endYear, team));
+        onChange();
         return true;
     }
 
@@ -90,6 +100,7 @@ public class Project {
         } else {
             teams.add(team);
         }
+        onChange();
     }
 
     public void addTeam(List<Team> teams) throws TeamAlreadyRegisteredException, TeamIsNullException {
@@ -103,6 +114,38 @@ public class Project {
             throw new TeamIsNullException("This team does not exist!");
         }
         teams.remove(team);
+        onChange();
+    }
+
+    /**
+     * Function specifying what to do when the project data are changed
+     * (e.g. save the project under the current path)
+     */
+    public void onChange() {
+        saveProject();
+    }
+
+    /**
+     * Function to save the project either to the associated file or to a file being newly picked
+     * if no valid file is set for the project.
+     *
+     * @return returns whether the saving was successful
+     */
+    public boolean saveProject() {
+        while (file == null) {
+            setFile();
+        }
+
+        return JsonReaderWriter.save(this, file);
+    }
+
+    /**
+     * @return
+     */
+    public boolean setFile() {
+        this.file = JsonReaderWriter.pickFile();
+
+        return (this.file != null);
     }
 
     @Override
@@ -129,9 +172,35 @@ public class Project {
 
     public void removeMember(Member member) {
         //TODO: remove the passed member
+
+        onChange();
     }
 
-    public ArrayList<Team> getTeams(){
+    public String getBudget() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Earned Value: " + schedule.getEarnedValue() + LS);
+
+        return sb.toString();
+    }
+
+    public double getTimeSpent(Member member) {
+        return member.getTimeSpent();
+    }
+
+    public double getCostVariance() {
+        return schedule.getCostVariance();
+    }
+
+    public double getScheduleVariance() {
+        return schedule.getScheduleVariance();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ArrayList<Team> getTeams() {
         return this.teams;
     }
 
@@ -141,6 +210,7 @@ public class Project {
 
     public void setTeam(Team team) {
         this.team = team;
+        onChange();
     }
 
     public RiskMatrix getRiskMatrix() {
@@ -149,6 +219,7 @@ public class Project {
 
     public void setRiskMatrix(RiskMatrix riskMatrix) {
         this.riskMatrix = riskMatrix;
+        onChange();
     }
 
     public ProjectSchedule getSchedule() {
@@ -157,5 +228,7 @@ public class Project {
 
     public void setSchedule(ProjectSchedule schedule) {
         this.schedule = schedule;
+        onChange();
     }
+
 }
