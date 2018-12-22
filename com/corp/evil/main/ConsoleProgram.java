@@ -1,3 +1,7 @@
+/**
+ * Class responsible to keep track of the current state (finite state machine of menus),
+ * input-output and hosting the project.
+ */
 public class ConsoleProgram {
 
     // constants
@@ -20,15 +24,12 @@ public class ConsoleProgram {
     private static final int PRIMARY_SAVE_EXIT = 6;
 
 
-
+    // members
     private static Project project;
     private static boolean proceed = true;
 
-    public static void main(String[] args) {
-        run();
-    }
 
-    private static int run() {
+    public static int run() {
         // set entry point for the console program
         int position = PROJECT;
 
