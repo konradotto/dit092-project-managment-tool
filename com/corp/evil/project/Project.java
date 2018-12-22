@@ -62,17 +62,6 @@ public class Project {
         onChange();
     }
 
-    public void setName(String name) {
-        if (name == null || name.equals("")) {
-            if (this.name == null) {
-                this.name = "Unnamed Project " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            }
-        } else {
-            this.name = name;
-        }
-        onChange();
-    }
-
     public void addMember(Member member) throws MemberAlreadyRegisteredException, MemberIsNullException {
         this.team.addMember(member);
         onChange();
@@ -200,6 +189,18 @@ public class Project {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String passedName) {
+        if (passedName == null || passedName.trim().equals("")) {       // make sure to only use the passedName if it has a useful value
+            // set name based on the current date if passedName and current this.name are useless
+            if (this.name == null) {
+                this.name = "Unnamed Project " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }
+        } else {
+            this.name = passedName;
+        }
+        onChange();
     }
 
     public ArrayList<Team> getTeams() {
