@@ -16,7 +16,7 @@ public class Project {
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
-    private ArrayList<Team> teams;
+    private ArrayList<Team> teams;  //TODO: decide whether we really need this...
 
     private File file;
 
@@ -140,7 +140,9 @@ public class Project {
     }
 
     /**
-     * @return
+     * Set the file the project is supposed to be saved to.
+     *
+     * @return success of setting the file.
      */
     public boolean setFile() {
         this.file = JsonReaderWriter.pickFile();
