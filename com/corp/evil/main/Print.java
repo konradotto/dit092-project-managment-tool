@@ -70,6 +70,7 @@ public class Print {
     public static int printProjectMenu() {
         sb.append("➤ 1. Print Project" + newline);
         sb.append("➤ 2. Edit Project ..." + newline);
+        sb.append("➤ 3. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -78,7 +79,7 @@ public class Print {
     public static int printEditProjectMenu() {
         sb.append("➤ 1. Update the project's name" + newline);
         sb.append("➤ 2. Update the project's end date" + newline);
-        sb.append("➤ 3. Back to the main" + newline);
+        sb.append("➤ 3. Back to the previous menu" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -131,6 +132,17 @@ public class Print {
         sb.setLength(0);
         return myScanner.readInt();
     }
+
+    public static int printEditTaskMenu(){
+        sb.append("➤ 1. Edit a task name" + newline);
+        sb.append("➤ 2. Edit a task end week" + newline);
+        sb.append("➤ 3. Edit a task end year" + newline);
+        sb.append("➤ 4. Back to the previous menu" + newline);
+        System.out.println(sb);
+        sb.setLength(0);
+        return myScanner.readInt();
+    }
+
 
     public static int printRiskMenu() {
         sb.append("Choose an option from below"+newline);
@@ -307,19 +319,6 @@ public class Print {
         }
         int j = myScanner.readInt("Choose a risk from the list: ");
         return risks.get(j);
-    }
-
-        public static Member chooseMember(Team team) {
-
-        team.getMembers();
-
-        sb.append("Choose a member to remove by enter his/her name");
-        System.out.println(sb.toString());
-
-
-        //TODO: print all members and let the user pick one
-
-        return null;
     }
 
     public static void printProject(Project project) {

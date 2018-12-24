@@ -84,7 +84,7 @@ public class Project {
     public void addTeam(Team team) throws TeamAlreadyRegisteredException, TeamIsNullException {
         if (team == null) {
             throw new TeamIsNullException("This team does not exist!");
-        } else if (teams.contains(team)) {
+        } else if ( (!teams.isEmpty()) && (teams.contains(team))) {
             throw new TeamAlreadyRegisteredException("A team with same name exists already!");
         } else {
             teams.add(team);

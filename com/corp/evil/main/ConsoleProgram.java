@@ -28,6 +28,7 @@ public class ConsoleProgram {
     private static Project project;
     private static boolean proceed = true;
 
+    //TODO error handling
 
     public static int run() {
         // set entry point for the console program
@@ -104,7 +105,8 @@ public class ConsoleProgram {
                       proceed = false;
                   }
                   break;
-              case 3://TODO Edit task menu and method
+              case 3:
+                  editTask();
                   proceed = false;
                   break;
               case 4:
@@ -160,6 +162,34 @@ public class ConsoleProgram {
             e.printStackTrace();
         }
 
+    }
+
+    public static void editTask(){
+        Activity activity = Print.readActivity();
+        do {
+            switch (Print.printEditTaskMenu()){
+
+                case 1:
+                    activity.setName(myScanner.readLine("Enter the new name: "));
+                    proceed=false;
+                    break;
+                case 2:
+                    activity.setEndWeek(myScanner.readInt("Enter the new end week: "));
+                    proceed=false;
+                    break;
+                case 3:
+                    activity.setEndYear(myScanner.readInt("Enter the new end year: "));
+                    proceed=false;
+                    break;
+                case 4:
+                    proceed=true;
+                    break;
+                default:
+                    System.out.println("Choose a valid option!");
+                    proceed = false;
+                    break;
+            }
+        }while (!proceed);
     }
 
     private static void riskManager() {
@@ -362,10 +392,6 @@ public class ConsoleProgram {
         return null;
     }
 
-
-
-
-
     private static int loadOrNewProject() {
         switch (Print.printStartMenu()) {
             case LOAD:
@@ -382,16 +408,25 @@ public class ConsoleProgram {
     }
 
     private static void projectMenu() {
-        int x;
         do {
-            x = Print.printProjectMenu();
-        } while (!(x == PRINT_PROJET || x == EDIT_PROJECT));
-
-        if (x == PRINT_PROJET) {
-            Print.printProject(project);
-        } else if (x == EDIT_PROJECT) {
-            editProject();
-        }
+            switch (Print.printProjectMenu()){
+                case 1:
+                    Print.printProject(project);
+                    proceed=false;
+                    break;
+                case 2:
+                    editProject();
+                    proceed=false;
+                    break;
+                case 3:
+                    proceed=true;
+                    break;
+                default:
+                    System.out.println("Choose a valid option!");
+                    proceed = false;
+                    break;
+            }
+        }while (!proceed);
     }
 
     public static void editProject() {
