@@ -13,7 +13,6 @@ class myScanner {
 
         return x;
     }
-
     static double readDouble(String string){
         System.out.println(string);
         while (!(input.hasNextDouble())){
@@ -45,8 +44,6 @@ class myScanner {
         input.nextLine();
         return x;
     }
-
-
 
     static void printDone(){
         System.out.println("Done!");

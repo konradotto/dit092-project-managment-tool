@@ -78,6 +78,7 @@ public class Print {
     public static int printEditProjectMenu() {
         sb.append("➤ 1. Update the project's name" + newline);
         sb.append("➤ 2. Update the project's end date" + newline);
+        sb.append("➤ 3. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -92,6 +93,7 @@ public class Print {
         sb.append("➤ 5. Remove member from the project" + newline);
         sb.append("➤ 6. Create a sub-team" + newline);
         sb.append("➤ 7. Edit a sub-team" + newline);
+        sb.append("➤ 8. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -102,6 +104,7 @@ public class Print {
         sb.append("➤ 1. Update the team's name "+newline);
         sb.append("➤ 2. Add a member"+newline);
         sb.append("➤ 3. Remove a member "+newline);
+        sb.append("➤ 4. Back to the previous menu" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -110,6 +113,7 @@ public class Print {
     public static int printEditMemberMenu() {
         sb.append("➤ 1. Update the member's name" + newline);
         sb.append("➤ 2. Update the members's salary" + newline);
+        sb.append("➤ 3. Back to the previous menu" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -122,6 +126,7 @@ public class Print {
         sb.append("➤ 4. Remove a task" + newline);
         sb.append("➤ 5. Assign a task to a team" + newline);
         sb.append("➤ 6. Update the time spent on a task" + newline);
+        sb.append("➤ 7. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -132,6 +137,7 @@ public class Print {
         sb.append("➤ 1. Print the Risk Matrix"+newline);
         sb.append("➤ 2. Add a risk"+newline);
         sb.append("➤ 3. Remove a risk"+newline);
+        sb.append("➤ 4. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
