@@ -5,52 +5,72 @@ class myScanner {
     static String readLine(String string){
         System.out.println(string);
         String x = input.nextLine();
-
-        while (x.trim().length() == 0) {
+        while (x.trim().isEmpty()) {
             System.out.println(string);
             x=input.nextLine();
         }
-
         return x;
     }
+
     static double readDouble(String string){
-        System.out.println(string);
-        while (!(input.hasNextDouble())){
+
+        boolean result;
+        double x =0;
+        do {
             System.out.println(string);
-            input.nextLine();
-        }
-        double x= input.nextDouble();
-        input.nextLine();
+            String y = input.nextLine();
+            while (y.trim().isEmpty()) {
+                System.out.println(string);
+                y=input.nextLine();
+            }
+            try {
+                x = Double.parseDouble(y);
+                return x;
+            }catch (java.lang.NumberFormatException e){
+                result =false;
+            }
+        }while (!result);
         return x;
     }
 
     static int readInt(String string){
-        System.out.println(string);
-        while (!(input.hasNextInt())){
+        boolean result;
+        int x =0;
+        do {
             System.out.println(string);
-            input.nextLine();
-        }
-        int x = input.nextInt();
-        input.nextLine();
+            String y = input.nextLine();
+            while (y.trim().isEmpty()) {
+                System.out.println(string);
+                y=input.nextLine();
+            }
+            try {
+                x = Integer.parseInt(y);
+                return x;
+            }catch (java.lang.NumberFormatException e){
+                result =false;
+            }
+        }while (!result);
         return x;
     }
 
     static int readInt(){
-        while (!(input.hasNextInt())){
+        boolean result;
+        int x =0;
+        do {
+        String y = input.nextLine();
+        while (y.trim().isEmpty()) {
             System.out.println("Please enter an integer!");
-            input.nextLine();
+            y=input.nextLine();
         }
-        int x = input.nextInt();
-        input.nextLine();
+            try {
+                 x = Integer.parseInt(y);
+                return x;
+            }catch (java.lang.NumberFormatException e){
+                System.out.println("Please enter an integer!");
+                result =false;
+            }
+        }while (!result);
         return x;
-    }
-
-    static void printDone(){
-        System.out.println("Done!");
-    }
-
-    static void nextLine(){
-        input.nextLine();
     }
 
 }

@@ -8,8 +8,8 @@ import java.util.List;
 public class Project {
 
     // constants
-    private final static int MARGIN = 3;
-    private final static String LS = System.lineSeparator();
+    private static final int MARGIN = 3;
+    private static final String LS = System.lineSeparator();
 
     // member variables
     private String name;
@@ -38,7 +38,6 @@ public class Project {
         this.setTeam(new Team(name));
         this.setRiskMatrix(new RiskMatrix());
         this.teams = new ArrayList<>();
-
         onChange();         // save all changes
     }
 
@@ -59,7 +58,7 @@ public class Project {
         this.setRiskMatrix(riskMatrix);
         this.setSchedule(schedule);
 
-        onChange();
+       onChange();
     }
 
     public void addMember(Member member) throws MemberAlreadyRegisteredException, MemberIsNullException {
@@ -84,7 +83,7 @@ public class Project {
     public void addTeam(Team team) throws TeamAlreadyRegisteredException, TeamIsNullException {
         if (team == null) {
             throw new TeamIsNullException("This team does not exist!");
-        } else if ( (!teams.isEmpty()) && (teams.contains(team))) {
+        } else if ( (teams != null) &&  (teams.contains(team))) {
             throw new TeamAlreadyRegisteredException("A team with same name exists already!");
         } else {
             teams.add(team);

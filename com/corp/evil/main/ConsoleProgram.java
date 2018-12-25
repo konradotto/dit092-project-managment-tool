@@ -30,6 +30,15 @@ public class ConsoleProgram {
 
     //TODO error handling
 
+
+    /**
+     * The process of creating a new project is interrupted by the file chooser!
+     * Although I tried to comment the onChange method in the project
+     * constructor, but that did not stop the file chooser!
+     * Konrad, if you are reading this, please turn it off for now while testing is in progress.
+     * @return
+     */
+
     public static int run() {
         // set entry point for the console program
         int position = PROJECT;
@@ -79,7 +88,7 @@ public class ConsoleProgram {
                     proceed = true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!");
+                    System.out.println("Choose a valid option!\n");
                     proceed = false;
                     break;
             }
@@ -127,7 +136,7 @@ public class ConsoleProgram {
                   break;
 
               default:
-                  System.out.println("Choose a valid option!");
+                  System.out.println("Choose a valid option!\n");
                   proceed = false;
                   break;
           }
@@ -185,7 +194,7 @@ public class ConsoleProgram {
                     proceed=true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!");
+                    System.out.println("Choose a valid option!\n");
                     proceed = false;
                     break;
             }
@@ -225,7 +234,7 @@ public class ConsoleProgram {
                     proceed=true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!");
+                    System.out.println("Choose a valid option!\n");
                     proceed = false;
                     break;
             }
@@ -236,12 +245,22 @@ public class ConsoleProgram {
         do {
             switch (Print.printTeamMenu()) {
                 case 1:
-                    System.out.println(project.getTeam().toString() + Print.newline);
+                    if (project.getTeam() != null){
+                        System.out.println(project.getTeam().toString() + Print.newline);
+
+                    }else {
+                        System.out.println("No registered members!" + Print.newline);
+                    }
                     proceed = false;
                     break;
                 case 2:
-                    for (Team team : project.getTeams()) {
-                        System.out.println(team.toString() + Print.newline);
+                    if (project.getTeams() != null){
+                        for (Team team : project.getTeams()) {
+                            System.out.println(team + Print.newline);
+                        }
+
+                    }else{
+                        System.out.println("No registered teams!" + Print.newline);
                     }
                     proceed = false;
                     break;
@@ -285,7 +304,7 @@ public class ConsoleProgram {
                     proceed = true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!");
+                    System.out.println("Choose a valid option!\n");
                     proceed = false;
                     break;
             }
@@ -308,7 +327,7 @@ public class ConsoleProgram {
                     proceed=true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!");
+                    System.out.println("Choose a valid option!\n");
                     proceed = false;
                     break;
             }
@@ -349,7 +368,7 @@ public class ConsoleProgram {
                     proceed=true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!");
+                    System.out.println("Choose a valid option!\n");
                     proceed = false;
                     break;
             }
@@ -393,17 +412,21 @@ public class ConsoleProgram {
     }
 
     private static int loadOrNewProject() {
-        switch (Print.printStartMenu()) {
-            case LOAD:
-                Print.loadProject();
-                break;
-            case NEW:
-                createProject();
-                break;
-            default:
-                proceed = false;
-                return NO_PROJECT;
-        }
+       do {
+           switch (Print.printStartMenu()) {
+               case LOAD:
+                   Print.loadProject();
+                   break;
+               case NEW:
+                   createProject();
+                   break;
+               default:
+                   System.out.println("Choose a valid option!\n");
+                   proceed = false;
+                   break;
+           }
+       }while (!proceed);
+
         return MAIN;
     }
 
@@ -422,7 +445,7 @@ public class ConsoleProgram {
                     proceed=true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!");
+                    System.out.println("Choose a valid option!\n");
                     proceed = false;
                     break;
             }
@@ -446,7 +469,7 @@ public class ConsoleProgram {
                     proceed=true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!");
+                    System.out.println("Choose a valid option!\n");
                     proceed = false;
                     break;
             }
