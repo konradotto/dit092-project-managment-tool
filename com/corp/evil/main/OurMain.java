@@ -1,5 +1,5 @@
 /**
- * Main Application only executing the ConsoleProgram
+ * Main Application for executing the ConsoleProgram
  */
 public class OurMain {
 
