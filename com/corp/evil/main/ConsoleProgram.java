@@ -28,6 +28,18 @@ public class ConsoleProgram {
     private static Project project;
     private static boolean proceed = true;
 
+    //TODO error handling
+
+
+    /**
+     * The process of creating a new project is interrupted by the file chooser!
+     * I tried to comment the onChange method in the project
+     * constructor, but that did not stop the file chooser!
+     * Konrad, if you are reading this, please turn it off for now while testing is in progress.
+     * Since we added a teams list to the Project constructor only after the
+     * broject.json was created, we need a new json project to load from.
+     * @return
+     */
 
     public static int run() {
         // set entry point for the console program
@@ -51,195 +63,376 @@ public class ConsoleProgram {
     }
 
     public static void primaryMenu() {
-        switch (Print.printPrimaryMeny()) {
-            case PRIMARY_PROJECT:
-                projectMenu();
-                break;
-            case PRIMARY_TEAM:
-                teamMenu();
-                break;
-            case PRIMARY_TASK:
-                taskManager();
-                break;
-            case PRIMARY_RISK:
-                riskManager();
-                break;
-            case PRIMARY_BUDGET:
-                project.getBudget();
-                break;
-            case PRIMARY_SAVE_EXIT:
-                // TODO save and exit method
-                // TODO loop
-                break;
-            default:
-                break;
-        }
+        do {
+            switch (Print.printPrimaryMeny()) {
+                case PRIMARY_PROJECT:
+                    projectMenu();
+                    proceed = false;
+                    break;
+                case PRIMARY_TEAM:
+                    teamMenu();
+                    proceed = false;
+                    break;
+                case PRIMARY_TASK:
+                    taskManager();
+                    proceed = false;
+                    break;
+                case PRIMARY_RISK:
+                    riskManager();
+                    proceed = false;
+                    break;
+                case PRIMARY_BUDGET:
+                    if (project.getBudget()!=null){
+                        System.out.println(project.getBudget());
+                    }
+                    else {
+                        System.out.println("No budget data yet!");
+                    }
+                    proceed = false;
+                    break;
+                case PRIMARY_SAVE_EXIT:
+                    // TODO save and exit method
+                    proceed = true;
+                    break;
+                default:
+                    System.out.println("Choose a valid option!\n");
+                    proceed = false;
+                    break;
+            }
+        }while (!proceed);
     }
 
+
+
     public static void taskManager() {
-        switch (Print.printTasksMenu()) {
-            case 1:
-                project.getSchedule().toString();
-                break;
-            case 2:
-                try {
-                    project.getSchedule().addActivity(Print.createActivity());
-                } catch (ActivityAlreadyRegisteredException e) {
-                    e.printStackTrace();
-                } catch (ActivityIsNullException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 3://TODO Edit task menu and method
-                break;
-            case 4:
-                taskRemover();
-                break;
-            case 5:
-                taskAssigner();
-                break;
-            case 6:
-                taskTimeSetter();
-                //TODO loop
-        }
+      do {
+          switch (Print.printTasksMenu()) {
+              case 1:
+                  if (project.getSchedule().getActivities()!=null) {
+                          System.out.println(project.getSchedule());
+                  }else {
+                      System.out.println("No registered tasks");
+                  }
+                  proceed = false;
+                  break;
+              case 2:
+                  try {
+                      project.getSchedule().addActivity(Print.createActivity());
+                      proceed = false;
+                  } catch (ActivityAlreadyRegisteredException e) {
+                      e.getMessage();
+                      proceed = false;
+                  } catch (ActivityIsNullException e) {
+                      e.getCause();
+                      proceed = false;
+                  }
+                  break;
+              case 3:
+                  editTask();
+                  proceed = false;
+                  break;
+              case 4:
+                  taskRemover();
+                  proceed = false;
+                  break;
+              case 5:
+                  taskAssigner();
+                  proceed = false;
+                  break;
+              case 6:
+                  taskTimeSetter();
+                  proceed = false;
+                  break;
+
+              case 7:// Back to the previous menu
+                  proceed = true;
+                  break;
+
+              default:
+                  System.out.println("Choose a valid option!\n");
+                  proceed = false;
+                  break;
+          }
+      }while (!proceed);
     }
 
     public static void taskTimeSetter() {
-        Activity task = Print.readActivity();
+
 
         // TODO logic for workOnActivty method
     }
 
-    public static void taskAssigner() {
-        Activity task = Print.readActivity();
-        Team team = Print.readTeam();
-
+    public static void taskAssigner()  {
+        Activity task = null;
         try {
-            team.addActivity(task);
-            task.setTeam(team);
-        } catch (ActivityAlreadyRegisteredException e) {
-            e.printStackTrace();
+            task = Print.readActivity();
         } catch (ActivityIsNullException e) {
-            e.printStackTrace();
+            System.out.println(e + Print.newline);
         }
+        Team team = null;
+        try {
+            team = Print.readTeam();
+        } catch (TeamIsNullException e) {
+            System.out.println(e + Print.newline);
+        }
+        try {
+                team.addActivity(task);
+                task.setTeam(team); //TODO: not sure about this line. Do we still need a team for an activity(since teams are saved separately in their list)?
+            } catch (ActivityAlreadyRegisteredException e) {
+                e.printStackTrace();
+            } catch (ActivityIsNullException e) {
+                e.printStackTrace();
+            }
     }
 
     public static void taskRemover() {
-        Activity task = Print.readActivity();
+        Activity task = null;
         try {
-            project.getSchedule().removeActivity(task);
+            task = Print.readActivity();
         } catch (ActivityIsNullException e) {
-            e.printStackTrace();
+            System.out.println(e + Print.newline);
         }
+        try {
+                project.getSchedule().removeActivity(task);
+            } catch (ActivityIsNullException e) {
+                System.out.println(e + Print.newline);
+            }
 
     }
+
+    public static void editTask(){
+        Activity activity = null;
+        try {
+            activity = Print.readActivity();
+        } catch (ActivityIsNullException e) {
+            System.out.println(e + Print.newline);
+        }
+
+            do {
+                switch (Print.printEditTaskMenu()) {
+
+                    case 1:
+                        activity.setName(myScanner.readLine("Enter the new name: "));
+                        proceed = false;
+                        break;
+                    case 2:
+                        activity.setEndWeek(myScanner.readInt("Enter the new end week: "));
+                        proceed = false;
+                        break;
+                    case 3:
+                        activity.setEndYear(myScanner.readInt("Enter the new end year: "));
+                        proceed = false;
+                        break;
+                    case 4:
+                        proceed = true;
+                        break;
+                    default:
+                        System.out.println("Choose a valid option!\n");
+                        proceed = false;
+                        break;
+                }
+            } while (!proceed);
+    }
+
+
 
     private static void riskManager() {
-        int x = Print.printRiskMenu();
-        while (!((x == 1) || (x == 2) || (x == 3))) {
-            x = Print.printRiskMenu();
-        }
-        if (x == 1) {
-            project.getRiskMatrix().toString();
-        } else if (x == 2) {
-            Risk risk = Print.createRisk();
-            try {
-                project.getRiskMatrix().addRisk(risk);
-            } catch (RiskIsNullException e) {
-                e.printStackTrace();
-            } catch (RiskAlreadyRegisteredException e) {
-                e.printStackTrace();
+        do {
+            switch (Print.printRiskMenu()){
+
+                case 1:
+                    if (project.getRiskMatrix()!=null) {
+                       System.out.println(project.getRiskMatrix().toStringText());
+                    }else {
+                        System.out.println("No registered risks!");
+                    }
+                    proceed=false;
+                    break;
+                case 2:
+                    try {
+                        project.getRiskMatrix().addRisk(Print.createRisk());
+                        proceed=false;
+                    } catch (RiskIsNullException e) {
+                        e.toString();
+                        proceed=false;
+                    } catch (RiskAlreadyRegisteredException e) {
+                        e.printStackTrace();
+                        proceed=false;
+                    }
+                    break;
+                case 3:
+                    try {
+                        project.getRiskMatrix().removeRisk(Print.readRisk());
+                        proceed=false;
+                    } catch (RiskIsNullException e) {
+                        System.out.println(e + Print.newline);
+                        proceed=false;
+                    }
+                    break;
+                case 4: //Back to previous menu
+                    proceed=true;
+                    break;
+                default:
+                    System.out.println("Choose a valid option!\n");
+                    proceed = false;
+                    break;
             }
-        } else {
-            Risk risk = Print.readRisk();
-            try {
-                project.getRiskMatrix().removeRisk(risk);
-            } catch (RiskIsNullException e) {
-                e.printStackTrace();
-            }
-        }
-        //TODO maybe a do-while instead of a while? + loop
+        }while (!proceed);
     }
 
+
+
     private static void teamMenu() {
-        switch (Print.printTeamMenu()) {
-            case 1:
-                System.out.println(project.getTeam().toString() + Print.newline);
-                break;
-            case 2:
-                for (Team team : project.getTeams()) {
-                    System.out.println(team.toString() + Print.newline);
-                }
-                break;
-            case 3:
-                Member member = Print.createMember();
-                try {
-                    project.getTeam().addMember(member);
-                } catch (MemberIsNullException e) {
-                    e.printStackTrace();
-                } catch (MemberAlreadyRegisteredException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 4:
-                editMember();
-                break;
-            case 5:
-                Member member1 = Print.readMember();
-                project.removeMember(member1);
-                break;
-            case 6:
-                Print.createTeam();
-                break;
-            case 7:
-                editTeam();
-                break;
-            default:
-                break;
-            //TODO loop
-        }
+        do {
+            switch (Print.printTeamMenu()) {
+                case 1:
+                    if (project.getTeam() != null){
+                        System.out.println(project.getTeam().toString() + Print.newline);
+
+                    }else {
+                        System.out.println("No registered members!" + Print.newline);
+                    }
+                    proceed = false;
+                    break;
+                case 2:
+                    if (project.getTeams() != null){
+                        for (Team team : project.getTeams()) {
+                            System.out.println(team + Print.newline);
+                        }
+
+                    }else{
+                        System.out.println("No registered teams!" + Print.newline);
+                    }
+                    proceed = false;
+                    break;
+                case 3:
+                    try {
+                        project.getTeam().addMember(Print.createMember());
+                        proceed = false;
+                    } catch (MemberIsNullException e) {
+                        e.printStackTrace();
+                        proceed = false;
+                    } catch (MemberAlreadyRegisteredException e) {
+                        e.printStackTrace();
+                        proceed = false;
+                    }
+                    break;
+                case 4:
+                    editMember();
+                    proceed = false;
+                    break;
+                case 5:
+
+                    try {
+                        project.getTeam().removeMember(Print.readMember());
+                    } catch (MemberIsNullException e) {
+                        System.out.println(e + Print.newline);
+                    }
+                    proceed = false;
+                    break;
+                case 6:
+                    try {
+                        project.addTeam(Print.createTeam());
+                        proceed = false;
+                    } catch (TeamAlreadyRegisteredException e) {
+                        e.printStackTrace();
+                        proceed = false;
+                    } catch (TeamIsNullException e) {
+                        e.printStackTrace();
+                        proceed = false;
+                    }
+                    break;
+                case 7:
+                    editTeam();
+                    proceed = false;
+                    break;
+                case 8://Back to previous menu
+                    proceed = true;
+                    break;
+                default:
+                    System.out.println("Choose a valid option!\n");
+                    proceed = false;
+                    break;
+            }
+        }while (!proceed);
     }
 
     private static void editMember() {
-        int x = Print.printEditMemberMenu();
-        while (!(x == 1 || x == 2)) {
-            x = Print.printEditMemberMenu();
+        Member member = null;
+        try {
+            member = Print.readMember();
+        } catch (MemberIsNullException e) {
+            System.out.println(e + Print.newline);
         }
-        Member member = Print.readMember();
-        if (x == 1) {
+        do {
+                switch (Print.printEditMemberMenu()) {
+                    case 1:
+                        member.setName(myScanner.readLine("Enter the members new name: "));
+                        proceed = false;
+                        break;
+                    case 2:
+                        member.setSALARY_PER_HOUR(myScanner.readDouble("Enter the members new salary: "));
+                        proceed = false;
+                        break;
+                    case 3:
+                        proceed = true;
+                        break;
+                    default:
+                        System.out.println("Choose a valid option!\n");
+                        proceed = false;
+                        break;
+                }
+            } while (!proceed);
 
-            member.setName(myScanner.readLine("Enter the members new name: "));
-        } else {
-            member.setSALARY_PER_HOUR(myScanner.readDouble("Enter the members new salary: "));
-        }
     }
 
     private static void editTeam() {
-        int x = Print.printEditSubTeamMenu();
-        while (!(x == 1 || x == 2 || x == 3)) {
-            x = Print.printEditSubTeamMenu();
+        Team team = null;
+        try {
+            team = Print.readTeam();
+        } catch (TeamIsNullException e) {
+            System.out.println(e + Print.newline);
         }
-        Team team = Print.readTeam();
-        if (x == 1) {
-            team.setName(myScanner.readLine("Enter the teams new name: "));
-        } else if (x == 2) {
-            Member member = Print.readMember();
-            try {
-                team.addMember(member);
-            } catch (MemberIsNullException e) {
-                e.printStackTrace();
-            } catch (MemberAlreadyRegisteredException e) {
-                e.printStackTrace();
+        do {
+            switch (Print.printEditSubTeamMenu()){
+
+                case 1:
+                    team.setName(myScanner.readLine("Enter the teams new name: "));
+                    proceed=false;
+                    break;
+                case 2:
+                    try {
+                        team.addMember(Print.readMember());
+                        proceed=false;
+                    } catch (MemberIsNullException e) {
+                        e.printStackTrace();
+                        proceed=false;
+                    } catch (MemberAlreadyRegisteredException e) {
+                        e.printStackTrace();
+                        proceed=false;
+                    }
+                    break;
+                case 3:
+                    try {
+                        team.removeMember(Print.readMember());
+                        proceed=false;
+                    } catch (MemberIsNullException e) {
+                        e.printStackTrace();
+                        proceed=false;
+                    }
+                    break;
+                case 4:
+                    proceed=true;
+                    break;
+                default:
+                    System.out.println("Choose a valid option!\n");
+                    proceed = false;
+                    break;
             }
-        } else {
-            Member member = Print.readMember();
-            try {
-                team.removeMember(member);
-            } catch (MemberIsNullException e) {
-                e.printStackTrace();
-            }
-        }
+        }while (!proceed);
     }
+
+
 
     public static Member retrieveMember(String name) {
         for (Member member : project.getTeam().getMembers()) {
@@ -277,44 +470,71 @@ public class ConsoleProgram {
         return null;
     }
 
+
+
     private static int loadOrNewProject() {
-        switch (Print.printStartMenu()) {
-            case LOAD:
-                Print.loadProject();
-                break;
-            case NEW:
-                createProject();
-                break;
-            default:
-                proceed = false;
-                return NO_PROJECT;
-        }
+       do {
+           switch (Print.printStartMenu()) {
+               case LOAD:
+                   Print.loadProject();
+                   break;
+               case NEW:
+                   createProject();
+                   break;
+               default:
+                   System.out.println("Choose a valid option!\n");
+                   proceed = false;
+                   break;
+           }
+       }while (!proceed);
+
         return MAIN;
     }
 
     private static void projectMenu() {
-        int x;
         do {
-            x = Print.printProjectMenu();
-        } while (!(x == PRINT_PROJET || x == EDIT_PROJECT));
-
-        if (x == PRINT_PROJET) {
-            Print.printProject(project);
-        } else if (x == EDIT_PROJECT) {
-            editProject();
-        }
+            switch (Print.printProjectMenu()){
+                case 1:
+                    Print.printProject(project);
+                    proceed=false;
+                    break;
+                case 2:
+                    editProject();
+                    proceed=false;
+                    break;
+                case 3:
+                    proceed=true;
+                    break;
+                default:
+                    System.out.println("Choose a valid option!\n");
+                    proceed = false;
+                    break;
+            }
+        }while (!proceed);
     }
 
     public static void editProject() {
-        int x = Print.printEditProjectMenu();
-        while (!(x == 1 || x == 2)) {
-            x = Print.printEditProjectMenu();
-        }
-        if (x == 1) {
-            project.setName(Print.enterName());
-        } else {
-            project.getSchedule().setEnd(Print.ender());
-        }
+
+        do {
+            switch (Print.printEditProjectMenu()){
+
+                case 1:
+                    project.setName(Print.enterName());
+                    proceed=false;
+                    break;
+                case 2:
+                    project.getSchedule().setEnd(Print.ender());
+                    proceed=false;
+                    break;
+                case 3:
+                    proceed=true;
+                    break;
+                default:
+                    System.out.println("Choose a valid option!\n");
+                    proceed = false;
+                    break;
+            }
+        }while (!proceed);
     }
 
     public static void setProject(Project pro) {

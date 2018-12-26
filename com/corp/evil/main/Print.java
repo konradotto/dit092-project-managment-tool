@@ -70,6 +70,7 @@ public class Print {
     public static int printProjectMenu() {
         sb.append("➤ 1. Print Project" + newline);
         sb.append("➤ 2. Edit Project ..." + newline);
+        sb.append("➤ 3. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -78,6 +79,7 @@ public class Print {
     public static int printEditProjectMenu() {
         sb.append("➤ 1. Update the project's name" + newline);
         sb.append("➤ 2. Update the project's end date" + newline);
+        sb.append("➤ 3. Back to the previous menu" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -92,6 +94,7 @@ public class Print {
         sb.append("➤ 5. Remove member from the project" + newline);
         sb.append("➤ 6. Create a sub-team" + newline);
         sb.append("➤ 7. Edit a sub-team" + newline);
+        sb.append("➤ 8. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -102,6 +105,7 @@ public class Print {
         sb.append("➤ 1. Update the team's name "+newline);
         sb.append("➤ 2. Add a member"+newline);
         sb.append("➤ 3. Remove a member "+newline);
+        sb.append("➤ 4. Back to the previous menu" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -110,6 +114,7 @@ public class Print {
     public static int printEditMemberMenu() {
         sb.append("➤ 1. Update the member's name" + newline);
         sb.append("➤ 2. Update the members's salary" + newline);
+        sb.append("➤ 3. Back to the previous menu" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -122,16 +127,29 @@ public class Print {
         sb.append("➤ 4. Remove a task" + newline);
         sb.append("➤ 5. Assign a task to a team" + newline);
         sb.append("➤ 6. Update the time spent on a task" + newline);
+        sb.append("➤ 7. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
     }
+
+    public static int printEditTaskMenu(){
+        sb.append("➤ 1. Edit a task name" + newline);
+        sb.append("➤ 2. Edit a task end week" + newline);
+        sb.append("➤ 3. Edit a task end year" + newline);
+        sb.append("➤ 4. Back to the previous menu" + newline);
+        System.out.println(sb);
+        sb.setLength(0);
+        return myScanner.readInt();
+    }
+
 
     public static int printRiskMenu() {
         sb.append("Choose an option from below"+newline);
         sb.append("➤ 1. Print the Risk Matrix"+newline);
         sb.append("➤ 2. Add a risk"+newline);
         sb.append("➤ 3. Remove a risk"+newline);
+        sb.append("➤ 4. Back to the main" + newline);
         System.out.println(sb);
         sb.setLength(0);
         return myScanner.readInt();
@@ -208,14 +226,18 @@ public class Print {
 
     }
 
-    public static Member readMember(){
+    public static Member readMember() throws MemberIsNullException {
         String option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the member's name\n2) By choosing a member from the list");
         while (!(option.equals("1") || option.equals("2"))){
             option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the member's name\n2) By choosing a member from the list");
         }
         switch (option) {
             case "1":
-                return ConsoleProgram.retrieveMember(enterName());
+                Member member = ConsoleProgram.retrieveMember(enterName());
+                if (member==null){
+                    throw new MemberIsNullException("No such member!");
+                }
+                return member;
             default:
                 return readMemberFromList();
         }
@@ -229,19 +251,25 @@ public class Print {
             System.out.println(i+") "+members.get(i).getName());
         }
         int j = myScanner.readInt("Choose a member from the list: ");
+        while (j>=members.size()){
+            j = myScanner.readInt("Choose a valid option! ");
+        }
         return members.get(j);
 
     }
 
 
-    public static Team readTeam(){
+    public static Team readTeam() throws TeamIsNullException {
         String option = myScanner.readLine("Choose how to retrieve a team:\n1) By entering the team's name\n2) By choosing a team from the list");
         while (!(option.equals("1") || option.equals("2"))){
             option = myScanner.readLine("Choose how to retrieve a team:\n1) By entering the team's name\n2) By choosing a team from the list");
         }
         switch (option) {
             case "1":
-                return ConsoleProgram.retrieveTeam(enterName());
+                Team team = ConsoleProgram.retrieveTeam(enterName());
+                if (team==null){{ throw new TeamIsNullException("No such team!"); }
+                }
+                return team;
             default:
                 return readTeamFromList();
         }
@@ -254,17 +282,24 @@ public class Print {
             System.out.println(i + ") " + teams.get(i).getName());
         }
         int j = myScanner.readInt("Choose a team from the list: ");
+        while (j>=teams.size()){
+            j = myScanner.readInt("Choose a valid option! ");
+        }
         return teams.get(j);
     }
 
-    public static Activity readActivity(){
+    public static Activity readActivity() throws ActivityIsNullException {
         String option = myScanner.readLine("Choose how to retrieve a task:\n1) By typing the task's name\n2) By choosing a task from the list");
         while (!(option.equals("1") || option.equals("2"))){
             option = myScanner.readLine("Choose how to retrieve a task:\n1) By typing the tasks's name\n2) By choosing a task from the list");
         }
         switch (option) {
             case "1":
-                return ConsoleProgram.retrieveActivity(enterName());
+                Activity activity =ConsoleProgram.retrieveActivity(enterName());
+                if (activity==null){
+                    throw new ActivityIsNullException("No such task!");
+                }
+                return activity;
             default:
               return readActivityFromList();
         }
@@ -277,17 +312,24 @@ public class Print {
             System.out.println(i + ") " + activities.get(i).getName());
         }
         int j = myScanner.readInt("Choose an activity from the list: ");
+        while (j>=activities.size()){
+            j = myScanner.readInt("Choose a valid option! ");
+        }
         return activities.get(j);
     }
 
-    public static Risk readRisk(){
+    public static Risk readRisk() throws RiskIsNullException {
         String option = myScanner.readLine("Choose how to retrieve a risk:\n1) By entering the risk's name\n2) By choosing a risk from the list");
         while (!(option.equals("1") || option.equals("2"))){
             option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the risk's name\n2) By choosing a risk from the list");
         }
         switch (option) {
             case "1":
-                return ConsoleProgram.retrieveRisk(enterName());
+                Risk risk = ConsoleProgram.retrieveRisk(enterName());
+                if (risk==null){
+                    throw new RiskIsNullException("No such risk!");
+                }
+                return risk;
             default:
                 return readRiskFromList();
         }
@@ -300,20 +342,10 @@ public class Print {
             System.out.println(i + ") " + risks.get(i).getRiskName());
         }
         int j = myScanner.readInt("Choose a risk from the list: ");
+        while (j>=risks.size()){
+            j = myScanner.readInt("Choose a valid option! ");
+        }
         return risks.get(j);
-    }
-
-        public static Member chooseMember(Team team) {
-
-        team.getMembers();
-
-        sb.append("Choose a member to remove by enter his/her name");
-        System.out.println(sb.toString());
-
-
-        //TODO: print all members and let the user pick one
-
-        return null;
     }
 
     public static void printProject(Project project) {
