@@ -2,9 +2,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class Print {
+
+    private static final int SEPARATOR_WIDTH = 25;
 
     private static final int DEFAULT = 0;
     public static final int PROJECT_LOADED = 1;
@@ -58,6 +61,11 @@ public class Print {
         return PROJECT_LOADED;
     }
 
+    /**
+     * Function starting the dialogue to create a new project.
+     *
+     * @return Integer depending on the success
+     */
     public static int startProject() {
         Project project = null;
 
@@ -66,7 +74,21 @@ public class Print {
     }
 
 
-    public static int printPrimaryMeny() {
+    public static int exitProgram() {
+        sb.append(String.join("", Collections.nCopies(SEPARATOR_WIDTH, "*")) + newline);
+        sb.append("The Console Application is being terminated." + newline);
+        sb.append("All changes made to the project are being saved." + newline);
+        sb.append(newline);
+        sb.append("Thank you for trusting us with your project!" + newline);
+        sb.append("This application is brought to you by Evil Corp" + newline);
+        sb.append(String.join("", Collections.nCopies(SEPARATOR_WIDTH, "*")));
+
+        printBuffer();
+        return 0;
+    }
+
+
+    public static int printPrimaryMenu() {
         // Specify String representation of primary menu
         sb.append("Choose an option from below" + newline);
         sb.append("➤ 1. Project" + newline);
@@ -76,9 +98,7 @@ public class Print {
         sb.append("➤ 5. Budget" + newline);
         sb.append("➤ 6. Save and Exit" + newline);
 
-        out.println(sb);
-        sb.setLength(0);
-
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -86,8 +106,8 @@ public class Print {
         sb.append("➤ 1. Print Project" + newline);
         sb.append("➤ 2. Edit Project ..." + newline);
         sb.append("➤ 3. Back to the main" + newline);
-        System.out.println(sb);
-        sb.setLength(0);
+
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -95,8 +115,8 @@ public class Print {
         sb.append("➤ 1. Update the project's name" + newline);
         sb.append("➤ 2. Update the project's end date" + newline);
         sb.append("➤ 3. Back to the previous menu" + newline);
-        System.out.println(sb);
-        sb.setLength(0);
+
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -110,8 +130,8 @@ public class Print {
         sb.append("➤ 6. Create a sub-team" + newline);
         sb.append("➤ 7. Edit a sub-team" + newline);
         sb.append("➤ 8. Back to the main" + newline);
-        System.out.println(sb);
-        sb.setLength(0);
+
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -121,8 +141,8 @@ public class Print {
         sb.append("➤ 2. Add a member"+newline);
         sb.append("➤ 3. Remove a member "+newline);
         sb.append("➤ 4. Back to the previous menu" + newline);
-        System.out.println(sb);
-        sb.setLength(0);
+
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -130,8 +150,8 @@ public class Print {
         sb.append("➤ 1. Update the member's name" + newline);
         sb.append("➤ 2. Update the members's salary" + newline);
         sb.append("➤ 3. Back to the previous menu" + newline);
-        System.out.println(sb);
-        sb.setLength(0);
+
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -143,8 +163,8 @@ public class Print {
         sb.append("➤ 5. Assign a task to a team" + newline);
         sb.append("➤ 6. Update the time spent on a task" + newline);
         sb.append("➤ 7. Back to the main" + newline);
-        System.out.println(sb);
-        sb.setLength(0);
+
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -153,8 +173,8 @@ public class Print {
         sb.append("➤ 2. Edit a task end week" + newline);
         sb.append("➤ 3. Edit a task end year" + newline);
         sb.append("➤ 4. Back to the previous menu" + newline);
-        System.out.println(sb);
-        sb.setLength(0);
+
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -165,8 +185,8 @@ public class Print {
         sb.append("➤ 2. Add a risk"+newline);
         sb.append("➤ 3. Remove a risk"+newline);
         sb.append("➤ 4. Back to the main" + newline);
-        System.out.println(sb);
-        sb.setLength(0);
+
+        printBuffer();
         return myScanner.readInt();
     }
 
@@ -377,6 +397,11 @@ public class Print {
 
     public static void println(String s) {
         out.println(s);
+    }
+
+    private static void printBuffer() {
+        out.println(sb);        // print buffer
+        sb.setLength(0);        // empty buffer
     }
 }
 

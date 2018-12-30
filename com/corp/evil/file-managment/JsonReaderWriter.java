@@ -54,7 +54,9 @@ public final class JsonReaderWriter {
         frame.setAlwaysOnTop(true);
         frame.requestFocus();
         chooser.showOpenDialog(frame);
+
         File jsonFile = chooser.getSelectedFile();
+
         return fromJsonFile(jsonFile, type);
     }
 
@@ -64,6 +66,9 @@ public final class JsonReaderWriter {
      *  @return String containing all characters of the passed file
      */
     private static String readFile(File f, Charset encoding) throws IOException {
+        if (f == null) {
+            throw new IOException("Reading from a NULL-file is not possible.");
+        }
         byte[] encoded = Files.readAllBytes(Paths.get(f.getPath()));
         return new String(encoded, encoding);
     }

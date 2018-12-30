@@ -9,6 +9,7 @@ public class ConsoleProgram {
 
     private static final int PROJECT = 1;
     private static final int MAIN = 2;
+    private static final int END = 3;
     private static final int SUCCESS = 42;
     private static final int LOAD = 1;
     private static final int NEW = 2;
@@ -49,8 +50,11 @@ public class ConsoleProgram {
                     position = loadOrNewProject();
                     break;
                 case MAIN:
-                    primaryMenu();
-
+                    position = primaryMenu();
+                    break;
+                case END:
+                    endConsoleProgram();
+                    proceed = false;
                     break;
                 default:
                     break;
@@ -61,7 +65,9 @@ public class ConsoleProgram {
     }
 
     /**
-     * @return
+     * Function to load an existing project or create a new one.
+     *
+     * @return next point in the program to continue from
      */
     private static int loadOrNewProject() {
         int next = MAIN;
@@ -87,44 +93,44 @@ public class ConsoleProgram {
     }
 
 
-    public static void primaryMenu() {
-        do {
-            switch (Print.printPrimaryMeny()) {
-                case PRIMARY_PROJECT:
-                    projectMenu();
-                    proceed = false;
-                    break;
-                case PRIMARY_TEAM:
-                    teamMenu();
-                    proceed = false;
-                    break;
-                case PRIMARY_TASK:
-                    taskManager();
-                    proceed = false;
-                    break;
-                case PRIMARY_RISK:
-                    riskManager();
-                    proceed = false;
-                    break;
-                case PRIMARY_BUDGET:
-                    if (project.getBudget()!=null){
-                        System.out.println(project.getBudget());
-                    }
-                    else {
-                        System.out.println("No budget data yet!");
-                    }
-                    proceed = false;
-                    break;
-                case PRIMARY_SAVE_EXIT:
-                    // TODO save and exit method
-                    proceed = true;
-                    break;
-                default:
-                    System.out.println("Choose a valid option!\n");
-                    proceed = false;
-                    break;
-            }
-        }while (!proceed);
+    public static int primaryMenu() {
+        int next = MAIN;
+        switch (Print.printPrimaryMenu()) {
+            case PRIMARY_PROJECT:
+                projectMenu();
+                break;
+            case PRIMARY_TEAM:
+                teamMenu();
+                break;
+            case PRIMARY_TASK:
+                taskManager();
+                proceed = false;
+                break;
+            case PRIMARY_RISK:
+                riskManager();
+                break;
+            case PRIMARY_BUDGET:
+                if (project.getBudget() != null) {
+                    System.out.println(project.getBudget());
+                } else {
+                    System.out.println("No budget data yet!");
+                }
+                break;
+            case PRIMARY_SAVE_EXIT:
+                next = END;
+                break;
+            default:
+                System.out.println("Choose a valid option!\n");
+                next = MAIN;
+                break;
+        }
+        return next;
+    }
+
+
+    private static void endConsoleProgram() {
+        Print.exitProgram();
+        project.saveProject();
     }
 
 
