@@ -233,4 +233,20 @@ public class Project {
         onChange();
     }
 
+    /**
+     * Method to test whether a project actually is a valid project.
+     *
+     * @return
+     */
+    public boolean isProject() {
+        boolean isProject = true;
+
+        try {
+            getName().length();
+        } catch (Exception e) {
+            isProject = false;
+        }
+        return isProject;
+    }
+
 }

@@ -7,9 +7,10 @@ import java.util.Comparator;
 public class Print {
 
     private static final int DEFAULT = 0;
-    private static final int PROJECT_LOADED = 1;
+    public static final int PROJECT_LOADED = 1;
     private static final int IO_EXCEPTION = -1;
     private static final int PROJECT_STARTED = 2;
+    private static final int NOT_A_PROJECT = -2;
 
     // reasons to quit
     private static final int NO_PROJECT = 1;
@@ -18,8 +19,12 @@ public class Print {
     public static String newline = System.lineSeparator();
     private static final PrintStream out = System.out;
 
+    /**
+     * Function printing the StartMenu and reading the user's choice.
+     *
+     * @return Integer value entered by the user
+     */
     public static int printStartMenu() {
-
         sb.append("Welcome to the Project Planning Software of Evil Corp" + newline);
         sb.append("Choose one of the following options" + newline);
         sb.append("➤ 1. Load a existing project" + newline);
@@ -31,12 +36,22 @@ public class Print {
         return myScanner.readInt();
     }
 
+
+    /**
+     * Function to choose a file and attempt to load a project from it.
+     *
+     * @return value depending on the success of the attempt
+     */
     public static int loadProject() {
         Project project;
         try {
             project = JsonReaderWriter.load(Project.class);
         } catch (IOException e) {
             return IO_EXCEPTION;
+        }
+
+        if (!project.isProject()) {
+            return NOT_A_PROJECT;
         }
 
         ConsoleProgram.setProject(project);
@@ -358,6 +373,10 @@ public class Print {
         // TODO: print options to chose the activity to be removed
 
         return null;
+    }
+
+    public static void println(String s) {
+        out.println(s);
     }
 }
 

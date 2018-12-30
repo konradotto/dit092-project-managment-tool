@@ -4,7 +4,7 @@
  */
 public class ConsoleProgram {
 
-    // constants
+    // status constants
     private static final int NO_PROJECT = -1;
 
     private static final int PROJECT = 1;
@@ -23,6 +23,8 @@ public class ConsoleProgram {
     private static final int PRIMARY_BUDGET = 5;
     private static final int PRIMARY_SAVE_EXIT = 6;
 
+    // result constants
+    private static final int PROJECT_CREATED = 1;
 
     // members
     private static Project project;
@@ -30,17 +32,13 @@ public class ConsoleProgram {
 
     //TODO error handling
 
-
     /**
-     * The process of creating a new project is interrupted by the file chooser!
-     * I tried to comment the onChange method in the project
-     * constructor, but that did not stop the file chooser!
-     * Konrad, if you are reading this, please turn it off for now while testing is in progress.
-     * Since we added a teams list to the Project constructor only after the
-     * broject.json was created, we need a new json project to load from.
-     * @return
+     * Function to run the ConsoleProgram.
+     * Start by choosing a project.
+     * Afterwards the main menu is entered and looped.
+     *
+     * @return value depending on whether the program has been completed without complications
      */
-
     public static int run() {
         // set entry point for the console program
         int position = PROJECT;
@@ -59,8 +57,35 @@ public class ConsoleProgram {
             }
         } while (proceed);
 
-        return SUCCESS;
+        return SUCCESS;     // return success after finishing the program
     }
+
+    /**
+     * @return
+     */
+    private static int loadOrNewProject() {
+        int next = MAIN;
+        switch (Print.printStartMenu()) {
+            case LOAD:
+                if (Print.loadProject() != Print.PROJECT_LOADED) {
+                    next = PROJECT;
+                    Print.println("Loading the Project failed. Try again!" + Print.newline);
+                }
+                break;
+            case NEW:
+                if (!(createProject() == PROJECT_CREATED)) {
+                    next = PROJECT;
+                }
+                break;
+            default:
+                Print.println("Choose a valid option!" + Print.newline);
+                next = PROJECT;
+                break;
+        }
+
+        return next;
+    }
+
 
     public static void primaryMenu() {
         do {
@@ -470,27 +495,6 @@ public class ConsoleProgram {
         return null;
     }
 
-
-
-    private static int loadOrNewProject() {
-       do {
-           switch (Print.printStartMenu()) {
-               case LOAD:
-                   Print.loadProject();
-                   break;
-               case NEW:
-                   createProject();
-                   break;
-               default:
-                   System.out.println("Choose a valid option!\n");
-                   proceed = false;
-                   break;
-           }
-       }while (!proceed);
-
-        return MAIN;
-    }
-
     private static void projectMenu() {
         do {
             switch (Print.printProjectMenu()){
@@ -545,8 +549,9 @@ public class ConsoleProgram {
         return ConsoleProgram.project;
     }
 
-    public static void createProject() {
+    private static int createProject() {
         setProject(Print.createProject());
+        return PROJECT_CREATED;
     }
 
 
