@@ -134,6 +134,7 @@ public class Team {
             StringBuilder sb = new StringBuilder();
             String newline = System.lineSeparator();
             if (members.isEmpty()) {
+                sb.append("Team: " +getName());
                 sb.append("There are no members registered in this team yet." + newline);
             } else {
 

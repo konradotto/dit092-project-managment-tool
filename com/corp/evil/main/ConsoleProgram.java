@@ -150,7 +150,7 @@ public class ConsoleProgram {
               case 2:
                   try {
                       project.getSchedule().addActivity(Print.createActivity());
-                      //TODO the line above is throwing a nullpointerexception
+                      //TODO: after creating a new project, the line above is throwing a nullpointerexception
                       proceed = false;
                   } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
                       Print.println(e+ Print.newline);
