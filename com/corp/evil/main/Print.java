@@ -192,8 +192,14 @@ public class Print {
     public static Activity createActivity(){
         String name = myScanner.readLine("Enter the name of the task: ");
         int startWeek = myScanner.readInt("Enter the start week: ");
+        while (!checkWeeks(startWeek)){
+            startWeek = myScanner.readInt("Enter the start week: ");
+        }
         int startYear = myScanner.readInt("Enter the start Year: ");
         int endWeek = myScanner.readInt("Enter the end week: ");
+        while (!checkWeeks(endWeek)){
+            endWeek = myScanner.readInt("Enter the start week: ");
+        }
         int endYear = myScanner.readInt("Enter the end year: ");
 
         return new Activity(name, startWeek, startYear, endWeek, endYear);
@@ -217,9 +223,15 @@ public class Print {
     public static Project createProject(){
         String name = myScanner.readLine("Please enter the name of your new project:");
         int startYear = myScanner.readInt("Please enter the start year of your project.");
-        int endYear = myScanner.readInt("Please enter the end year of your project.");
         int startWeek = myScanner.readInt("Please enter the start week of your project.");
+        while (!checkWeeks(startWeek)){
+            startWeek = myScanner.readInt("Please enter the start week of your project.");
+        }
+        int endYear = myScanner.readInt("Please enter the end year of your project.");
         int endWeek = myScanner.readInt("Please enter the end week of your project.");
+        while (!checkWeeks(endWeek)){
+            endWeek = myScanner.readInt("Please enter the end week of your project.");
+        }
 
         ProjectSchedule schedule = new ProjectSchedule(startYear, startWeek, endYear, endWeek);
 
@@ -236,6 +248,9 @@ public class Print {
     public static LocalDateTime ender(){
         int endYear = myScanner.readInt("Please enter the end year of your project.");
         int endWeek = myScanner.readInt("Please enter the end week of your project.");
+        while (!checkWeeks(endWeek)){
+            endWeek = myScanner.readInt("Please enter the end week of your project.");
+        }
         LocalDateTime date = ProjectSchedule.getLocalDateTime(endYear, endWeek, ProjectSchedule.LAST_WORKDAY, ProjectSchedule.DAY_END_HOUR);
         return date;
     }
@@ -278,8 +293,11 @@ public class Print {
     }
 
 
-    public static Member readMemberFromList(){
+    public static Member readMemberFromList() throws MemberIsNullException {
         ArrayList<Member> members = ConsoleProgram.getProject().getTeam().getMembers();
+        if (members.isEmpty()){
+            throw new MemberIsNullException("No registered members!");
+        }
         members.sort(Comparator.comparing(Member::getName));
         for (int i = 0; i<members.size(); i++){
             System.out.println(i+") "+members.get(i).getName());
@@ -309,8 +327,11 @@ public class Print {
         }
     }
 
-    public static Team readTeamFromList() {
+    public static Team readTeamFromList() throws TeamIsNullException {
         ArrayList<Team> teams = ConsoleProgram.getProject().getTeams();
+        if (teams.isEmpty()){
+            throw new TeamIsNullException("No registered teams!");
+        }
         teams.sort(Comparator.comparing(Team::getName));
         for (int i = 0; i < teams.size(); i++) {
             System.out.println(i + ") " + teams.get(i).getName());
@@ -339,8 +360,11 @@ public class Print {
         }
     }
 
-    public static Activity readActivityFromList() {
+    public static Activity readActivityFromList() throws ActivityIsNullException {
         ArrayList<Activity> activities = ConsoleProgram.getProject().getSchedule().getActivities();
+        if (activities.isEmpty()){
+            throw new ActivityIsNullException("No registered tasks!");
+        }
         activities.sort(Comparator.comparing(Activity::getName));
         for (int i = 0; i < activities.size(); i++) {
             System.out.println(i + ") " + activities.get(i).getName());
@@ -369,8 +393,11 @@ public class Print {
         }
     }
 
-    public static Risk readRiskFromList() {
+    public static Risk readRiskFromList() throws RiskIsNullException {
         ArrayList<Risk> risks = ConsoleProgram.getProject().getRiskMatrix().getRisks();
+        if (risks.isEmpty()){
+            throw new RiskIsNullException("No registered risks!");
+        }
         risks.sort(Comparator.comparing(Risk::getRiskName));
         for (int i = 0; i < risks.size(); i++) {
             System.out.println(i + ") " + risks.get(i).getRiskName());
@@ -387,13 +414,6 @@ public class Print {
     }
 
 
-    public static Activity removeActivity() {
-
-        // TODO: print options to chose the activity to be removed
-
-        return null;
-    }
-
     public static void println(String s) {
         out.println(s);
     }
@@ -402,5 +422,21 @@ public class Print {
         out.println(sb);        // print buffer
         sb.setLength(0);        // empty buffer
     }
+
+    private static boolean checkWeeks(int weeks){
+
+        if (weeks>52){
+            println("The year consists of 52 weeks only!"+newline);
+            return false;
+        }
+        else if (weeks<1){
+            println("The first week of the year is week 1!"+newline);
+            return false;
+        }
+        return true;
+    }
+
+
+
 }
 

@@ -33,6 +33,7 @@ public class ConsoleProgram {
 
     //TODO error handling
 
+
     /**
      * Function to run the ConsoleProgram.
      * Start by choosing a project.
@@ -110,10 +111,10 @@ public class ConsoleProgram {
                 riskManager();
                 break;
             case PRIMARY_BUDGET:
-                if (project.getBudget() != null) {
-                    System.out.println(project.getBudget());
-                } else {
+                if (project.getBudget().isEmpty()) {
                     System.out.println("No budget data yet!");
+                } else {
+                    System.out.println(project.getBudget());
                 }
                 break;
             case PRIMARY_SAVE_EXIT:
@@ -139,22 +140,20 @@ public class ConsoleProgram {
       do {
           switch (Print.printTasksMenu()) {
               case 1:
-                  if (project.getSchedule().getActivities()!=null) {
-                          System.out.println(project.getSchedule());
-                  }else {
-                      System.out.println("No registered tasks");
+                  if (project.getSchedule().getActivities().isEmpty()) {
+                      System.out.println("No registered tasks"+Print.newline);
+                  } else {
+                      System.out.println(project.getSchedule());
                   }
                   proceed = false;
                   break;
               case 2:
                   try {
                       project.getSchedule().addActivity(Print.createActivity());
+                      //TODO the line above is throwing a nullpointerexception
                       proceed = false;
-                  } catch (ActivityAlreadyRegisteredException e) {
-                      e.getMessage();
-                      proceed = false;
-                  } catch (ActivityIsNullException e) {
-                      e.getCause();
+                  } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
+                      Print.println(e+ Print.newline);
                       proceed = false;
                   }
                   break;
@@ -193,52 +192,55 @@ public class ConsoleProgram {
         // TODO logic for workOnActivty method
     }
 
-    public static void taskAssigner()  {
-        Activity task = null;
+    public static boolean taskAssigner()  {
+        Activity task;
         try {
             task = Print.readActivity();
         } catch (ActivityIsNullException e) {
-            System.out.println(e + Print.newline);
+            Print.println(e+ Print.newline);
+            return false;
         }
-        Team team = null;
+        Team team;
         try {
             team = Print.readTeam();
         } catch (TeamIsNullException e) {
-            System.out.println(e + Print.newline);
+            Print.println(e+ Print.newline);
+            return false;
         }
         try {
                 team.addActivity(task);
                 task.setTeam(team); //TODO: not sure about this line. Do we still need a team for an activity(since teams are saved separately in their list)?
-            } catch (ActivityAlreadyRegisteredException e) {
-                e.printStackTrace();
-            } catch (ActivityIsNullException e) {
-                e.printStackTrace();
+            } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
+            Print.println(e+ Print.newline);
+            return false;
             }
+        return false;
     }
 
-    public static void taskRemover() {
-        Activity task = null;
+    public static boolean taskRemover() {
+        Activity task;
         try {
             task = Print.readActivity();
         } catch (ActivityIsNullException e) {
-            System.out.println(e + Print.newline);
+            Print.println(e+ Print.newline);
+            return false;
         }
         try {
-                project.getSchedule().removeActivity(task);
-            } catch (ActivityIsNullException e) {
-                System.out.println(e + Print.newline);
+            project.getSchedule().removeActivity(task);
+        } catch (ActivityIsNullException e) {
+            Print.println(e+ Print.newline);
             }
-
+        return false;
     }
 
-    public static void editTask(){
+    public static boolean editTask(){
         Activity activity = null;
         try {
             activity = Print.readActivity();
         } catch (ActivityIsNullException e) {
-            System.out.println(e + Print.newline);
+            Print.println(e+ Print.newline);
+            return false;
         }
-
             do {
                 switch (Print.printEditTaskMenu()) {
 
@@ -263,6 +265,7 @@ public class ConsoleProgram {
                         break;
                 }
             } while (!proceed);
+            return false;
     }
 
 
@@ -272,10 +275,10 @@ public class ConsoleProgram {
             switch (Print.printRiskMenu()){
 
                 case 1:
-                    if (project.getRiskMatrix()!=null) {
-                       System.out.println(project.getRiskMatrix().toStringText());
-                    }else {
+                    if (project.getRiskMatrix().getRisks().isEmpty()) {
                         System.out.println("No registered risks!");
+                    } else {
+                        System.out.println(project.getRiskMatrix().toStringText());
                     }
                     proceed=false;
                     break;
@@ -283,11 +286,8 @@ public class ConsoleProgram {
                     try {
                         project.getRiskMatrix().addRisk(Print.createRisk());
                         proceed=false;
-                    } catch (RiskIsNullException e) {
-                        e.toString();
-                        proceed=false;
-                    } catch (RiskAlreadyRegisteredException e) {
-                        e.printStackTrace();
+                    } catch (RiskIsNullException | RiskAlreadyRegisteredException e) {
+                        Print.println(e+ Print.newline);
                         proceed=false;
                     }
                     break;
@@ -296,7 +296,7 @@ public class ConsoleProgram {
                         project.getRiskMatrix().removeRisk(Print.readRisk());
                         proceed=false;
                     } catch (RiskIsNullException e) {
-                        System.out.println(e + Print.newline);
+                        Print.println(e+ Print.newline);
                         proceed=false;
                     }
                     break;
@@ -317,22 +317,21 @@ public class ConsoleProgram {
         do {
             switch (Print.printTeamMenu()) {
                 case 1:
-                    if (project.getTeam() != null){
+                    if (project.getTeam().getMembers().isEmpty()) {
+                        System.out.println("No registered members!" + Print.newline);
+                    } else {
                         System.out.println(project.getTeam().toString() + Print.newline);
 
-                    }else {
-                        System.out.println("No registered members!" + Print.newline);
                     }
                     proceed = false;
                     break;
                 case 2:
-                    if (project.getTeams() != null){
+                    if (project.getTeams().isEmpty()) {
+                        System.out.println("No registered teams!" + Print.newline);
+                    } else {
                         for (Team team : project.getTeams()) {
                             System.out.println(team + Print.newline);
                         }
-
-                    }else{
-                        System.out.println("No registered teams!" + Print.newline);
                     }
                     proceed = false;
                     break;
@@ -358,6 +357,7 @@ public class ConsoleProgram {
                         project.getTeam().removeMember(Print.readMember());
                     } catch (MemberIsNullException e) {
                         System.out.println(e + Print.newline);
+                        proceed = false;
                     }
                     proceed = false;
                     break;
@@ -388,12 +388,13 @@ public class ConsoleProgram {
         }while (!proceed);
     }
 
-    private static void editMember() {
-        Member member = null;
+    private static boolean editMember() {
+        Member member;
         try {
             member = Print.readMember();
         } catch (MemberIsNullException e) {
             System.out.println(e + Print.newline);
+            return false;
         }
         do {
                 switch (Print.printEditMemberMenu()) {
@@ -414,15 +415,16 @@ public class ConsoleProgram {
                         break;
                 }
             } while (!proceed);
-
+        return false;
     }
 
-    private static void editTeam() {
-        Team team = null;
+    private static boolean editTeam() {
+        Team team;
         try {
             team = Print.readTeam();
         } catch (TeamIsNullException e) {
-            System.out.println(e + Print.newline);
+            Print.println(e+ Print.newline);
+            return false;
         }
         do {
             switch (Print.printEditSubTeamMenu()){
@@ -435,11 +437,8 @@ public class ConsoleProgram {
                     try {
                         team.addMember(Print.readMember());
                         proceed=false;
-                    } catch (MemberIsNullException e) {
-                        e.printStackTrace();
-                        proceed=false;
-                    } catch (MemberAlreadyRegisteredException e) {
-                        e.printStackTrace();
+                    } catch (MemberIsNullException | MemberAlreadyRegisteredException e) {
+                       Print.println(e+ Print.newline);
                         proceed=false;
                     }
                     break;
@@ -448,7 +447,7 @@ public class ConsoleProgram {
                         team.removeMember(Print.readMember());
                         proceed=false;
                     } catch (MemberIsNullException e) {
-                        e.printStackTrace();
+                        Print.println(e+ Print.newline);
                         proceed=false;
                     }
                     break;
@@ -461,6 +460,7 @@ public class ConsoleProgram {
                     break;
             }
         }while (!proceed);
+        return false;
     }
 
 
@@ -500,6 +500,8 @@ public class ConsoleProgram {
         }
         return null;
     }
+
+
 
     private static void projectMenu() {
         do {
