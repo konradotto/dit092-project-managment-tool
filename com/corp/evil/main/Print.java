@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
@@ -7,7 +8,7 @@ import java.util.Comparator;
 
 public class Print {
 
-    private static final int SEPARATOR_WIDTH = 25;
+    private static final int SEPARATOR_WIDTH = 50;
 
     private static final int DEFAULT = 0;
     public static final int PROJECT_LOADED = 1;
@@ -30,11 +31,10 @@ public class Print {
     public static int printStartMenu() {
         sb.append("Welcome to the Project Planning Software of Evil Corp" + newline);
         sb.append("Choose one of the following options" + newline);
-        sb.append("➤ 1. Load a existing project" + newline);
+        sb.append("➤ 1. Load an existing project" + newline);
         sb.append("➤ 2. Create a new project");
 
-        out.println(sb);
-        sb.setLength(0);
+        printBuffer();
 
         return myScanner.readInt();
     }
@@ -57,6 +57,11 @@ public class Print {
             return NOT_A_PROJECT;
         }
 
+        int changeFile = JOptionPane.showConfirmDialog(null, "Do you want to change the save-path?",
+                "Warning", JOptionPane.YES_NO_OPTION);
+        if (changeFile == JOptionPane.YES_OPTION) {
+            project.setFile();
+        }
         ConsoleProgram.setProject(project);
         return PROJECT_LOADED;
     }
@@ -255,9 +260,9 @@ public class Print {
     }
 
     public static Team createTeam() {
-     String name = myScanner.readLine("Enter the name of the team: ");
-            Team team = new Team(name);
-            return team;
+        String name = myScanner.readLine("Enter the name of the team: ");
+        Team team = new Team(name);
+        return team;
 
     }
 
@@ -282,7 +287,7 @@ public class Print {
     public static Member readMemberFromList(){
         ArrayList<Member> members = ConsoleProgram.getProject().getTeam().getMembers();
         members.sort(Comparator.comparing(Member::getName));
-        for (int i = 0; i<members.size();i++){
+        for (int i = 0; i<members.size(); i++){
             System.out.println(i+") "+members.get(i).getName());
         }
         int j = myScanner.readInt("Choose a member from the list: ");
@@ -336,7 +341,7 @@ public class Print {
                 }
                 return activity;
             default:
-              return readActivityFromList();
+                return readActivityFromList();
         }
     }
 

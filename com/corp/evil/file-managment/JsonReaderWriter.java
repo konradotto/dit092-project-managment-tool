@@ -2,7 +2,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -16,23 +16,16 @@ public final class JsonReaderWriter {
 
     public final static Charset STANDARD_ENCODING = StandardCharsets.UTF_8;
 
-    private final static FileFilter filter = new FileFilter() {
+    private final static FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON FILES", "json");
 
-        @Override
-        public boolean accept(File file) {
-            if (file.isDirectory()) {
-                return false;
-            } else {
-                String filename = file.getName().toLowerCase();
-                return filename.endsWith(".json");
-            }
-        }
+    private static JFileChooser chooser;
 
-        @Override
-        public String getDescription() {
-            return "JSON Files (*.json)";
-        }
-    };
+    static {
+        chooser = new JFileChooser();
+
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileFilter(filter);
+    }
 
     private final static Frame frame = new Frame();
 
@@ -44,19 +37,19 @@ public final class JsonReaderWriter {
         return save(classInstance, pickFile());
     }
 
-    public static <T> T load(Class<T> type) throws IOException {
-        JFileChooser chooser = new JFileChooser();
+    public static void readyFileChooser() {
         chooser.setCurrentDirectory(new File("."));
-        chooser.setDialogTitle("select a JSON-project to load");
-
-        chooser.setFileFilter(filter);
         frame.toFront();
         frame.setAlwaysOnTop(true);
         frame.requestFocus();
+    }
+
+    public static <T> T load(Class<T> type) throws IOException {
+        readyFileChooser();
+        chooser.setDialogTitle("select a JSON-project to load");
         chooser.showOpenDialog(frame);
 
         File jsonFile = chooser.getSelectedFile();
-
         return fromJsonFile(jsonFile, type);
     }
 
@@ -74,13 +67,20 @@ public final class JsonReaderWriter {
     }
 
     public static File pickFile() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File("."));
-        chooser.setDialogTitle("select a JSON-project to load");
-        chooser.setFileFilter(filter);
+        readyFileChooser();
+        chooser.setDialogTitle("pick a JSON-File to save to");
 
         chooser.showSaveDialog(frame);
-        return chooser.getSelectedFile();
+
+        File file = chooser.getSelectedFile();
+
+        // make sure the file ends on <.json>
+        String filename = file.getAbsolutePath();
+        if (!filename.endsWith(".json")) {
+            file = new File(filename + ".json");
+        }
+
+        return file;
     }
 
     public static boolean write(String jsonText, File file) {
