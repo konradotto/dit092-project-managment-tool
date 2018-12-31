@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -58,7 +59,7 @@ public class Project {
         this.setRiskMatrix(riskMatrix);
         this.setSchedule(schedule);
 
-       onChange();
+        onChange();
     }
 
     public void addMember(Member member) throws MemberAlreadyRegisteredException, MemberIsNullException {
@@ -247,6 +248,15 @@ public class Project {
             isProject = false;
         }
         return isProject;
+    }
+
+
+    public void offerFileChange() {
+        int changeFile = JOptionPane.showConfirmDialog(null, "Do you want to change the save-path?",
+                "Warning", JOptionPane.YES_NO_OPTION);
+        if (changeFile == JOptionPane.YES_OPTION) {
+            setFile();
+        }
     }
 
 }

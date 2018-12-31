@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
@@ -56,12 +55,7 @@ public class Print {
         if (!project.isProject()) {
             return NOT_A_PROJECT;
         }
-
-        int changeFile = JOptionPane.showConfirmDialog(null, "Do you want to change the save-path?",
-                "Warning", JOptionPane.YES_NO_OPTION);
-        if (changeFile == JOptionPane.YES_OPTION) {
-            project.setFile();
-        }
+        project.offerFileChange();
         ConsoleProgram.setProject(project);
         return PROJECT_LOADED;
     }
