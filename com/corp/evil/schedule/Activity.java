@@ -16,8 +16,6 @@ public class Activity {
     private double costOfWorkScheduled;
     private double costOfWorkPerformed;
     private double percentCompleted;
-    private int num;
-
     private Map<Member, Long> timeSpent;
 
 
@@ -35,9 +33,6 @@ public class Activity {
         this.percentCompleted = 0.0;
         this.startYear = startYear;
         this.endYear = endYear;
-
-        this.num = 0;
-
         this.timeSpent = new TreeMap<Member, Long>();
 
         try {
@@ -49,17 +44,10 @@ public class Activity {
         }
     }
 
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-
 
 //TODO: activity constructor without team
+//TODO: activity toString without a team
+
 
     //Accessor methods
     public int getDuration() {

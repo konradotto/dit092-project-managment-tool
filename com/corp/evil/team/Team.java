@@ -47,6 +47,7 @@ public class Team {
 
     public void removeMember(Member member)throws MemberIsNullException {
         if (member == null) { throw new MemberIsNullException("This member does not exist!"); }
+
         members.remove(member);
     }
 

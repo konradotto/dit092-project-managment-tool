@@ -156,7 +156,7 @@ public class Project {
         sb.append(schedule);
         sb.append(LS + LS);
 
-        sb.append(riskMatrix);
+        sb.append(riskMatrix.toStringText());
 
         return sb.toString();
     }
