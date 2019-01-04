@@ -74,13 +74,15 @@ public class Print {
     }
 
 
-    public static int exitProgram() {
+    public static int exitProgram(boolean projectUsed) {
         sb.append(String.join("", Collections.nCopies(SEPARATOR_WIDTH, "*")) + newline);
         sb.append("The Console Application is being terminated." + newline);
-        sb.append("All changes made to the project are being saved." + newline);
-        sb.append(newline);
-        sb.append("Thank you for trusting us with your project!" + newline);
-        sb.append("This application is brought to you by Evil Corp" + newline);
+        if (projectUsed) {
+            sb.append("All changes made to the project are being saved." + newline);
+            sb.append(newline);
+            sb.append("Thank you for trusting us with your project!" + newline);
+        }
+        sb.append("This application is brought to you by Evil Corp." + newline);
         sb.append(String.join("", Collections.nCopies(SEPARATOR_WIDTH, "*")));
 
         printBuffer();

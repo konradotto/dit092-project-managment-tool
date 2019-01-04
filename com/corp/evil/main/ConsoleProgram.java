@@ -134,8 +134,12 @@ public class ConsoleProgram {
 
 
     private static void endConsoleProgram() {
-        Print.exitProgram();
-        project.saveProject();
+        boolean projectUsed = false;
+        if (project != null) {
+            project.saveProject();
+            projectUsed = true;
+        }
+        Print.exitProgram(projectUsed);
     }
 
 
