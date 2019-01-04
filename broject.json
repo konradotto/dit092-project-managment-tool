@@ -89,5 +89,8 @@
         "nano": 0
       }
     }
+  },
+  "file": {
+    "path": "/home/konrad/IdeaProjects/dit092-project-managment-tool/./broject.json"
   }
 }

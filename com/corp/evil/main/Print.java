@@ -31,7 +31,8 @@ public class Print {
         sb.append("Welcome to the Project Planning Software of Evil Corp" + newline);
         sb.append("Choose one of the following options" + newline);
         sb.append("➤ 1. Load an existing project" + newline);
-        sb.append("➤ 2. Create a new project");
+        sb.append("➤ 2. Create a new project" + newline);
+        sb.append("➤ 3. Exit the program");
 
         printBuffer();
 
