@@ -202,6 +202,11 @@ public class Print {
         }
         int endYear = myScanner.readInt("Enter the end year: ");
 
+        while (!checkYears(startYear,endYear)){
+            startYear = myScanner.readInt("Enter the start Year: ");
+            endYear = myScanner.readInt("Enter the end year: ");
+        }
+
         return new Activity(name, startWeek, startYear, endWeek, endYear);
     }
 
@@ -232,6 +237,12 @@ public class Print {
         while (!checkWeeks(endWeek)){
             endWeek = myScanner.readInt("Please enter the end week of your project.");
         }
+
+        while (!checkYears(startYear,endYear)){
+            startYear = myScanner.readInt("Please enter the start year of your project.");
+            endYear = myScanner.readInt("Please enter the end year of your project.");
+        }
+
 
         ProjectSchedule schedule = new ProjectSchedule(startYear, startWeek, endYear, endWeek);
 
@@ -433,6 +444,16 @@ public class Print {
             println("The first week of the year is week 1!"+newline);
             return false;
         }
+        return true;
+    }
+
+    private static boolean checkYears(int num1,int num2){
+
+        if (num1>num2){
+            println("The end year cannot be lower than the start year"+newline);
+            return false;
+        }
+
         return true;
     }
 
