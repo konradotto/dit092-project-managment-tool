@@ -244,7 +244,7 @@ public class Print {
     }
 
     public static String enterName(){
-        String name = myScanner.readLine("Enter the name");
+        String name = myScanner.readLine("Enter the intended name:");
         return name;
     }
 
