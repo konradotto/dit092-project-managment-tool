@@ -19,7 +19,7 @@ public class Print {
     private static final int NO_PROJECT = 1;
 
     private static StringBuilder sb = new StringBuilder();
-    public static String newline = System.lineSeparator();
+    public static String LS = System.lineSeparator();
     private static final PrintStream out = System.out;
 
     /**
@@ -28,10 +28,10 @@ public class Print {
      * @return Integer value entered by the user
      */
     public static int printStartMenu() {
-        sb.append("Welcome to the Project Planning Software of Evil Corp" + newline);
-        sb.append("Choose one of the following options" + newline);
-        sb.append("➤ 1. Load an existing project" + newline);
-        sb.append("➤ 2. Create a new project" + newline);
+        sb.append("Welcome to the Project Planning Software of Evil Corp" + LS);
+        sb.append("Choose one of the following options" + LS);
+        sb.append("➤ 1. Load an existing project" + LS);
+        sb.append("➤ 2. Create a new project" + LS);
         sb.append("➤ 3. Exit the program");
 
         printBuffer();
@@ -75,14 +75,14 @@ public class Print {
 
 
     public static int exitProgram(boolean projectUsed) {
-        sb.append(String.join("", Collections.nCopies(SEPARATOR_WIDTH, "*")) + newline);
-        sb.append("The Console Application is being terminated." + newline);
+        sb.append(String.join("", Collections.nCopies(SEPARATOR_WIDTH, "*")) + LS);
+        sb.append("The Console Application is being terminated." + LS);
         if (projectUsed) {
-            sb.append("All changes made to the project are being saved." + newline);
-            sb.append(newline);
-            sb.append("Thank you for trusting us with your project!" + newline);
+            sb.append("All changes made to the project are being saved." + LS);
+            sb.append(LS);
+            sb.append("Thank you for trusting us with your project!" + LS);
         }
-        sb.append("This application is brought to you by Evil Corp." + newline);
+        sb.append("This application is brought to you by Evil Corp." + LS);
         sb.append(String.join("", Collections.nCopies(SEPARATOR_WIDTH, "*")));
 
         printBuffer();
@@ -92,31 +92,31 @@ public class Print {
 
     public static int printPrimaryMenu() {
         // Specify String representation of primary menu
-        sb.append("Choose an option from below" + newline);
-        sb.append("➤ 1. Project" + newline);
-        sb.append("➤ 2. Teams and Members" + newline);
-        sb.append("➤ 3. Tasks Management" + newline);
-        sb.append("➤ 4. Risks Management" + newline);
-        sb.append("➤ 5. Budget" + newline);
-        sb.append("➤ 6. Save and Exit" + newline);
+        sb.append("Choose an option from below" + LS);
+        sb.append("➤ 1. Project" + LS);
+        sb.append("➤ 2. Teams and Members" + LS);
+        sb.append("➤ 3. Tasks Management" + LS);
+        sb.append("➤ 4. Risks Management" + LS);
+        sb.append("➤ 5. Budget" + LS);
+        sb.append("➤ 6. Save and Exit" + LS);
 
         printBuffer();
         return myScanner.readInt();
     }
 
     public static int printProjectMenu() {
-        sb.append("➤ 1. Print Project" + newline);
-        sb.append("➤ 2. Edit Project ..." + newline);
-        sb.append("➤ 3. Back to the main" + newline);
+        sb.append("➤ 1. Print Project" + LS);
+        sb.append("➤ 2. Edit Project ..." + LS);
+        sb.append("➤ 3. Back to the main" + LS);
 
         printBuffer();
         return myScanner.readInt();
     }
 
     public static int printEditProjectMenu() {
-        sb.append("➤ 1. Update the project's name" + newline);
-        sb.append("➤ 2. Update the project's end date" + newline);
-        sb.append("➤ 3. Back to the previous menu" + newline);
+        sb.append("➤ 1. Update the project's name" + LS);
+        sb.append("➤ 2. Update the project's end date" + LS);
+        sb.append("➤ 3. Back to the previous menu" + LS);
 
         printBuffer();
         return myScanner.readInt();
@@ -124,57 +124,57 @@ public class Print {
 
 
     public static int printTeamMenu() {
-        sb.append("➤ 1. Print All Members" + newline);
-        sb.append("➤ 2. Print All Teams" + newline);
-        sb.append("➤ 3. Add member to the project" + newline);
-        sb.append("➤ 4. Update member's information" + newline);
-        sb.append("➤ 5. Remove member from the project" + newline);
-        sb.append("➤ 6. Create a sub-team" + newline);
-        sb.append("➤ 7. Edit a sub-team" + newline);
-        sb.append("➤ 8. Back to the main" + newline);
+        sb.append("➤ 1. Print All Members" + LS);
+        sb.append("➤ 2. Print All Teams" + LS);
+        sb.append("➤ 3. Add member to the project" + LS);
+        sb.append("➤ 4. Update member's information" + LS);
+        sb.append("➤ 5. Remove member from the project" + LS);
+        sb.append("➤ 6. Create a sub-team" + LS);
+        sb.append("➤ 7. Edit a sub-team" + LS);
+        sb.append("➤ 8. Back to the main" + LS);
 
         printBuffer();
         return myScanner.readInt();
     }
 
     public static int printEditSubTeamMenu() {
-        sb.append("Choose what you want to edit"+newline);
-        sb.append("➤ 1. Update the team's name "+newline);
-        sb.append("➤ 2. Add a member"+newline);
-        sb.append("➤ 3. Remove a member "+newline);
-        sb.append("➤ 4. Back to the previous menu" + newline);
+        sb.append("Choose what you want to edit" + LS);
+        sb.append("➤ 1. Update the team's name " + LS);
+        sb.append("➤ 2. Add a member" + LS);
+        sb.append("➤ 3. Remove a member " + LS);
+        sb.append("➤ 4. Back to the previous menu" + LS);
 
         printBuffer();
         return myScanner.readInt();
     }
 
     public static int printEditMemberMenu() {
-        sb.append("➤ 1. Update the member's name" + newline);
-        sb.append("➤ 2. Update the members's salary" + newline);
-        sb.append("➤ 3. Back to the previous menu" + newline);
+        sb.append("➤ 1. Update the member's name" + LS);
+        sb.append("➤ 2. Update the members's salary" + LS);
+        sb.append("➤ 3. Back to the previous menu" + LS);
 
         printBuffer();
         return myScanner.readInt();
     }
 
     public static int printTasksMenu() {
-        sb.append("➤ 1. Print All Tasks" + newline);
-        sb.append("➤ 2. Add a task" + newline);
-        sb.append("➤ 3. Edit a task" + newline);
-        sb.append("➤ 4. Remove a task" + newline);
-        sb.append("➤ 5. Assign a task to a team" + newline);
-        sb.append("➤ 6. Update the time spent on a task" + newline);
-        sb.append("➤ 7. Back to the main" + newline);
+        sb.append("➤ 1. Print All Tasks" + LS);
+        sb.append("➤ 2. Add a task" + LS);
+        sb.append("➤ 3. Edit a task" + LS);
+        sb.append("➤ 4. Remove a task" + LS);
+        sb.append("➤ 5. Assign a task to a team" + LS);
+        sb.append("➤ 6. Update the time spent on a task" + LS);
+        sb.append("➤ 7. Back to the main" + LS);
 
         printBuffer();
         return myScanner.readInt();
     }
 
     public static int printEditTaskMenu(){
-        sb.append("➤ 1. Edit a task name" + newline);
-        sb.append("➤ 2. Edit a task end week" + newline);
-        sb.append("➤ 3. Edit a task end year" + newline);
-        sb.append("➤ 4. Back to the previous menu" + newline);
+        sb.append("➤ 1. Edit a task name" + LS);
+        sb.append("➤ 2. Edit a task end week" + LS);
+        sb.append("➤ 3. Edit a task end year" + LS);
+        sb.append("➤ 4. Back to the previous menu" + LS);
 
         printBuffer();
         return myScanner.readInt();
@@ -182,11 +182,11 @@ public class Print {
 
 
     public static int printRiskMenu() {
-        sb.append("Choose an option from below"+newline);
-        sb.append("➤ 1. Print the Risk Matrix"+newline);
-        sb.append("➤ 2. Add a risk"+newline);
-        sb.append("➤ 3. Remove a risk"+newline);
-        sb.append("➤ 4. Back to the main" + newline);
+        sb.append("Choose an option from below" + LS);
+        sb.append("➤ 1. Print the Risk Matrix" + LS);
+        sb.append("➤ 2. Add a risk" + LS);
+        sb.append("➤ 3. Remove a risk" + LS);
+        sb.append("➤ 4. Back to the main" + LS);
 
         printBuffer();
         return myScanner.readInt();
@@ -423,10 +423,6 @@ public class Print {
         return risks.get(j);
     }
 
-    public static void printProject(Project project) {
-        out.println(project);
-    }
-
 
     public static void println(String s) {
         out.println(s);
@@ -440,11 +436,11 @@ public class Print {
     private static boolean checkWeeks(int weeks){
 
         if (weeks>52){
-            println("The year consists of 52 weeks only!"+newline);
+            println("The year consists of 52 weeks only!" + LS);
             return false;
         }
         else if (weeks<1){
-            println("The first week of the year is week 1!"+newline);
+            println("The first week of the year is week 1!" + LS);
             return false;
         }
         return true;
@@ -453,14 +449,15 @@ public class Print {
     private static boolean checkYears(int num1,int num2){
 
         if (num1>num2){
-            println("The end year cannot be lower than the start year"+newline);
+            println("The end year cannot be lower than the start year" + LS);
             return false;
         }
 
         return true;
     }
 
-
-
+    public static void defaultMonologue() {
+        out.println("Choose a valid option!" + LS);
+    }
 }
 

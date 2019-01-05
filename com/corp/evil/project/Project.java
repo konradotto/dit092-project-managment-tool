@@ -168,10 +168,10 @@ public class Project {
     }
 
     public String getBudget() {
+        //TODO: is this all we want here?
         StringBuilder sb = new StringBuilder();
 
         sb.append("Earned Value: " + schedule.getEarnedValue() + LS);
-
         return sb.toString();
     }
 

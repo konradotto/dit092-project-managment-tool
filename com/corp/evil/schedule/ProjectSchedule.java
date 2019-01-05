@@ -15,6 +15,22 @@ public class ProjectSchedule {
     private final static int COLUMN_WIDTH = 25;
     private final static int COLUMNS = 5;
 
+    private final static String LS = Print.LS;
+    private final static String SEPARATOR = String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-") + LS);
+
+    private final static String HEAD;
+
+    // initialising the static header part of every ProjectSchedule
+    static {
+        StringBuilder sbTemp = new StringBuilder();
+        sbTemp.append("\t\t\t TASKS " + LS);
+        sbTemp.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")));
+        sbTemp.append(LS);
+        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start Week:", "| End Week:", "| Percent Completed:", "| Teams: ", "|"}));
+        sbTemp.append(SEPARATOR);
+
+        HEAD = sbTemp.toString();
+    }
 
     private ArrayList<Activity> activities;
     private LocalDateTime start;
@@ -29,7 +45,6 @@ public class ProjectSchedule {
         this.start = getLocalDateTime(startYear, startWeek, FIRST_WORKDAY, DAY_START_HOUR);
         this.end = getLocalDateTime(endYear, endWeek, LAST_WORKDAY, DAY_END_HOUR);
         this.activities = new ArrayList<Activity>();
-
     }
 
 
@@ -47,11 +62,8 @@ public class ProjectSchedule {
 
 
     public void sort(){
-
         activities.sort(Comparator.comparingInt(Activity::getStartWeek));
         activities.sort(Comparator.comparingInt(Activity::getStartYear));
-
-
     }
 
     public double getEarnedValue() {
@@ -131,9 +143,8 @@ public class ProjectSchedule {
         return formatTable();
     }
 
-    private String formatTableRow(String[] columns) {
+    private static String formatTableRow(String[] columns) {
         String result = "";
-
         for(int i = 0; i < COLUMNS ; ++i) {
             result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
         }
@@ -144,31 +155,16 @@ public class ProjectSchedule {
 
     public String formatTable() {
         StringBuilder sb = new StringBuilder();
-        String newline = System.lineSeparator();
+
         if (activities.isEmpty()) {
-            sb.append("There are no activities registered in this team yet." + newline);
+            sb.append("There are no activities registered to this project schedule yet." + LS);
         } else {
+            sb.append(HEAD);
 
-            sb.append("\t\t\t TASKS " + newline);
-
-            sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
-            sb.append(newline);
-
-            // format table content
-            sb.append(formatTableRow(new String[]{"| Task name:", "| Start Week:", "| End Week:", "| Percent Completed:","| Teams: ", "|"}));
-
-            // separator line
-
-            sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
-            sb.append(newline);
-
-            this.sort();
-
+            this.sort();        // sort the activities by their start date
 
             for (Activity activity : activities) {
                 if (activity.getTeam()!=null){
-
-
 
                     sb.append(formatTableRow(new String[] {"| " + activity.getName(),
                             "| " + activity.getStartWeek(),
@@ -177,14 +173,8 @@ public class ProjectSchedule {
                             "| " + activity.getTeam().getName(),
                             "|"
                     }));
-
-                    sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
-                    sb.append(newline);
                 }
                 else {
-
-
-
                     sb.append(formatTableRow(new String[] {"| " + activity.getName(),
                             "| " + activity.getStartWeek(),
                             "| " + activity.getEndWeek(),
@@ -192,16 +182,12 @@ public class ProjectSchedule {
                             "| " + "No team assigned",
                             "|"
                     }));
-
-                    sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
-                    sb.append(newline);
                 }
+                sb.append(SEPARATOR);
             }
         }
-        //test
         return sb.toString();
     }
-
 
 
     public List<Activity> getParticipation(Member member) {
