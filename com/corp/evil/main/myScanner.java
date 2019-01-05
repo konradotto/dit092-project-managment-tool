@@ -103,4 +103,24 @@ class myScanner {
         return x;
     }
 
+    static long readLong(String string){
+        boolean result;
+        long x =0;
+        do {
+            System.out.println(string);
+            String y = input.nextLine();
+            while (y.trim().isEmpty()) {
+                System.out.println(string);
+                y=input.nextLine();
+            }
+            try {
+                x = Long.parseLong(y);
+                return x;
+            }catch (java.lang.NumberFormatException e){
+                result =false;
+            }
+        }while (!result);
+        return x;
+    }
+
 }

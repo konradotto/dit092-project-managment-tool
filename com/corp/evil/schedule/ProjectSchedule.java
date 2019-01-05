@@ -166,19 +166,36 @@ public class ProjectSchedule {
 
 
             for (Activity activity : activities) {
+                if (activity.getTeam()!=null){
 
 
 
-                sb.append(formatTableRow(new String[] {"| " + activity.getName(),
-                        "| " + activity.getStartWeek(),
-                        "| " + activity.getEndWeek(),
-                        "| " + String.format("%.2f", activity.getPercentCompleted()),
-                        "| " + activity.getTeam().getName(),
-                        "|"
-                }));
+                    sb.append(formatTableRow(new String[] {"| " + activity.getName(),
+                            "| " + activity.getStartWeek(),
+                            "| " + activity.getEndWeek(),
+                            "| " + String.format("%.2f", activity.getPercentCompleted()),
+                            "| " + activity.getTeam().getName(),
+                            "|"
+                    }));
 
-                sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
-                sb.append(newline);
+                    sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
+                    sb.append(newline);
+                }
+                else {
+
+
+
+                    sb.append(formatTableRow(new String[] {"| " + activity.getName(),
+                            "| " + activity.getStartWeek(),
+                            "| " + activity.getEndWeek(),
+                            "| " + String.format("%.2f", activity.getPercentCompleted()),
+                            "| " + "No team assigned",
+                            "|"
+                    }));
+
+                    sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH +1, "-")));
+                    sb.append(newline);
+                }
             }
         }
         //test

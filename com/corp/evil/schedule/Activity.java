@@ -34,20 +34,20 @@ public class Activity {
         this.startYear = startYear;
         this.endYear = endYear;
         this.timeSpent = new TreeMap<Member, Long>();
-
-        try {
-            team.addActivity(this);
-        } catch (ActivityAlreadyRegisteredException e) {
-            e.printStackTrace();
-        } catch (ActivityIsNullException e) {
-            e.printStackTrace();
+        if (team!=null){
+            try {
+                team.addActivity(this);
+            } catch (ActivityAlreadyRegisteredException e) {
+                e.printStackTrace();
+            } catch (ActivityIsNullException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
 
 //TODO: activity constructor without team
-//TODO: activity toString without a team
-
 
     //Accessor methods
     public int getDuration() {
@@ -74,6 +74,9 @@ public class Activity {
         return costOfWorkPerformed;
     }
 
+    public void setCostOfWorkScheduled(double costOfWorkScheduled) {
+        this.costOfWorkScheduled = costOfWorkScheduled;
+    }
 
     public double getPercentScheduled() {
 
@@ -83,11 +86,14 @@ public class Activity {
 
     public double scheduledCost() {
         double averageSalary = 0.0;
+        if ((team == null) || (team.getMembers().isEmpty())){
+            return 0.0;
+        }
         int teamSize = team.getMembers().size();
         for (Member member : team.getMembers()) {
             averageSalary += member.getSALARY_PER_HOUR();
         }
-        averageSalary /= teamSize;
+        averageSalary /= teamSize; //why are we dividing here!?
         System.err.println("Schedule Cost()");
         System.err.println(team.getName());
         System.err.println("Average Salary: " + averageSalary);
