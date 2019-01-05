@@ -105,7 +105,6 @@ public class ConsoleProgram {
                 break;
             case PRIMARY_TASK:
                 taskManager();
-                proceed = false;
                 break;
             case PRIMARY_RISK:
                 riskManager();
@@ -199,10 +198,32 @@ public class ConsoleProgram {
       }while (!proceed);
     }
 
-    public static void taskTimeSetter() {
+    public static boolean taskTimeSetter() {
+        Activity task;
+        try {
+            task = Print.readActivity();
+        } catch (ActivityIsNullException e) {
+            Print.println(e+ Print.newline);
+            return false;
+        }
+        Member member;
+        try {
+            member = Print.readMember();
+        } catch (MemberIsNullException e) {
+            Print.println(e+ Print.newline);
+            return false;
+        }
+        if (!task.getTeam().contains(member)){
+            Print.println("This member is not assigned to the chosen task!"+Print.newline);
+            return false;
+        }
+        else {
+            long timeSpent = myScanner.readLong("Enter the amount of time that " + member.getName() + " has spent on " + task.getName() + ':');
+            long timeScheduled = myScanner.readLong("Enter the amount of scheduled time that " + member.getName() + " has spent on " + task.getName() + ':');
 
-
-        // TODO logic for workOnActivty method
+            task.getTeam().workOnActivity(member, task, timeSpent,timeScheduled);
+        }
+        return false;
     }
 
     public static boolean taskAssigner()  {
@@ -222,7 +243,8 @@ public class ConsoleProgram {
         }
         try {
                 team.addActivity(task);
-                task.setTeam(team); //TODO: not sure about this line. Do we still need a team for an activity(since teams are saved separately in their list)?
+                task.setTeam(team);
+                task.setCostOfWorkScheduled(task.scheduledCost());
             } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
             Print.println(e+ Print.newline);
             return false;

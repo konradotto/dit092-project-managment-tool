@@ -7,7 +7,7 @@ public class Team {
 
     private String name;
     private ArrayList<Member> members;
-    //private ArrayList<Activity> activities;
+    private ArrayList<Activity> activities;
 
 
     private final static int COLUMN_WIDTH = 30;
@@ -15,7 +15,7 @@ public class Team {
 
     public Team(String name){
         members = new ArrayList<>();
-        //activities = new ArrayList<>();
+        activities = new ArrayList<>();
         this.name = name;
     }
 
@@ -23,7 +23,7 @@ public class Team {
         if (name.isEmpty()){ throw new NameIsEmptyException("The field name cannot be empty!"); }
         this.name = name;
         this.members = members;
-        //this.activities = activities;
+        this.activities = activities;
 
     }
 
@@ -56,8 +56,7 @@ public class Team {
         } else if (false) {//activities.contains(activity)) {
             throw new ActivityAlreadyRegisteredException("An activity with same name exists already!");
         } else {
-            System.out.println("hi");
-            //activities.add(activity);
+            activities.add(activity);
         }
     }
 
@@ -73,7 +72,7 @@ public class Team {
 
     public void removeActivity(Activity activity) throws ActivityIsNullException {
         if (activity == null){ throw new ActivityIsNullException("This activity does not exist!");}
-        //activities.remove(activity);
+        activities.remove(activity);
     }
 
     public boolean contains(Member member) {
@@ -111,10 +110,6 @@ public class Team {
     }
 
     public boolean workOnActivity(Member member, Activity activity, long timeSpent, long timeScheduled) {
-        if (!members.contains(member)) {
-            System.err.println("Member not in team.");
-            return false;
-        }
 
         // TODO: prevent to spend more scheduled time than needed for the task
 
