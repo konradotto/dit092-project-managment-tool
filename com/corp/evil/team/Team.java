@@ -79,14 +79,15 @@ public class Team {
         return members.contains(member);
     }
 
-    public Member retrieveMember (Member member){
-        Member result = null;
+    public Member retrieveMember(String name) {
 
-        for(Member temp : members) {
-            if (temp.equals(member)) {return temp;}
+        for (Member member : members) {
+            if (member.getName().equals(name)) {
+                return member;
+            }
         }
 
-        return result;
+        return null;
     }
 
     public ArrayList<Member> getMembers() {

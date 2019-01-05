@@ -470,14 +470,6 @@ public class ConsoleProgram {
 
 
     //TODO: move these to Project-class
-    public static Member retrieveMember(String name) {
-        for (Member member : project.getTeam().getMembers()) {
-            if (member.getName().equals(name)) {
-                return member;
-            }
-        }
-        return null;
-    }
 
     public static Team retrieveTeam(String name) {
         for (Team team : project.getTeams()) {
