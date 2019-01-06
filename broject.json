@@ -13,6 +13,15 @@
         }
       },
       {
+        "name": "Her Dudessness",
+        "uuid": "915cac3d-9337-4c08-9612-1c077a9586d0",
+        "SALARY_PER_HOUR": 0.0,
+        "timeSpent": {
+          "seconds": 0,
+          "nanos": 0
+        }
+      },
+      {
         "name": "The dude",
         "uuid": "36e05c01-2083-47e5-b9b1-06e85987c7b8",
         "SALARY_PER_HOUR": 500.0,
@@ -59,7 +68,6 @@
         "costOfWorkScheduled": 700000.0,
         "costOfWorkPerformed": 0.0,
         "percentCompleted": 0.0,
-        "num": 0,
         "timeSpent": {}
       }
     ],

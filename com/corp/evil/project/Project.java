@@ -260,7 +260,11 @@ public class Project {
     }
 
     public Member retrieveMember(String name) {
-        return getTeam().retrieveMember(name);
+        return team.retrieveMember(name);
+    }
+
+    public Member retrieveMember(int index) {
+        return team.retrieveMember(index);
     }
 
 }

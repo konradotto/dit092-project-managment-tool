@@ -80,13 +80,19 @@ public class Team {
     }
 
     public Member retrieveMember(String name) {
-
         for (Member member : members) {
             if (member.getName().equals(name)) {
                 return member;
             }
         }
+        return null;
+    }
 
+
+    public Member retrieveMember(int index) {
+        if (index >= 0 && index < members.size()) {
+            return members.get(index);
+        }
         return null;
     }
 
@@ -94,20 +100,36 @@ public class Team {
         return members;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return formatTable();
     }
 
     private String formatTableRow(String[] columns) {
-        String result = "";
+        StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < COLUMNS - 2; ++i) {
-            result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
+            sb.append(String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]));
         }
-        result += String.format(columns[3] + "%n");
+        sb.append(String.format(columns[3] + "%n"));
 
-        return result;
+        return sb.toString();
+    }
+
+    public String toNumberedString() {
+        StringBuilder sb = new StringBuilder();
+
+        if (members.isEmpty()) {
+            sb.append("There are currently no members registered for this team." + System.lineSeparator());
+        } else {
+            int l = (int) Math.ceil(Math.log10(members.size()) + 0.005);   // number of digits needed for left aligned formatting
+            for (int i = 0; i < members.size(); i++) {
+                Member mem = members.get(i);
+                sb.append(String.format("%1$" + String.valueOf(l) + "s %2$-20s\t%3$s%n", i + 1, mem.getName(), mem.getID()));
+            }
+        }
+
+        return sb.toString();
     }
 
     public boolean workOnActivity(Member member, Activity activity, long timeSpent, long timeScheduled) {

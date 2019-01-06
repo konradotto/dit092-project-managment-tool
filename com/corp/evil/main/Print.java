@@ -289,39 +289,31 @@ public class Print {
 
     }
 
-    public static Member readMember() throws MemberIsNullException {
-        String option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the member's name\n2) By choosing a member from the list");
-        while (!(option.equals("1") || option.equals("2"))){
-            option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the member's name\n2) By choosing a member from the list");
-        }
-        switch (option) {
-            case "1":
-                Member member = ConsoleProgram.retrieveMember(enterName());
-                if (member==null){
-                    throw new MemberIsNullException("No such member!");
-                }
-                return member;
-            default:
-                return readMemberFromList();
-        }
+
+    public static int chooseMemberSelection() {
+        sb.append("Please choose a way to select a member:" + LS);
+        sb.append("➤ 1. Enter the members name" + LS);
+        sb.append("➤ 2. Choosing from the list of members" + LS);
+
+        printBuffer();
+        return myScanner.readInt();
     }
 
 
-    public static Member readMemberFromList() throws MemberIsNullException {
-        ArrayList<Member> members = ConsoleProgram.getProject().getTeam().getMembers();
-        if (members.isEmpty()){
-            throw new MemberIsNullException("No registered members!");
+    public static Member chooseMemberByName(Project project) {
+        String name = myScanner.readLine("Please enter the member's full name.");
+        if (name == null) {
+            return null;
         }
-        members.sort(Comparator.comparing(Member::getName));
-        for (int i = 0; i<members.size(); i++){
-            System.out.println(i+") "+members.get(i).getName());
-        }
-        int j = myScanner.readInt("Choose a member from the list: ");
-        while (j>=members.size()){
-            j = myScanner.readInt("Choose a valid option! ");
-        }
-        return members.get(j);
+        return project.retrieveMember(name);
+    }
 
+    public static Member chooseMemberFromList(Project project) {
+        sb.append("Please choose a member from the list of people working on the project:" + LS);
+        sb.append(project.getTeam().toNumberedString() + LS);
+
+        printBuffer();
+        return project.retrieveMember(myScanner.readInt());
     }
 
 

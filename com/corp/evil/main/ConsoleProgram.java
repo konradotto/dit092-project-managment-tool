@@ -27,6 +27,9 @@ public class ConsoleProgram {
 
     private static final int LEAVE_RISK_MANAGER = 4;
 
+    private static final int MEMBER_BY_NAME = 1;
+    private static final int MEMBER_FROM_LIST = 2;
+
     // result constants
     private static final int PROJECT_CREATED = 1;
 
@@ -207,13 +210,8 @@ public class ConsoleProgram {
             Print.println(e + Print.LS);
             return false;
         }
-        Member member;
-        try {
-            member = Print.readMember();
-        } catch (MemberIsNullException e) {
-            Print.println(e + Print.LS);
-            return false;
-        }
+        Member member = chooseMember();
+
         if (!task.getTeam().contains(member)) {
             Print.println("This member is not assigned to the chosen task!" + Print.LS);
             return false;
@@ -225,6 +223,24 @@ public class ConsoleProgram {
         }
         return false;
     }
+
+    public static Member chooseMember() {
+        Member member;
+
+        switch (Print.chooseMemberSelection()) {
+            case MEMBER_BY_NAME:
+                member = Print.chooseMemberByName(project);
+                break;
+            case MEMBER_FROM_LIST:
+                member = Print.chooseMemberFromList(project);
+                break;
+            default:
+                member = Print.chooseMemberFromList(project);
+                break;
+        }
+        return member;
+    }
+
 
     public static boolean taskAssigner() {
         Activity task;
@@ -372,7 +388,7 @@ public class ConsoleProgram {
             case 5:
 
                 try {
-                    project.getTeam().removeMember(Print.readMember());
+                    project.getTeam().removeMember(chooseMember());
                 } catch (MemberIsNullException e) {
                     Print.println(e + Print.LS);    //TODO: use error message
                 }
@@ -400,11 +416,8 @@ public class ConsoleProgram {
 
     private static boolean editMember() {
 
-        Member member;
-        try {
-            member = Print.readMember();
-        } catch (MemberIsNullException e) {
-            System.out.println(e + Print.LS);
+        Member member = chooseMember();
+        if (member == null) {
             return false;
         }
 
@@ -421,11 +434,11 @@ public class ConsoleProgram {
                     leave = true;
                     break;
                 default:
-                    System.out.println("Choose a valid option!\n");
+                    Print.defaultMonologue();
                     break;
             }
         } while (!leave);
-        return false;
+        return false;       //TODO: allow returning true
     }
 
     private static boolean editTeam() {
@@ -445,14 +458,14 @@ public class ConsoleProgram {
                 break;
             case 2:
                 try {
-                    team.addMember(Print.readMember());
+                    team.addMember(chooseMember());
                 } catch (MemberIsNullException | MemberAlreadyRegisteredException e) {
                     Print.println(e + Print.LS);
                 }
                 break;
             case 3:
                 try {
-                    team.removeMember(Print.readMember());
+                    team.removeMember(chooseMember());
                 } catch (MemberIsNullException e) {
                     Print.println(e + Print.LS);
                 }
