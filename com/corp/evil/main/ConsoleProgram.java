@@ -160,20 +160,6 @@ public class ConsoleProgram {
                 case 2:
                     try {
                         project.getSchedule().addActivity(Print.createActivity());
-                        //TODO: Running the line above is throwing a null pointer exception.
-
-                        // The first solution is that we need to fix the no-team constructor,
-                        // and to create a different toString method for activities without the teams assigned to them.
-                        // The calculations can be skipped (I guess) unless there is a non-empty team assigned to the activity.
-
-                        // An other solution (I do not like this kind of solutions though) would be assigning a team directly to an activity while creating it.
-                        // If so, then the user should be able to choose whether to:
-                        // First, create a new team and then add member to it by choosing from registered members or by creating new members.
-                        // Second, to choose an already registered team that has members.
-
-                        // Note: if the team assigned to an activity does not have any members,
-                        // we would get some exceptions popping later while doing the calculations.
-
                     } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
                         Print.println(e + Print.LS);
                     }
@@ -257,13 +243,18 @@ public class ConsoleProgram {
             Print.println(e + Print.LS);
             return false;
         }
-        try {
-            team.addActivity(task);
-            task.setTeam(team);
-            task.setCostOfWorkScheduled(task.scheduledCost());
-        } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
-            Print.println(e + Print.LS);
-            return false;
+        if (!team.getMembers().isEmpty()){
+            try {
+                team.addActivity(task);
+                task.setTeam(team);
+                task.setCostOfWorkScheduled(task.scheduledCost());
+            } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
+                Print.println(e + Print.LS);
+                return false;
+            }
+        }
+        else {
+            Print.println("A task cannot be assigned to an empty team!");
         }
         return false;
     }
