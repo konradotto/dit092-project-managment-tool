@@ -124,8 +124,7 @@ public class ProjectSchedule {
         if (activity == null) {
             throw new ActivityIsNullException("Activity is NULL and cannot be added to the list of activities!");
         }
-        // TODO: this is ignored:
-        String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-") + LS);
+
         if (activities.contains(activity)) {
             throw new ActivityAlreadyRegisteredException("This activity already exists!");
         } else activities.add(activity);
