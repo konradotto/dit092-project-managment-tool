@@ -37,7 +37,8 @@ public enum RiskImpact {
 
     public static RiskImpact valueOf(int impact) throws RiskImpactNotDefinedException {
         if (!map.containsKey(impact)) {
-            throw new RiskImpactNotDefinedException("No RiskImpact is defined for the requested value.");
+            throw new RiskImpactNotDefinedException("No RiskImpact is defined for the requested value: " + impact +
+                    Print.LS + "Please enter a value between " + RiskImpact.VERY_LOW + " and " + RiskImpact.VERY_HIGH);
         }
         return map.get(impact);
     }
