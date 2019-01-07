@@ -313,7 +313,7 @@ public class Print {
         sb.append(project.getTeam().toNumberedString() + LS);
 
         printBuffer();
-        return project.retrieveMember(myScanner.readInt());
+        return project.retrieveMember(myScanner.readInt()-1);
     }
 
 
