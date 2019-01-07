@@ -416,10 +416,14 @@ public class ConsoleProgram {
         do {
             switch (Print.printEditMemberMenu()) {
                 case 1:
-                    member.setName(myScanner.readLine("Enter the members new name: "));
+                    String name = myScanner.readLine("Enter the members new name: ");
+                    member.setName(name);
+                    project.memberNameChanger(member,name);
                     break;
                 case 2:
-                    member.setSALARY_PER_HOUR(myScanner.readDouble("Enter the members new salary: "));
+                    double salary = myScanner.readDouble("Enter the members new salary: ");
+                    member.setSALARY_PER_HOUR(salary);
+                    project.memberSalaryChanger(member,salary);
                     break;
                 case 3:
                     leave = true;
