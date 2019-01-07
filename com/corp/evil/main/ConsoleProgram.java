@@ -122,7 +122,7 @@ public class ConsoleProgram {
                 riskManager();
                 break;
             case PRIMARY_BUDGET:
-                //TODO: Is this all we want for the budget?
+                // TODO: Is this all we want for the budget?
                 Print.println(project.getBudget());
                 break;
             case PRIMARY_SAVE_EXIT:

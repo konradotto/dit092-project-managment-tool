@@ -35,7 +35,6 @@ public class ProjectSchedule {
     private LocalDateTime start;
     private LocalDateTime end;
 
-
     public ProjectSchedule() {
         this.activities = new ArrayList<Activity>();
     }
