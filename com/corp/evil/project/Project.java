@@ -266,5 +266,19 @@ public class Project {
     public Member retrieveMember(int index) {
         return team.retrieveMember(index);
     }
+    public void memberNameChanger(Member member, String name){
+        for (Team team: getTeams()){
+            if (team.getMembers().contains(member)){
+                member.setName(name);
+            }
+        }
+    }
 
+    public void memberSalaryChanger(Member member, double salary){
+        for (Team team: getTeams()){
+            if (team.getMembers().contains(member)){
+                member.setSALARY_PER_HOUR(salary);
+            }
+        }
+    }
 }
