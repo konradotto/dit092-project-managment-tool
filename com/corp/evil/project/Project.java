@@ -11,7 +11,6 @@ public class Project {
     // constants
     private static final int MARGIN = 3;
     private static final String LS = System.lineSeparator();
-    public static final int EARLIEST_YEAR_ALLOWED = 1900;
 
     // member variables
     private String name;
@@ -78,7 +77,7 @@ public class Project {
         }
     }
 
-    public boolean addActivity(String name, int startWeek, int startYear, int endWeek, int endYear, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
+    public boolean addActivity(String name, TimePeriod timePeriod, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
 
         // make sure the members are in the team
         for (Member member : team.getMembers()) {
@@ -87,7 +86,7 @@ public class Project {
             }
         }
 
-        schedule.addActivity(new Activity(name, startWeek, startYear, endWeek, endYear, team));
+        schedule.addActivity(new Activity(name, timePeriod, team));
         onChange();
         return true;
     }
