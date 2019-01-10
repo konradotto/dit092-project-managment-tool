@@ -231,7 +231,7 @@ public class ConsoleProgram {
             Print.println(e + Print.LS);
             return false;
         }
-        Member member = chooseMember();
+        Member member = chooseMember(task.getTeam());
 
         if (!task.getTeam().contains(member)) {
             Print.println("This member is not assigned to the chosen task!" + Print.LS);
@@ -245,18 +245,18 @@ public class ConsoleProgram {
         return false;
     }
 
-    public static Member chooseMember() {
+    public static Member chooseMember(Team team) {
         Member member;
 
         switch (Print.chooseMemberSelection()) {
             case MEMBER_BY_NAME:
-                member = Print.chooseMemberByName(project);
+                member = Print.chooseMemberByName(team);
                 break;
             case MEMBER_FROM_LIST:
-                member = Print.chooseMemberFromList(project);
+                member = Print.chooseMemberFromList(team);
                 break;
             default:
-                member = Print.chooseMemberFromList(project);
+                member = Print.chooseMemberFromList(team);
                 break;
         }
         return member;
