@@ -26,6 +26,15 @@ public class TimePeriod {
         this.endYear = endYear;
     }
 
+    public boolean isWithin(TimePeriod otherPeriod) {
+        if (otherPeriod.getStartYear() > startYear ||
+                (otherPeriod.getStartYear() == startYear && otherPeriod.getStartWeek() > startWeek)) {       // otherPeriod starts after this
+            return false;
+        }
+        return otherPeriod.getEndYear() >= endYear &&
+                (otherPeriod.getEndYear() != endYear || otherPeriod.getEndWeek() >= endWeek);
+    }
+
     public int getStartWeek() {
         return startWeek;
     }
