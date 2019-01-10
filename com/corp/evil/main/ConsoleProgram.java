@@ -30,6 +30,14 @@ public class ConsoleProgram {
     private static final int MEMBER_BY_NAME = 1;
     private static final int MEMBER_FROM_LIST = 2;
 
+    private static final int EDIT_PROJECT_MEMBER = 4;
+    private static final int REMOVE_PROJECT_MEMBER = 5;
+
+    private static final int SUBTEAM_CHANGE_NAME = 1;
+    private static final int SUBTEAM_ADD_MEMBER = 2;
+    private static final int SUBTEAM_REMOVE_MEMBER = 3;
+    private static final int SUBTEAM_LEAVE = 4;
+
     // result constants
     private static final int PROJECT_CREATED = 1;
 
@@ -196,7 +204,7 @@ public class ConsoleProgram {
             Print.println(e + Print.LS);
             return false;
         }
-        Member member = chooseMember();
+        Member member = chooseMember(project.getTeam());
 
         if (!task.getTeam().contains(member)) {
             Print.println("This member is not assigned to the chosen task!" + Print.LS);
@@ -210,18 +218,18 @@ public class ConsoleProgram {
         return false;
     }
 
-    public static Member chooseMember() {
+    public static Member chooseMember(Team team) {
         Member member;
 
         switch (Print.chooseMemberSelection()) {
             case MEMBER_BY_NAME:
-                member = Print.chooseMemberByName(project);
+                member = Print.chooseMemberByName(team);
                 break;
             case MEMBER_FROM_LIST:
-                member = Print.chooseMemberFromList(project);
+                member = Print.chooseMemberFromList(team);
                 break;
             default:
-                member = Print.chooseMemberFromList(project);
+                member = Print.chooseMemberFromList(team);
                 break;
         }
         return member;
@@ -373,16 +381,11 @@ public class ConsoleProgram {
                     e.printStackTrace();
                 }
                 break;
-            case 4:
-                editMember();
+            case EDIT_PROJECT_MEMBER:
+                editMember(project.getTeam());
                 break;
-            case 5:
-
-                try {
-                    project.getTeam().removeMember(chooseMember());
-                } catch (MemberIsNullException e) {
-                    Print.println(e + Print.LS);    //TODO: use error message
-                }
+            case REMOVE_PROJECT_MEMBER:
+                project.removeMember(chooseMember(project.getTeam()));
                 break;
             case 6:
                 try {
@@ -405,9 +408,9 @@ public class ConsoleProgram {
         } while (!leave);
     }
 
-    private static boolean editMember() {
+    private static boolean editMember(Team team) {
 
-        Member member = chooseMember();
+        Member member = chooseMember(team);
         if (member == null) {
             return false;
         }
@@ -448,24 +451,24 @@ public class ConsoleProgram {
         boolean leave = false;
         do switch (Print.printEditSubTeamMenu()) {
 
-            case 1:
+            case SUBTEAM_CHANGE_NAME:
                 team.setName(myScanner.readLine("Enter the teams new name: "));
                 break;
-            case 2:
+            case SUBTEAM_ADD_MEMBER:
                 try {
-                    team.addMember(chooseMember());
+                    team.addMember(chooseMember(project.getTeam()));
                 } catch (MemberIsNullException | MemberAlreadyRegisteredException e) {
                     Print.println(e + Print.LS);
                 }
                 break;
-            case 3:
+            case SUBTEAM_REMOVE_MEMBER:
                 try {
-                    team.removeMember(chooseMember());
+                    team.removeMember(chooseMember(team));
                 } catch (MemberIsNullException e) {
                     Print.println(e + Print.LS);
                 }
                 break;
-            case 4:
+            case SUBTEAM_LEAVE:
                 leave = true;
                 break;
             default:

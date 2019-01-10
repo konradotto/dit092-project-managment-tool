@@ -300,20 +300,20 @@ public class Print {
     }
 
 
-    public static Member chooseMemberByName(Project project) {
+    public static Member chooseMemberByName(Team team) {
         String name = myScanner.readLine("Please enter the member's full name.");
         if (name == null) {
             return null;
         }
-        return project.retrieveMember(name);
+        return team.retrieveMember(name);
     }
 
-    public static Member chooseMemberFromList(Project project) {
-        sb.append("Please choose a member from the list of people working on the project:" + LS);
-        sb.append(project.getTeam().toNumberedString() + LS);
+    public static Member chooseMemberFromList(Team team) {
+        sb.append("Please choose a member from the list:" + LS);
+        sb.append(team.toNumberedString() + LS);
 
         printBuffer();
-        return project.retrieveMember(myScanner.readInt()-1);
+        return team.retrieveMember(myScanner.readInt() - 1);
     }
 
 

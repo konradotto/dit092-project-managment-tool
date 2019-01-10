@@ -162,9 +162,12 @@ public class Project {
     }
 
     public void removeMember(Member member) {
-        //TODO: remove the passed member
-
-        onChange();
+        try {
+            team.removeMember(member);
+            onChange();
+        } catch (MemberIsNullException e) {
+            Print.println(e.getMessage());
+        }
     }
 
     public String getBudget() {
