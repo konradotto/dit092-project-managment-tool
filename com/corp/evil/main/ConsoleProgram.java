@@ -33,6 +33,14 @@ public class ConsoleProgram {
     private static final int EDIT_PROJECT_MEMBER = 4;
     private static final int REMOVE_PROJECT_MEMBER = 5;
 
+    private static final int TASKS_PRINT_ALL = 1;
+    private static final int TASK_ADD = 2;
+    private static final int TASK_EDIT = 3;
+    private static final int TASK_REMOVE = 4;
+    private static final int TASK_ASSIGN_TEAM = 5;
+    private static final int TASK_UPDATE_TIME_SPENT = 6;
+    private static final int TASKS_LEAVE = 7;
+
     private static final int SUBTEAM_CHANGE_NAME = 1;
     private static final int SUBTEAM_ADD_MEMBER = 2;
     private static final int SUBTEAM_REMOVE_MEMBER = 3;
@@ -137,7 +145,7 @@ public class ConsoleProgram {
                 next = END;
                 break;
             default:
-                System.out.println("Choose a valid option!\n");
+                Print.println("Choose a valid option!\n");
                 next = primaryMenu();
                 break;
         }
@@ -145,7 +153,7 @@ public class ConsoleProgram {
     }
 
     /**
-     * Function closing the Console Program.
+     * Routine for closing the Console Program.
      * Prints a Goodbye-Message and saves the project.     *
      */
     private static void endConsoleProgram() {
@@ -160,39 +168,31 @@ public class ConsoleProgram {
 
     public static void taskManager() {
         boolean leaveMenu = false;
-        do {
-            switch (Print.printTasksMenu()) {
-                case 1:
-                    Print.println(project.getSchedule().toString());
-                    break;
-                case 2:
-                    try {
-                        project.getSchedule().addActivity(Print.createActivity());
-                    } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
-                        Print.println(e + Print.LS);
-                    }
-                    break;
-                case 3:
-                    editTask();
-                    break;
-                case 4:
-                    taskRemover();
-                    break;
-                case 5:
-                    taskAssigner();
-                    break;
-                case 6:
-                    taskTimeSetter();
-                    break;
-
-                case 7:
-                    leaveMenu = true;
-                    break;
-
-                default:
-                    Print.println("Choose a valid option!\n");
-                    break;
-            }
+        do switch (Print.printTasksMenu()) {
+            case TASKS_PRINT_ALL:
+                Print.println(project.getSchedule().toString());
+                break;
+            case TASK_ADD:
+                project.addActivity(Print.createActivity());
+                break;
+            case TASK_EDIT:
+                editTask();
+                break;
+            case TASK_REMOVE:
+                taskRemover();
+                break;
+            case TASK_ASSIGN_TEAM:
+                taskAssigner();
+                break;
+            case TASK_UPDATE_TIME_SPENT:
+                taskTimeSetter();
+                break;
+            case TASKS_LEAVE:
+                leaveMenu = true;
+                break;
+            default:
+                Print.println("Choose a valid option!" + Print.LS);
+                break;
         } while (!leaveMenu);
     }
 

@@ -11,6 +11,7 @@ public class Project {
     // constants
     private static final int MARGIN = 3;
     private static final String LS = System.lineSeparator();
+    public static final int EARLIEST_YEAR_ALLOWED = 1900;
 
     // member variables
     private String name;
@@ -65,6 +66,16 @@ public class Project {
     public void addMember(Member member) throws MemberAlreadyRegisteredException, MemberIsNullException {
         this.team.addMember(member);
         onChange();
+    }
+
+    public void addActivity(Activity activity) {
+        try {
+            schedule.addActivity(activity);
+        } catch (ActivityAlreadyRegisteredException e) {
+            Print.println(e.getMessage());
+        } catch (ActivityIsNullException e) {
+            Print.println(e.getMessage());
+        }
     }
 
     public boolean addActivity(String name, int startWeek, int startYear, int endWeek, int endYear, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {

@@ -194,23 +194,22 @@ public class Print {
 
     public static Activity createActivity(){
         String name = myScanner.readLine("Enter the name of the task: ");
-        int startWeek = myScanner.readInt("Enter the start week: ");
-        while (!checkWeeks(startWeek)){
+
+        int startWeek, startYear, endWeek, endYear;
+        Activity activity = null;
+        do {
             startWeek = myScanner.readInt("Enter the start week: ");
-        }
-        int startYear = myScanner.readInt("Enter the start Year: ");
-        int endWeek = myScanner.readInt("Enter the end week: ");
-        while (!checkWeeks(endWeek)){
-            endWeek = myScanner.readInt("Enter the start week: ");
-        }
-        int endYear = myScanner.readInt("Enter the end year: ");
-
-        while (!checkYears(startYear,endYear)){
-            startYear = myScanner.readInt("Enter the start Year: ");
+            startYear = myScanner.readInt("Enter the start year: ");
+            endWeek = myScanner.readInt("Enter the end week: ");
             endYear = myScanner.readInt("Enter the end year: ");
-        }
+            try {
+                activity = new Activity(name, startWeek, startYear, endWeek, endYear);
+            } catch (IllegalArgumentException e) {
+                Print.println(e + LS);
+            }
+        } while (activity == null);
 
-        return new Activity(name, startWeek, startYear, endWeek, endYear);
+        return activity;
     }
 
     public static Risk createRisk(){
@@ -425,26 +424,35 @@ public class Print {
         sb.setLength(0);        // empty buffer
     }
 
-    private static boolean checkWeeks(int weeks){
-
-        if (weeks>52){
+    /**
+     * Function checking whether an integer is between 1 and 52 and can therefore be a year of the week
+     *
+     * @param week
+     * @return boolean telling whether week can be interpreted as a week
+     */
+    private static boolean checkWeeks(int week) {
+        if (week > 52) {
             println("The year consists of 52 weeks only!" + LS);
             return false;
-        }
-        else if (weeks<1){
+        } else if (week < 1) {
             println("The first week of the year is week 1!" + LS);
             return false;
         }
         return true;
     }
 
-    private static boolean checkYears(int num1,int num2){
-
-        if (num1>num2){
+    /**
+     * Method checking whether the end year is bigger or equal than the start year
+     *
+     * @param startYear
+     * @param endYear
+     * @return
+     */
+    private static boolean checkYears(int startYear, int endYear) {
+        if (startYear > endYear) {
             println("The end year cannot be lower than the start year" + LS);
             return false;
         }
-
         return true;
     }
 
