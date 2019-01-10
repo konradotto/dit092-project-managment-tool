@@ -1,6 +1,7 @@
 public class TimePeriod {
 
     public static final int EARLIEST_YEAR_ALLOWED = 1900;
+    public final static int WEEKS_PER_YEAR = 52;
 
     private int startWeek;
     private int startYear;
@@ -24,6 +25,12 @@ public class TimePeriod {
         this.startYear = startYear;
         this.endWeek = endWeek;
         this.endYear = endYear;
+    }
+
+    public int getDurationInWeeks() {
+        int weeks = endWeek - startWeek + 1;
+        int years = endYear - startYear;
+        return weeks + years * WEEKS_PER_YEAR;
     }
 
     public boolean isWithin(TimePeriod otherPeriod) {
