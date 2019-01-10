@@ -16,7 +16,7 @@ public class ProjectSchedule {
     private final static int COLUMNS = 5;
 
     private final static String LS = Print.LS;
-    private final static String SEPARATOR = String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-") + LS);
+    private final static String SEPARATOR = String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")) + LS;
 
     private final static String HEAD;
 
@@ -24,8 +24,7 @@ public class ProjectSchedule {
     static {
         StringBuilder sbTemp = new StringBuilder();
         sbTemp.append("\t\t\t TASKS " + LS);
-        sbTemp.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")));
-        sbTemp.append(LS);
+        sbTemp.append(SEPARATOR);
         sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start Week:", "| End Week:", "| Percent Completed:", "| Teams: ", "|"}));
         sbTemp.append(SEPARATOR);
 
@@ -36,19 +35,18 @@ public class ProjectSchedule {
     private LocalDateTime start;
     private LocalDateTime end;
 
-
     public ProjectSchedule() {
         this.activities = new ArrayList<Activity>();
     }
 
-    public ProjectSchedule(int startYear, int startWeek, int endYear, int endWeek){
+    public ProjectSchedule(int startYear, int startWeek, int endYear, int endWeek) {
         this.start = getLocalDateTime(startYear, startWeek, FIRST_WORKDAY, DAY_START_HOUR);
         this.end = getLocalDateTime(endYear, endWeek, LAST_WORKDAY, DAY_END_HOUR);
         this.activities = new ArrayList<Activity>();
     }
 
 
-    public ProjectSchedule (ArrayList<Activity> activities) {
+    public ProjectSchedule(ArrayList<Activity> activities) {
         this.activities = activities;
         this.getEndWeek();
         this.getStartWeek();
@@ -61,7 +59,7 @@ public class ProjectSchedule {
     }
 
 
-    public void sort(){
+    public void sort() {
         activities.sort(Comparator.comparingInt(Activity::getStartWeek));
         activities.sort(Comparator.comparingInt(Activity::getStartYear));
     }
@@ -121,13 +119,23 @@ public class ProjectSchedule {
         return getEarnedValue() - getScheduledCost();
     }
 
+    /**
+     * Add an activity to a schedule.
+     *
+     * @param activity the activity that is supposed to be added to the schedule
+     * @throws ActivityAlreadyRegisteredException
+     * @throws ActivityIsNullException
+     */
     public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
         if (activity == null) {
             throw new ActivityIsNullException("Activity is NULL and cannot be added to the list of activities!");
         }
+
         if (activities.contains(activity)) {
-            throw new ActivityAlreadyRegisteredException("This activity already exists!");
-        } else activities.add(activity);
+            throw new ActivityAlreadyRegisteredException("This activity is already registered!");
+        } else {
+            activities.add(activity);
+        }
     }
 
     public void removeActivity(Activity activity) throws ActivityIsNullException {
@@ -145,7 +153,7 @@ public class ProjectSchedule {
 
     private static String formatTableRow(String[] columns) {
         String result = "";
-        for(int i = 0; i < COLUMNS ; ++i) {
+        for (int i = 0; i < COLUMNS; ++i) {
             result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
         }
         result += String.format(columns[columns.length - 1] + "%n");
@@ -164,18 +172,17 @@ public class ProjectSchedule {
             this.sort();        // sort the activities by their start date
 
             for (Activity activity : activities) {
-                if (activity.getTeam()!=null){
+                if (activity.getTeam() != null) {
 
-                    sb.append(formatTableRow(new String[] {"| " + activity.getName(),
+                    sb.append(formatTableRow(new String[]{"| " + activity.getName(),
                             "| " + activity.getStartWeek(),
                             "| " + activity.getEndWeek(),
                             "| " + String.format("%.2f", activity.getPercentCompleted()),
                             "| " + activity.getTeam().getName(),
                             "|"
                     }));
-                }
-                else {
-                    sb.append(formatTableRow(new String[] {"| " + activity.getName(),
+                } else {
+                    sb.append(formatTableRow(new String[]{"| " + activity.getName(),
                             "| " + activity.getStartWeek(),
                             "| " + activity.getEndWeek(),
                             "| " + String.format("%.2f", activity.getPercentCompleted()),

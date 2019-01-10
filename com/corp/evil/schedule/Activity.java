@@ -11,7 +11,6 @@ public class Activity {
     private Team team;
     private Budget budget;
     private final static int LAST_WEEK_OF_YEAR = 52;
-    private final static int DAYS_IN_WORKWEEK = 5;
 
     private double costOfWorkScheduled;
     private double costOfWorkPerformed;
@@ -24,6 +23,14 @@ public class Activity {
     }
 
     public Activity(String name, int startWeek, int startYear, int endWeek, int endYear, Team team) {
+
+        if (startYear > endYear) {
+            throw new IllegalArgumentException("Start year of activity can not be later than end year!");
+        }
+        if (startYear == endYear && startWeek > endWeek) {
+            throw new IllegalArgumentException("Combination start year+month can not be later than end year+month!");
+        }
+
         this.name = name;
         this.startWeek = startWeek;
         this.endWeek = endWeek;
@@ -43,10 +50,7 @@ public class Activity {
                 e.printStackTrace();
             }
         }
-
     }
-
-
 //TODO: activity constructor without team
 
     //Accessor methods
