@@ -203,7 +203,7 @@ public class Print {
             endWeek = myScanner.readInt("Enter the end week: ");
             endYear = myScanner.readInt("Enter the end year: ");
             try {
-                activity = new Activity(name, startWeek, startYear, endWeek, endYear);
+                activity = new Activity(name, new TimePeriod(startWeek, startYear, endWeek, endYear));
             } catch (IllegalArgumentException e) {
                 Print.println(e + LS);
             }
@@ -229,6 +229,8 @@ public class Print {
 
     public static Project createProject(){
         String name = myScanner.readLine("Please enter the name of your new project:");
+
+
         int startYear = myScanner.readInt("Please enter the start year of your project.");
         int startWeek = myScanner.readInt("Please enter the start week of your project.");
         while (!checkWeeks(startWeek)){
@@ -246,11 +248,15 @@ public class Print {
         }
 
 
-        ProjectSchedule schedule = new ProjectSchedule(startYear, startWeek, endYear, endWeek);
+        ProjectSchedule schedule = new ProjectSchedule(new TimePeriod(startYear, startWeek, endYear, endWeek));
 
         Project project = new Project(name, schedule);
 
         return project;
+    }
+
+    public static void readStartToEnd(TimePeriod startToEnd) {
+
     }
 
     public static String enterName(){
@@ -458,6 +464,13 @@ public class Print {
 
     public static void defaultMonologue() {
         out.println("Choose a valid option!" + LS);
+        try {
+            println("Blabla");
+        } catch (RuntimeException e) {
+            println("Do something");
+        } catch (Exception e) {
+            println("Hi");
+        }
     }
 }
 

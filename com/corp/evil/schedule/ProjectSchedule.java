@@ -35,14 +35,18 @@ public class ProjectSchedule {
     private LocalDateTime start;
     private LocalDateTime end;
 
-    public ProjectSchedule() {
-        this.activities = new ArrayList<Activity>();
+    public ProjectSchedule(TimePeriod timePeriod, ArrayList<Activity> activities) {
+        this.start = getLocalDateTime(timePeriod.getStartYear(), timePeriod.getEndYear(), FIRST_WORKDAY, DAY_START_HOUR);
+        this.end = getLocalDateTime(timePeriod.getEndYear(), timePeriod.getEndWeek(), LAST_WORKDAY, DAY_END_HOUR);
+        this.activities = activities;
     }
 
-    public ProjectSchedule(int startYear, int startWeek, int endYear, int endWeek) {
-        this.start = getLocalDateTime(startYear, startWeek, FIRST_WORKDAY, DAY_START_HOUR);
-        this.end = getLocalDateTime(endYear, endWeek, LAST_WORKDAY, DAY_END_HOUR);
-        this.activities = new ArrayList<Activity>();
+    public ProjectSchedule() {
+        this.activities = new ArrayList<>();
+    }
+
+    public ProjectSchedule(TimePeriod timePeriod) {
+        this(timePeriod, new ArrayList<>());
     }
 
 
@@ -52,11 +56,9 @@ public class ProjectSchedule {
         this.getStartWeek();
     }
 
-    public ProjectSchedule(int startYear, int startWeek, int endYear, int endWeek, ArrayList<Activity> activities) {
-        this.start = getLocalDateTime(startYear, startWeek, FIRST_WORKDAY, DAY_START_HOUR);
-        this.end = getLocalDateTime(endYear, endWeek, LAST_WORKDAY, DAY_END_HOUR);
-        this.activities = activities;
-    }
+    //public void extendActivity
+
+
 
 
     public void sort() {
@@ -71,7 +73,7 @@ public class ProjectSchedule {
 
 
         for (Activity act : activities) {
-            long duration = (long) act.getDuration();
+            long duration = (long) act.getDurationInHours();
             totalDuration += duration;
             completion += act.getPercentCompleted() * duration;         // weight completion of activities with their expected duration
             budgetAtCompletion += act.getCostOfWorkScheduled();         // sum up the expected costs

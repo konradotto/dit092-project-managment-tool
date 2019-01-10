@@ -3,14 +3,11 @@ import java.util.TreeMap;
 
 public class Activity {
 
-    private int startWeek;
-    private int endWeek;
-    private int endYear;
-    private int startYear;
     private String name;
+    private TimePeriod timePeriod;
     private Team team;
     private Budget budget;
-    private final static int LAST_WEEK_OF_YEAR = 52;
+    private final static int WORKING_HOURS_PER_WEEK = 20;
 
     private double costOfWorkScheduled;
     private double costOfWorkPerformed;
@@ -18,28 +15,17 @@ public class Activity {
     private Map<Member, Long> timeSpent;
 
 
-    public Activity(String name, int startWeek, int startYear, int endWeek, int endYear) {
-        this(name, startWeek, startYear, endWeek, endYear, null);
+    public Activity(String name, TimePeriod timePeriod) {
+        this(name, timePeriod, null);
     }
 
-    public Activity(String name, int startWeek, int startYear, int endWeek, int endYear, Team team) {
-
-        if (startYear > endYear) {
-            throw new IllegalArgumentException("Start year of activity can not be later than end year!");
-        }
-        if (startYear == endYear && startWeek > endWeek) {
-            throw new IllegalArgumentException("Combination start year+month can not be later than end year+month!");
-        }
-
+    public Activity(String name, TimePeriod timePeriod, Team team) {
         this.name = name;
-        this.startWeek = startWeek;
-        this.endWeek = endWeek;
+        this.timePeriod = timePeriod;
         this.team = team;
         this.costOfWorkScheduled = scheduledCost();
         this.costOfWorkPerformed = 0.0;
         this.percentCompleted = 0.0;
-        this.startYear = startYear;
-        this.endYear = endYear;
         this.timeSpent = new TreeMap<Member, Long>();
         if (team!=null){
             try {
@@ -54,16 +40,8 @@ public class Activity {
 //TODO: activity constructor without team
 
     //Accessor methods
-    public int getDuration() {
-        int weeks;
-        if (getStartWeek() > getEndWeek()) {
-            int firstDur = LAST_WEEK_OF_YEAR - getStartWeek() + 1;
-            weeks = firstDur + getEndWeek();
-        } else {
-            weeks = getEndWeek() - getStartWeek() + 1;
-        }
-        int hours = weeks * 20;
-        return hours;
+    public int getDurationInHours() {
+        return timePeriod.getDurationInWeeks() * WORKING_HOURS_PER_WEEK;
     }
 
     public double getPercentCompleted() {
@@ -102,48 +80,31 @@ public class Activity {
         System.err.println(team.getName());
         System.err.println("Average Salary: " + averageSalary);
         System.err.println("Team Size: " + teamSize);
-        System.err.println("Duration: " + getDuration());
+        System.err.println("Duration: " + getDurationInHours());
 
-        return (averageSalary) * getDuration();
+        return (averageSalary) * getDurationInHours();
     }
 
     public void spendTime(long timeScheduled, long timeSpent, double cost) {
         costOfWorkPerformed += cost;
         costOfWorkScheduled += timeSpent;
-        percentCompleted += ((double) timeScheduled) / ((double) getDuration()) * 100.0;
+        percentCompleted += ((double) timeScheduled) / ((double) getDurationInHours()) * 100.0;
     }
 
     public int getStartWeek() {
-        return startWeek;
-    }
-
-    public void setStartWeek(int startWeek) {
-        this.startWeek = startWeek;
+        return timePeriod.getStartWeek();
     }
 
     public int getEndWeek() {
-        return endWeek;
+        return timePeriod.getEndWeek();
     }
-
-    public void setEndWeek(int endWeek) {
-        this.endWeek = endWeek;
-    }
-
 
     public int getEndYear() {
-        return endYear;
-    }
-
-    public void setEndYear(int endYear) {
-        this.endYear = endYear;
+        return timePeriod.getEndYear();
     }
 
     public int getStartYear() {
-        return startYear;
-    }
-
-    public void setStartYear(int startYear) {
-        this.startYear = startYear;
+        return timePeriod.getStartYear();
     }
 
     public String getName() {
