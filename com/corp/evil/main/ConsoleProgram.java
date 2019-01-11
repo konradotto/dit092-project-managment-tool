@@ -27,35 +27,35 @@ public class ConsoleProgram {
     private static final int PRIMARY_BUDGET = 5;
     private static final int PRIMARY_SAVE_EXIT = 6;
 
-    private static final int PRINT_ALL_TASKS = 1;
-    private static final int ADD_TASK = 2;
-    private static final int EDIT_TASK_MENU = 3;
-    private static final int REMOVE_TASK = 4;
-    private static final int ASSIGN_TASK = 5;
-    private static final int TASK_TIME_SETTER= 6;
-    private static final int LEAVE_TASK_MANAGER= 7;
+    private static final int TASKS_PRINT_ALL = 1;
+    private static final int TASK_ADD = 2;
+    private static final int TASK_EDIT = 3;
+    private static final int TASK_REMOVE = 4;
+    private static final int TASK_ASSIGN_TEAM = 5;
+    private static final int TASK_UPDATE_TIME_SPENT = 6;
+    private static final int LEAVE_TASK_MANAGER = 7;
 
     private static final int EDIT_TASK_NAME= 1;
     private static final int EDIT_TASK_END_WEEK= 2;
     private static final int EDIT_TASK_END_YEAR= 3;
     private static final int LEAVE_TASK_MENU= 4;
 
-    private static final int PRINT_PROJECT_MEMBERS = 1;
-    private static final int PRINT_PROJECT_TEAMS = 2;
-    private static final int ADD_MEMBER_PROJECT = 3;
-    private static final int EDIT_MEMBER = 4;
-    private static final int REMOVE_MEMBER = 5;
-    private static final int ADD_TEAM = 6;
-    private static final int EDIT_TEAM = 7;
+    private static final int PROJECT_PRINT_MEMBERS = 1;
+    private static final int PROJECT_PRINT_TEAMS = 2;
+    private static final int PROJECT_ADD_MEMBER = 3;
+    private static final int PROJECT_EDIT_MEMBER = 4;
+    private static final int PROJECT_REMOVE_MEMBER = 5;
+    private static final int PROJECT_ADD_TEAM = 6;
+    private static final int SUBTEAM_EDIT = 7;
     private static final int LEAVE_TEAM_MANAGER = 8;
 
     private static final int EDIT_MEMBER_NAME = 1;
     private static final int EDIT_MEMBER_SALARY = 2;
     private static final int LEAVE_MEMBER_MENU = 3;
 
-    private static final int EDIT_TEAM_NAME = 1;
-    private static final int ADD_MEMBER_TO_TEAM = 2;
-    private static final int REMOVE_MEMBER_FROM_TEAM= 3;
+    private static final int TEAM_CHANGE_NAME = 1;
+    private static final int TEAM_ADD_MEMBER = 2;
+    private static final int TEAM_REMOVE_MEMBER = 3;
     private static final int LEAVE_TEAM_MENU = 4;
 
     private static final int PRINT_RISK_MATRIX = 1;
@@ -158,14 +158,14 @@ public class ConsoleProgram {
                 riskManager();
                 break;
             case PRIMARY_BUDGET:
-                //TODO: Is this all we want for the budget?
+                // TODO: Is this all we want for the budget?
                 Print.println(project.getBudget());
                 break;
             case PRIMARY_SAVE_EXIT:
                 next = END;
                 break;
             default:
-                System.out.println("Choose a valid option!\n");
+                Print.println("Choose a valid option!\n");
                 next = primaryMenu();
                 break;
         }
@@ -173,7 +173,7 @@ public class ConsoleProgram {
     }
 
     /**
-     * Function closing the Console Program.
+     * Routine for closing the Console Program.
      * Prints a Goodbye-Message and saves the project.     *
      */
     private static void endConsoleProgram() {
@@ -188,38 +188,31 @@ public class ConsoleProgram {
 
     public static void taskManager() {
         boolean leaveMenu = false;
-        do {
-            switch (Print.printTasksMenu()) {
-                case PRINT_ALL_TASKS:
-                    Print.println(project.getSchedule().toString());
-                    break;
-                case ADD_TASK:
-                    try {
-                        project.getSchedule().addActivity(Print.createActivity());
-                    } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
-                        Print.println(e + Print.LS);
-                    }
-                    break;
-                case EDIT_TASK_MENU:
-                    editTask();
-                    break;
-                case REMOVE_TASK:
-                    taskRemover();
-                    break;
-                case ASSIGN_TASK:
-                    taskAssigner();
-                    break;
-                case TASK_TIME_SETTER:
-                    taskTimeSetter();
-                    break;
-                case LEAVE_TASK_MANAGER:
-                    Print.println("Leaving the task manager...\n");
-                    leaveMenu = true;
-                    break;
-                default:
-                    Print.println("Choose a valid option!\n");
-                    break;
-            }
+        do switch (Print.printTasksMenu()) {
+            case TASKS_PRINT_ALL:
+                Print.println(project.getSchedule().toString());
+                break;
+            case TASK_ADD:
+                project.addActivity(Print.createActivity());
+                break;
+            case TASK_EDIT:
+                editTask();
+                break;
+            case TASK_REMOVE:
+                taskRemover();
+                break;
+            case TASK_ASSIGN_TEAM:
+                taskAssigner();
+                break;
+            case TASK_UPDATE_TIME_SPENT:
+                taskTimeSetter();
+                break;
+            case LEAVE_TASK_MANAGER:
+                leaveMenu = true;
+                break;
+            default:
+                Print.println("Choose a valid option!" + Print.LS);
+                break;
         } while (!leaveMenu);
     }
 
@@ -382,7 +375,7 @@ public class ConsoleProgram {
     private static void teamMenu() {
         boolean leave = false;
         do switch (Print.printTeamMenu()) {
-            case PRINT_PROJECT_MEMBERS:
+            case PROJECT_PRINT_MEMBERS:
                 if (project.getTeam().getMembers().isEmpty()) {
                     System.out.println("No registered members!" + Print.LS);
                 } else {
@@ -390,7 +383,7 @@ public class ConsoleProgram {
 
                 }
                 break;
-            case PRINT_PROJECT_TEAMS:
+            case PROJECT_PRINT_TEAMS:
                 if (project.getTeams().isEmpty()) {
                     System.out.println("No registered teams!" + Print.LS);
                 } else {
@@ -399,7 +392,7 @@ public class ConsoleProgram {
                     }
                 }
                 break;
-            case ADD_MEMBER_PROJECT:
+            case PROJECT_ADD_MEMBER:
                 try {
                     project.getTeam().addMember(Print.createMember());
                 } catch (MemberIsNullException e) {
@@ -408,19 +401,13 @@ public class ConsoleProgram {
                     e.printStackTrace();
                 }
                 break;
-            case EDIT_MEMBER:
-                editMember();
+            case PROJECT_EDIT_MEMBER:
+                editMember(project.getTeam());
                 break;
-            case REMOVE_MEMBER:
-                Member member = chooseMember();
-                try {
-                    project.getTeam().removeMember(member);
-                    project.memberNameChanger(member,"(Removed) " + member.getName());
-                } catch (MemberIsNullException e) {
-                    Print.println(e + Print.LS);    //TODO: use error message
-                }
+            case PROJECT_REMOVE_MEMBER:
+                project.removeMember(chooseMember(project.getTeam()));
                 break;
-            case ADD_TEAM:
+            case PROJECT_ADD_TEAM:
                 try {
                     project.addTeam(Print.createTeam());
                 } catch (TeamAlreadyRegisteredException e) {
@@ -429,7 +416,7 @@ public class ConsoleProgram {
                     e.printStackTrace();
                 }
                 break;
-            case EDIT_TEAM:
+            case SUBTEAM_EDIT:
                 editTeam();
                 break;
             case LEAVE_TEAM_MANAGER://Back to previous menu
@@ -441,9 +428,9 @@ public class ConsoleProgram {
         } while (!leave);
     }
 
-    private static boolean editMember() {
+    private static boolean editMember(Team team) {
 
-        Member member = chooseMember();
+        Member member = chooseMember(team);
         if (member == null) {
             return false;
         }
@@ -485,25 +472,24 @@ public class ConsoleProgram {
         boolean leave = false;
         do switch (Print.printEditSubTeamMenu()) {
 
-            case EDIT_TEAM_NAME:
+            case TEAM_CHANGE_NAME:
                 team.setName(myScanner.readLine("Enter the teams new name: "));
                 break;
-            case ADD_MEMBER_TO_TEAM:
+            case TEAM_ADD_MEMBER:
                 try {
-                    team.addMember(chooseMember());
+                    team.addMember(chooseMember(project.getTeam()));
                 } catch (MemberIsNullException | MemberAlreadyRegisteredException e) {
                     Print.println(e + Print.LS);
                 }
                 break;
-            case REMOVE_MEMBER_FROM_TEAM:
+            case TEAM_REMOVE_MEMBER:
                 try {
-                    team.removeMember(chooseMember());
+                    team.removeMember(chooseMember(team));
                 } catch (MemberIsNullException e) {
                     Print.println(e + Print.LS);
                 }
                 break;
             case LEAVE_TEAM_MENU:
-                Print.println("Leaving the edit team menu...");
                 leave = true;
                 break;
             default:
