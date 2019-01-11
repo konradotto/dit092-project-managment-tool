@@ -66,6 +66,16 @@ public class Activity {
         return 0;
     }
 
+    public void setEndWeek(int week) {
+        //TODO
+    }
+
+    public void setEndYear(int year) {
+        //TODO
+    }
+
+
+
     public double scheduledCost() {
         double averageSalary = 0.0;
         if ((team == null) || (team.getMembers().isEmpty())){
