@@ -109,30 +109,27 @@ public class ConsoleProgram {
      * @return next point in the program to continue from
      */
     private static int loadOrNewProject() {
-        int next = MAIN;
+        int next = PROJECT;                 // default next action if nothing changes
         switch (Print.printStartMenu()) {
             case LOAD:
                 next = loadProject();       // set next to MAIN if and only if PROJECT_LOADED
                 break;
             case NEW:
-                if (!(createProject() == PROJECT_CREATED)) {
-                    next = PROJECT;
-                }
+                createProject();            // after this we always want ot execute MAIN
+                next = MAIN;
                 break;
             case END:
                 next = END;
                 break;
-
             default:
-                Print.println("Choose a valid option!" + Print.LS);
-                next = PROJECT;
+                Print.defaultMonologue();
                 break;
         }
         return next;
     }
 
     /**
-     * Function displaying the primary Menu of our application
+     * Routine displaying the primary Menu of the project-management-tool.
      *
      * @return
      */
@@ -159,8 +156,7 @@ public class ConsoleProgram {
                 next = END;
                 break;
             default:
-                Print.println("Choose a valid option!\n");
-                next = primaryMenu();
+                Print.defaultMonologue();
                 break;
         }
         return next;
@@ -179,6 +175,10 @@ public class ConsoleProgram {
         Print.exitProgram(projectUsed);
     }
 
+    /**
+     * Routine for running the project-menu.
+     * Will offer to print or edit a project or leave until leaving is chosen.
+     */
     private static void projectMenu() {
         boolean leave = false;
         do switch (Print.printProjectMenu()) {
@@ -224,7 +224,7 @@ public class ConsoleProgram {
                 leaveMenu = true;
                 break;
             default:
-                Print.println("Choose a valid option!" + Print.LS);
+                Print.defaultMonologue();
                 break;
         } while (!leaveMenu);
     }
@@ -576,9 +576,8 @@ public class ConsoleProgram {
         return MAIN;
     }
 
-    private static int createProject() {
+    private static void createProject() {
         project = Print.createProject();
-        return PROJECT_CREATED;
     }
 
     public static void setProject(Project pro) {
