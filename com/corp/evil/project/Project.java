@@ -263,12 +263,21 @@ public class Project {
         return isProject;
     }
 
-
+    /**
+     * Method to allow the user to save all future changes on the project in a new file instead of
+     * overwriting the source-file.
+     * Keeps the old file if no new file is selected.
+     */
     public void offerFileChange() {
         int changeFile = JOptionPane.showConfirmDialog(null, "Do you want to change the save-path?",
                 "Warning", JOptionPane.YES_NO_OPTION);
         if (changeFile == JOptionPane.YES_OPTION) {
+            File currentFile = this.file;
             setFile();
+            if (file == null) {
+                file = currentFile;
+                Print.println("Selecting a new save-path failed. Using the old file instead." + LS);
+            }
         }
     }
 

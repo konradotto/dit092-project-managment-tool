@@ -19,7 +19,7 @@ public class Print {
     private static final int NO_PROJECT = 1;
 
     private static StringBuilder sb = new StringBuilder();
-    public static String LS = System.lineSeparator();
+    static final String LS = System.lineSeparator();
     private static final PrintStream out = System.out;
 
     /**
@@ -50,10 +50,12 @@ public class Print {
         try {
             project = JsonReaderWriter.load(Project.class);
         } catch (IOException e) {
+            Print.println("No project could be loaded from the specified file." + LS);
             return IO_EXCEPTION;
         }
 
         if (!project.isProject()) {
+            Print.println("The object loaded from the json-file is no project." + LS);
             return NOT_A_PROJECT;
         }
         project.offerFileChange();
@@ -74,6 +76,12 @@ public class Print {
     }
 
 
+    /**
+     * Function specifying what to print when the program is closed
+     *
+     * @param projectUsed
+     * @return
+     */
     public static int exitProgram(boolean projectUsed) {
         sb.append(String.join("", Collections.nCopies(SEPARATOR_WIDTH, "*")) + LS);
         sb.append("The Console Application is being terminated." + LS);
@@ -194,23 +202,9 @@ public class Print {
 
     public static Activity createActivity(){
         String name = myScanner.readLine("Enter the name of the task: ");
-
-        int startWeek, startYear, endWeek, endYear;
-        Activity activity = null;
-        do {
-            startWeek = myScanner.readInt("Enter the start week: ");
-            startYear = myScanner.readInt("Enter the start year: ");
-            endWeek = myScanner.readInt("Enter the end week: ");
-            endYear = myScanner.readInt("Enter the end year: ");
-            try {
-                activity = new Activity(name, new TimePeriod(startWeek, startYear, endWeek, endYear));
-            } catch (IllegalArgumentException e) {
-                Print.println(e + LS);
-            }
-        } while (activity == null);
-
-        return activity;
+        return new Activity(name, readTimePeriod("activity"));
     }
+
 
     public static Risk createRisk(){
         String name = myScanner.readLine("Enter the name of the risk: ");
@@ -227,36 +221,37 @@ public class Print {
         return risk;
     }
 
-    public static Project createProject(){
-        String name = myScanner.readLine("Please enter the name of your new project:");
 
+    /**
+     * Method reading the start year, start week, end year and end week of a TimePeriod repeatedly
+     * until the values are successfully used to initialize a TimePeriod.
+     *
+     * @param purpose a String telling the user what he is entering the dates for
+     * @return the resulting TimePeriod
+     */
+    public static TimePeriod readTimePeriod(String purpose) {
+        int startYear = myScanner.readInt("Enter the start year of the " + purpose + ": ");
+        int startWeek = myScanner.readInt("Enter the start week of the " + purpose + ": ");
+        int endYear = myScanner.readInt("Enter the end year of the " + purpose + ": ");
+        int endWeek = myScanner.readInt("Enter the end week of the " + purpose + ": ");
 
-        int startYear = myScanner.readInt("Please enter the start year of your project.");
-        int startWeek = myScanner.readInt("Please enter the start week of your project.");
-        while (!checkWeeks(startWeek)){
-            startWeek = myScanner.readInt("Please enter the start week of your project.");
+        try {
+            return new TimePeriod(startWeek, startYear, endWeek, endYear);
+        } catch (IllegalArgumentException e) {
+            Print.println(e + LS);
+            return readTimePeriod(purpose);             // recursively call of readTimePeriod until it succeeds
         }
-        int endYear = myScanner.readInt("Please enter the end year of your project.");
-        int endWeek = myScanner.readInt("Please enter the end week of your project.");
-        while (!checkWeeks(endWeek)){
-            endWeek = myScanner.readInt("Please enter the end week of your project.");
-        }
-
-        while (!checkYears(startYear,endYear)){
-            startYear = myScanner.readInt("Please enter the start year of your project.");
-            endYear = myScanner.readInt("Please enter the end year of your project.");
-        }
-
-
-        ProjectSchedule schedule = new ProjectSchedule(new TimePeriod(startYear, startWeek, endYear, endWeek));
-
-        Project project = new Project(name, schedule);
-
-        return project;
     }
 
-    public static void readStartToEnd(TimePeriod startToEnd) {
 
+    /**
+     * Function reading the name and dates to create a new project
+     *
+     * @return the project created with the collected data
+     */
+    public static Project createProject() {
+        String name = myScanner.readLine("Please enter the name of the new project:");
+        return new Project(name, new ProjectSchedule(readTimePeriod("project")));
     }
 
     public static String enterName(){
@@ -264,11 +259,11 @@ public class Print {
         return name;
     }
 
-    public static LocalDateTime ender(){
-        int endYear = myScanner.readInt("Please enter the end year of your project.");
-        int endWeek = myScanner.readInt("Please enter the end week of your project.");
-        while (!checkWeeks(endWeek)){
-            endWeek = myScanner.readInt("Please enter the end week of your project.");
+    public static LocalDateTime ender() {
+        int endYear = myScanner.readInt("Please enter the end year of the project.");
+        int endWeek = myScanner.readInt("Please enter the end week of the project.");
+        while (!checkWeeks(endWeek)) {
+            endWeek = myScanner.readInt("Please enter the end week of the project.");
         }
         LocalDateTime date = ProjectSchedule.getLocalDateTime(endYear, endWeek, ProjectSchedule.LAST_WORKDAY, ProjectSchedule.DAY_END_HOUR);
         return date;
@@ -276,7 +271,7 @@ public class Print {
 
 
     public static Member createMember() {
-        String name = myScanner.readLine("Please enter the name of your new member:");
+        String name = myScanner.readLine("Please enter the name of the new member:");
         double salary = myScanner.readDouble("Please enter the salary of the new member:");
         try {
             Member member = new Member(name, salary);
@@ -442,21 +437,6 @@ public class Print {
             return false;
         } else if (week < 1) {
             println("The first week of the year is week 1!" + LS);
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Method checking whether the end year is bigger or equal than the start year
-     *
-     * @param startYear
-     * @param endYear
-     * @return
-     */
-    private static boolean checkYears(int startYear, int endYear) {
-        if (startYear > endYear) {
-            println("The end year cannot be lower than the start year" + LS);
             return false;
         }
         return true;

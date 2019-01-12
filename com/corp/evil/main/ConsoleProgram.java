@@ -35,10 +35,10 @@ public class ConsoleProgram {
     private static final int TASK_UPDATE_TIME_SPENT = 6;
     private static final int LEAVE_TASK_MANAGER = 7;
 
-    private static final int EDIT_TASK_NAME= 1;
-    private static final int EDIT_TASK_END_WEEK= 2;
-    private static final int EDIT_TASK_END_YEAR= 3;
-    private static final int LEAVE_TASK_MENU= 4;
+    private static final int EDIT_TASK_NAME = 1;
+    private static final int EDIT_TASK_END_WEEK = 2;
+    private static final int EDIT_TASK_END_YEAR = 3;
+    private static final int LEAVE_TASK_MENU = 4;
 
     private static final int PROJECT_PRINT_MEMBERS = 1;
     private static final int PROJECT_PRINT_TEAMS = 2;
@@ -74,7 +74,7 @@ public class ConsoleProgram {
     //private static boolean proceed = true;
 
     /**
-     * Function to run the ConsoleProgram.
+     * Routine to run the ConsoleProgram.
      * Start by choosing a project.
      * Afterwards the main menu is entered and looped.
      *
@@ -85,21 +85,19 @@ public class ConsoleProgram {
         // set entry point for the console program
         int position = PROJECT;
 
-        do {
-            switch (position) {
-                case PROJECT:       // print start menu and choose whether to load or create a new project
-                    position = loadOrNewProject();
-                    break;
-                case MAIN:
-                    position = primaryMenu();
-                    break;
-                case END:
-                    endConsoleProgram();
-                    proceed = false;
-                    break;
-                default:
-                    break;
-            }
+        do switch (position) {
+            case PROJECT:       // print start menu and choose whether to load or create a new project
+                position = loadOrNewProject();
+                break;
+            case MAIN:
+                position = primaryMenu();
+                break;
+            case END:
+                endConsoleProgram();
+                proceed = false;
+                break;
+            default:
+                break;
         } while (proceed);
 
         return SUCCESS;     // return success after finishing the program
@@ -114,10 +112,7 @@ public class ConsoleProgram {
         int next = MAIN;
         switch (Print.printStartMenu()) {
             case LOAD:
-                if (Print.loadProject() != Print.PROJECT_LOADED) {
-                    next = PROJECT;
-                    Print.println("Loading the Project failed. Try again!" + Print.LS);
-                }
+                next = loadProject();       // set next to MAIN if and only if PROJECT_LOADED
                 break;
             case NEW:
                 if (!(createProject() == PROJECT_CREATED)) {
@@ -133,7 +128,6 @@ public class ConsoleProgram {
                 next = PROJECT;
                 break;
         }
-
         return next;
     }
 
@@ -158,7 +152,7 @@ public class ConsoleProgram {
                 riskManager();
                 break;
             case PRIMARY_BUDGET:
-                // TODO: Is this all we want for the budget?
+                // TODO: fix the god damn budget already, stupid idiot (Konrad)
                 Print.println(project.getBudget());
                 break;
             case PRIMARY_SAVE_EXIT:
@@ -174,7 +168,7 @@ public class ConsoleProgram {
 
     /**
      * Routine for closing the Console Program.
-     * Prints a Goodbye-Message and saves the project.     *
+     * Prints a Goodbye-Message and saves the project.
      */
     private static void endConsoleProgram() {
         boolean projectUsed = false;
@@ -183,6 +177,25 @@ public class ConsoleProgram {
             projectUsed = true;
         }
         Print.exitProgram(projectUsed);
+    }
+
+    private static void projectMenu() {
+        boolean leave = false;
+        do switch (Print.printProjectMenu()) {
+            case PRINT_PROJECT:
+                Print.println(project.toString());
+                break;
+            case EDIT_PROJECT:
+                editProject();
+                break;
+            case LEAVE_PROJECT_MENU:
+                Print.println("Leaving the general project menu...");
+                leave = true;
+                break;
+            default:
+                Print.defaultMonologue();
+                break;
+        } while (!leave);
     }
 
 
@@ -531,26 +544,6 @@ public class ConsoleProgram {
     }
 
 
-    private static void projectMenu() {
-        boolean leave = false;
-        do switch (Print.printProjectMenu()) {
-            case PRINT_PROJECT:
-                Print.println(project.toString());
-                break;
-            case EDIT_PROJECT:
-                editProject();
-                break;
-            case LEAVE_PROJECT_MENU:
-                Print.println("Leaving the general project menu...");
-                leave = true;
-                break;
-            default:
-                Print.defaultMonologue();
-                break;
-        } while (!leave);
-    }
-
-
     //TODO: do we really need the projectEditingMenu? Changing the start date or name from the projectMenu should be good enough...
 
     /**
@@ -575,17 +568,24 @@ public class ConsoleProgram {
         } while (!leave);
     }
 
+    private static int loadProject() {
+        if (Print.loadProject() != Print.PROJECT_LOADED) {
+            Print.println("Loading the Project failed. Try again!" + Print.LS);
+            return PROJECT;
+        }
+        return MAIN;
+    }
+
+    private static int createProject() {
+        project = Print.createProject();
+        return PROJECT_CREATED;
+    }
+
     public static void setProject(Project pro) {
         project = pro;
     }
 
     public static Project getProject() {
         return ConsoleProgram.project;
-    }
-
-
-    private static int createProject() {
-        setProject(Print.createProject());
-        return PROJECT_CREATED;
     }
 }
