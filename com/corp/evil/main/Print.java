@@ -235,7 +235,7 @@ public class Print {
         int endWeek = myScanner.readInt("Enter the end week of the " + purpose + ": ");
 
         try {
-            return new TimePeriod(startWeek, startYear, endWeek, endYear);
+            return new TimePeriod(startYear, startWeek, endYear, endWeek);
         } catch (IllegalArgumentException e) {
             Print.println(e + LS);
             return readTimePeriod(purpose);             // recursively call of readTimePeriod until it succeeds
