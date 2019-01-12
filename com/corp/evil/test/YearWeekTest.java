@@ -13,21 +13,25 @@ public class YearWeekTest {
 
     public static class NonParameterizedYearWeekTests {
 
+        // Exception because year is too early
         @Test(expected = IllegalArgumentException.class)
         public void testConstructWithYearTooSmall() {
             new YearWeek(YearWeek.EARLIEST_YEAR_ALLOWED - 1, YearWeek.WEEKS_PER_YEAR);
         }
 
+        // Exception because year is too late
         @Test(expected = IllegalArgumentException.class)
         public void testConstructWithYearTooBig() {
             new YearWeek(YearWeek.LATEST_YEAR_ALLOWED + 1, YearWeek.WEEKS_PER_YEAR);
         }
 
+        // Exception because week < 1
         @Test(expected = IllegalArgumentException.class)
         public void testConstructWithWeekTooSmall() {
             new YearWeek(YearWeek.EARLIEST_YEAR_ALLOWED, YearWeek.FIRST_WEEK - 1);
         }
 
+        // Exception because week > 52
         @Test(expected = IllegalArgumentException.class)
         public void testConstructWithWeekTooBig() {
             new YearWeek(YearWeek.EARLIEST_YEAR_ALLOWED, YearWeek.WEEKS_PER_YEAR + 1);
@@ -38,7 +42,7 @@ public class YearWeekTest {
     public static class ParameterizedYearWeekTests {
 
         // fields used as parameters must be public
-        @Parameterized.Parameter(0)
+        @Parameterized.Parameter()
         public int year1;
         @Parameterized.Parameter(1)
         public int week1;
@@ -55,10 +59,10 @@ public class YearWeekTest {
         @Parameterized.Parameters
         public static Collection<Object[]> data() {
             Object[][] data = new Object[][]{
-                    {2010, 12, 2010, 13, -1, 1},
-                    {2010, 42, 2010, 42, 0, 0},
-                    {2010, 15, 2011, 15, -1, 1},
-                    {1950, 1, 1949, 52, 1, -1}
+                    {2010, 12, 2010, 13, -1, 1},        // first earlier second (same year, one week off)
+                    {2010, 42, 2010, 42, 0, 0},         // first equal second (same year, same week)
+                    {2010, 15, 2011, 15, -1, 1},        // first earlier second (same year, different week)
+                    {1950, 1, 1949, 52, 1, -1}          // first later second (year shift)
             };
             return Arrays.asList(data);
         }
