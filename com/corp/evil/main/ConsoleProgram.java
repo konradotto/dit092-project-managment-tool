@@ -556,7 +556,7 @@ public class ConsoleProgram {
                 project.setName(Print.enterName());
                 break;
             case EDIT_PROJECT_END:
-                project.getSchedule().setEnd(Print.ender());
+                project.setEndWeek(Print.pickEndWeek("project"));
                 break;
             case LEAVE_PROJECT_MENU:
                 Print.println("Leaving the menu for project editing...");

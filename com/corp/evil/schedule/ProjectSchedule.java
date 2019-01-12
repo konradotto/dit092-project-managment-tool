@@ -11,13 +11,11 @@ public class ProjectSchedule {
     public final static int DAY_END_HOUR = 17;
     private final int LAST_WEEK_OF_YEAR = 52;
 
-
+    // constants for table formatting
     private final static int COLUMN_WIDTH = 25;
     private final static int COLUMNS = 5;
-
     private final static String LS = Print.LS;
     private final static String SEPARATOR = String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")) + LS;
-
     private final static String HEAD;
 
     // initialising the static header part of every ProjectSchedule
@@ -25,45 +23,29 @@ public class ProjectSchedule {
         StringBuilder sbTemp = new StringBuilder();
         sbTemp.append("\t\t\t TASKS " + LS);
         sbTemp.append(SEPARATOR);
-        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start Week:", "| End Week:", "| Percent Completed:", "| Teams: ", "|"}));
+        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start YearWeek:", "| End YearWeek:", "| Percent Completed:", "| Teams: ", "|"}));
         sbTemp.append(SEPARATOR);
 
         HEAD = sbTemp.toString();
     }
 
+    // member variables
     private ArrayList<Activity> activities;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private TimePeriod timePeriod;
 
     public ProjectSchedule(TimePeriod timePeriod, ArrayList<Activity> activities) {
-        this.start = getLocalDateTime(timePeriod.getStartYear(), timePeriod.getEndYear(), FIRST_WORKDAY, DAY_START_HOUR);
-        this.end = getLocalDateTime(timePeriod.getEndYear(), timePeriod.getEndWeek(), LAST_WORKDAY, DAY_END_HOUR);
+        this.timePeriod = timePeriod;
         this.activities = activities;
-    }
-
-    public ProjectSchedule() {
-        this.activities = new ArrayList<>();
     }
 
     public ProjectSchedule(TimePeriod timePeriod) {
         this(timePeriod, new ArrayList<>());
     }
 
-
-    public ProjectSchedule(ArrayList<Activity> activities) {
-        this.activities = activities;
-        this.getEndWeek();
-        this.getStartWeek();
-    }
-
-    //public void extendActivity
-
-
-
-
     public void sort() {
-        activities.sort(Comparator.comparingInt(Activity::getStartWeek));
-        activities.sort(Comparator.comparingInt(Activity::getStartYear));
+        activities.sort(Activity::compareStartTime);
+        //activities.sort(Comparator.comparingInt(Activity::getStartWeek));
+        //activities.sort(Comparator.comparingInt(Activity::getStartYear));
     }
 
     public double getEarnedValue() {
@@ -135,9 +117,12 @@ public class ProjectSchedule {
 
         if (activities.contains(activity)) {
             throw new ActivityAlreadyRegisteredException("This activity is already registered!");
-        } else {
-            activities.add(activity);
         }
+        if (!activity.getTimePeriod().isWithin(timePeriod)) {
+            throw new IllegalArgumentException("The activities period is not within the time frame of the schedule!");
+        }
+
+        activities.add(activity);
     }
 
     public void removeActivity(Activity activity) throws ActivityIsNullException {
@@ -177,16 +162,16 @@ public class ProjectSchedule {
                 if (activity.getTeam() != null) {
 
                     sb.append(formatTableRow(new String[]{"| " + activity.getName(),
-                            "| " + activity.getStartWeek(),
-                            "| " + activity.getEndWeek(),
+                            "| " + activity.getTimePeriod().getStart().getWeek(),
+                            "| " + activity.getTimePeriod().getEnd().getWeek(),
                             "| " + String.format("%.2f", activity.getPercentCompleted()),
                             "| " + activity.getTeam().getName(),
                             "|"
                     }));
                 } else {
                     sb.append(formatTableRow(new String[]{"| " + activity.getName(),
-                            "| " + activity.getStartWeek(),
-                            "| " + activity.getEndWeek(),
+                            "| " + activity.getTimePeriod().getStart().getWeek(),
+                            "| " + activity.getTimePeriod().getEnd().getWeek(),
                             "| " + String.format("%.2f", activity.getPercentCompleted()),
                             "| " + "No team assigned",
                             "|"
@@ -200,7 +185,7 @@ public class ProjectSchedule {
 
 
     public List<Activity> getParticipation(Member member) {
-        List<Activity> result = new ArrayList<Activity>();
+        List<Activity> result = new ArrayList<>();
         for (Activity act : this.activities) {
             if (act.getTeam().contains(member)) {
                 result.add(act);
@@ -230,11 +215,23 @@ public class ProjectSchedule {
     }
 
     public int getStartWeek() {
-        return ProjectSchedule.getWeek(this.start);
+        return timePeriod.getStart().getWeek();
     }
 
     public int getEndWeek() {
-        return ProjectSchedule.getWeek(this.end);
+        return timePeriod.getEnd().getWeek();
+    }
+
+    public void setEndWeek() {
+
+    }
+
+    public TimePeriod getTimePeriod() {
+        return timePeriod;
+    }
+
+    public void setTimePeriod(TimePeriod timePeriod) {
+        this.timePeriod = timePeriod;
     }
 
     public ArrayList<Activity> getActivities() {
@@ -243,21 +240,5 @@ public class ProjectSchedule {
 
     public void setActivities(ArrayList<Activity> activities) {
         this.activities = activities;
-    }
-
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
     }
 }

@@ -1,80 +1,50 @@
 public class TimePeriod {
 
-    public static final int EARLIEST_YEAR_ALLOWED = 1900;
-    private static final int FIRST_WEEK = 1;
-    public final static int WEEKS_PER_YEAR = 52;
+    private static final int LATER = 1;
 
-    private int startWeek;
-    private int startYear;
-    private int endWeek;
-    private int endYear;
+    private YearWeek start;
+    private YearWeek end;
 
-    public TimePeriod(int startWeek, int startYear, int endWeek, int endYear) {
-        if (startWeek < FIRST_WEEK || endWeek < FIRST_WEEK || startWeek > WEEKS_PER_YEAR || endWeek > WEEKS_PER_YEAR) {
-            throw new IllegalArgumentException("Weeks need to be integers in the interval " +
-                    FIRST_WEEK + " - " + WEEKS_PER_YEAR + "!");
-        }
-        if (startYear > endYear) {
-            throw new IllegalArgumentException("Start year can not be later than end year!" + Print.LS);
-        }
-        if (startYear < EARLIEST_YEAR_ALLOWED) {
-            throw new IllegalArgumentException("This program only allows periods starting from the year "
-                    + EARLIEST_YEAR_ALLOWED + "!");
-        }
-        if (startYear == endYear && startWeek > endWeek) {
+    public TimePeriod(YearWeek start, YearWeek end) {
+        if (start.compareTo(end) == LATER) {
             throw new IllegalArgumentException("Start of a TimePeriod can not be later than its end!");
         }
 
-        this.startWeek = startWeek;
-        this.startYear = startYear;
-        this.endWeek = endWeek;
-        this.endYear = endYear;
+        this.start = start;
+        this.end = end;
+    }
+
+    public TimePeriod(int startYear, int startWeek, int endYear, int endWeek) {
+        this(new YearWeek(startYear, startWeek), new YearWeek(endYear, endWeek));
     }
 
     public int getDurationInWeeks() {
-        int weeks = endWeek - startWeek + 1;
-        int years = endYear - startYear;
-        return weeks + years * WEEKS_PER_YEAR;
+        int weeks = end.getWeek() - start.getWeek() + 1;
+        int years = end.getYear() - start.getYear();
+        return weeks + years * YearWeek.WEEKS_PER_YEAR;
     }
 
     public boolean isWithin(TimePeriod otherPeriod) {
-        if (otherPeriod.getStartYear() > startYear ||
-                (otherPeriod.getStartYear() == startYear && otherPeriod.getStartWeek() > startWeek)) {       // otherPeriod starts after this
+        if (start.compareTo(otherPeriod.getStart()) == LATER) {         // other period starts before start?
             return false;
         }
-        return otherPeriod.getEndYear() >= endYear &&
-                (otherPeriod.getEndYear() != endYear || otherPeriod.getEndWeek() >= endWeek);
+
+        return otherPeriod.getEnd().compareTo(end) != LATER;
     }
 
-    public int getStartWeek() {
-        return startWeek;
+    public YearWeek getStart() {
+        return start;
     }
 
-    public void setStartWeek(int startWeek) {
-        this.startWeek = startWeek;
+    public void setStart(YearWeek start) {
+        this.start = start;
     }
 
-    public int getStartYear() {
-        return startYear;
+    public YearWeek getEnd() {
+        return end;
     }
 
-    public void setStartYear(int startYear) {
-        this.startYear = startYear;
-    }
-
-    public int getEndWeek() {
-        return endWeek;
-    }
-
-    public void setEndWeek(int endWeek) {
-        this.endWeek = endWeek;
-    }
-
-    public int getEndYear() {
-        return endYear;
-    }
-
-    public void setEndYear(int endYear) {
-        this.endYear = endYear;
+    public void setEnd(YearWeek end) {
+        this.end = end;
     }
 }

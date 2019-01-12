@@ -2,7 +2,6 @@ import java.util.List;
 
 public class Budget {
 
-    private final static String LS = System.lineSeparator();
     private final static String CURRENCY = "$";
 
     private final static double DEFAULT_COST_SCHEDULED = 0;
@@ -12,6 +11,16 @@ public class Budget {
     private double costOfWorkScheduled;
     private double costOfWorkPerformed;
     private double percentCompleted;
+
+    public static Budget calculateBudget(Activity activity) {
+        return new Budget();
+    }
+
+    public static double calculateEarnedValue(Activity activity) {
+        //TODO: this needs to be calculated
+        return activity.getPercentCompleted();
+    }
+
 
     public Budget(double costScheduled, double costPerformed, double percentCompleted) {
         this.costOfWorkScheduled = costScheduled;
@@ -40,10 +49,10 @@ public class Budget {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Budget:" + LS);
-        sb.append("Cost of work scheduled: \t" + CURRENCY + " " + costOfWorkScheduled + LS);
-        sb.append("Cost of work performed: \t" + CURRENCY + " " + costOfWorkPerformed + LS);
-        sb.append("Completion: \t\t\t\t" + percentCompleted + " %" + LS);
+        sb.append("Budget:" + Print.LS);
+        sb.append("Cost of work scheduled: \t" + CURRENCY + " " + costOfWorkScheduled + Print.LS);
+        sb.append("Cost of work performed: \t" + CURRENCY + " " + costOfWorkPerformed + Print.LS);
+        sb.append("Completion: \t\t\t\t" + percentCompleted + " %" + Print.LS);
 
         return sb.toString();
     }

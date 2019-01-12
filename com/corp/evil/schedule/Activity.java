@@ -6,7 +6,7 @@ public class Activity {
     private String name;
     private TimePeriod timePeriod;
     private Team team;
-    private Budget budget;
+    //private Budget budget;
     private final static int WORKING_HOURS_PER_WEEK = 20;
 
     private double costOfWorkScheduled;
@@ -37,6 +37,12 @@ public class Activity {
             }
         }
     }
+
+
+    public static int compareStartTime(Activity a1, Activity a2) {
+        return a1.getTimePeriod().getStart().compareTo(a2.getTimePeriod().getStart());
+    }
+
 //TODO: activity constructor without team
 
     //Accessor methods
@@ -101,22 +107,7 @@ public class Activity {
         percentCompleted += ((double) timeScheduled) / ((double) getDurationInHours()) * 100.0;
     }
 
-    public int getStartWeek() {
-        return timePeriod.getStartWeek();
-    }
-
-    public int getEndWeek() {
-        return timePeriod.getEndWeek();
-    }
-
-    public int getEndYear() {
-        return timePeriod.getEndYear();
-    }
-
-    public int getStartYear() {
-        return timePeriod.getStartYear();
-    }
-
+    // getters and setters
     public String getName() {
         return name;
     }
@@ -125,20 +116,20 @@ public class Activity {
         this.name = name;
     }
 
+    public TimePeriod getTimePeriod() {
+        return timePeriod;
+    }
+
+    public void setTimePeriod(TimePeriod timePeriod) {
+        this.timePeriod = timePeriod;
+    }
+
     public Team getTeam() {
         return team;
     }
 
     public void setTeam(Team team) {
         this.team = team;
-    }
-
-    public Budget getBudget() {
-        return budget;
-    }
-
-    public void setBudget(Budget budget) {
-        this.budget = budget;
     }
     //End of Accessor methods
 }

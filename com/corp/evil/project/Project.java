@@ -75,8 +75,11 @@ public class Project {
         } catch (ActivityIsNullException e) {
             Print.println(e.getMessage());
         }
+
+        onChange();
     }
 
+    //TODO: what is this doing?
     public boolean addActivity(String name, TimePeriod timePeriod, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
 
         // make sure the members are in the team
@@ -245,6 +248,17 @@ public class Project {
     public void setSchedule(ProjectSchedule schedule) {
         this.schedule = schedule;
         onChange();
+    }
+
+    public void setEndWeek(YearWeek endWeek) {
+        //TODO: handle all tasks to end before the new end week
+        try {
+            TimePeriod updatedPeriod = new TimePeriod(schedule.getTimePeriod().getStart(), endWeek);
+            schedule.setTimePeriod(updatedPeriod);
+        } catch (IllegalArgumentException e) {
+            //Let's see about that...
+        }
+
     }
 
     /**

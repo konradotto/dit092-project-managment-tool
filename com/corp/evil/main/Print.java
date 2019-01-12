@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.PrintStream;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -259,14 +258,19 @@ public class Print {
         return name;
     }
 
-    public static LocalDateTime ender() {
-        int endYear = myScanner.readInt("Please enter the end year of the project.");
-        int endWeek = myScanner.readInt("Please enter the end week of the project.");
-        while (!checkWeeks(endWeek)) {
-            endWeek = myScanner.readInt("Please enter the end week of the project.");
+    public static YearWeek pickEndWeek(String purpose) {
+        YearWeek endWeek;
+        int year = myScanner.readInt("Please enter the end year of the " + purpose + ".");
+        int week = myScanner.readInt("Please enter the end week of the " + purpose + ".");
+
+        try {
+            endWeek = new YearWeek(year, week);         // try whether the entered end week works
+
+        } catch (IllegalArgumentException e) {
+            println(e.getMessage() + LS);
+            endWeek = null;
         }
-        LocalDateTime date = ProjectSchedule.getLocalDateTime(endYear, endWeek, ProjectSchedule.LAST_WORKDAY, ProjectSchedule.DAY_END_HOUR);
-        return date;
+        return endWeek;
     }
 
 
