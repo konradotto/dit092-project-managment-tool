@@ -18,18 +18,29 @@ public class TimePeriod {
         this(new YearWeek(startYear, startWeek), new YearWeek(endYear, endWeek));
     }
 
+
+    /**
+     * Function calculating the duration of a TimePeriod in weeks.
+     *
+     * @return duration in weeks
+     */
     public int getDurationInWeeks() {
         int weeks = end.getWeek() - start.getWeek() + 1;
         int years = end.getYear() - start.getYear();
         return weeks + years * YearWeek.WEEKS_PER_YEAR;
     }
 
+    /**
+     * Function checking whether a TimePeriod is within another one.
+     *
+     * @param otherPeriod that should start no earlier than this and end no later than this.
+     * @return boolean telling whether otherPeriod is within this
+     */
     public boolean isWithin(TimePeriod otherPeriod) {
         if (start.compareTo(otherPeriod.getStart()) == LATER) {         // other period starts before start?
             return false;
         }
-
-        return otherPeriod.getEnd().compareTo(end) != LATER;
+        return (otherPeriod.getEnd().compareTo(end) != LATER);          // other period doesn't end after end?
     }
 
     public YearWeek getStart() {
