@@ -1,9 +1,9 @@
 public class YearWeek implements Comparable<YearWeek> {
 
-    public static final int EARLIEST_YEAR_ALLOWED = 1900;
-    public static final int LATEST_YEAR_ALLOWED = 2100;
-    private static final int FIRST_WEEK = 1;
-    public final static int WEEKS_PER_YEAR = 52;
+    static final int EARLIEST_YEAR_ALLOWED = 1900;
+    static final int LATEST_YEAR_ALLOWED = 2100;
+    static final int FIRST_WEEK = 1;
+    static final int WEEKS_PER_YEAR = 52;
 
     private int year;
     private int week;
