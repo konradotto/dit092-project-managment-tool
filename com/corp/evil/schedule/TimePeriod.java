@@ -31,6 +31,19 @@ public class TimePeriod {
     }
 
     /**
+     * Function to calculate the duration of a TimePeriod if it is possibly null.
+     *
+     * @param timePeriod TimePeriod of which the duration in weeks shall be determined.
+     * @return duration in weeks
+     */
+    public static int getDurationInWeeksStatically(TimePeriod timePeriod) {
+        if (timePeriod == null) {
+            return 0;
+        }
+        return timePeriod.getDurationInWeeks();
+    }
+
+    /**
      * Function checking whether a TimePeriod is within another one.
      *
      * @param otherPeriod that should start no earlier than this and end no later than this.
