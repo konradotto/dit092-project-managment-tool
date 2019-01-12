@@ -1,43 +1,62 @@
-import java.time.Duration;
+import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.UUID;
 
 public class Member {
 
     private String name;
     private final String uuid;
-    private double SALARY_PER_HOUR;
-    private Duration timeSpent;
+    private double salaryPerHour;
+    private int hoursSpent;
+    private Map<Activity, Integer> workContribution;
 
     Member(String name, double salary) throws NameIsEmptyException {
         if (name.isEmpty()) {
             throw new NameIsEmptyException("The field name cannot be empty!");
         }
         this.name = name;
-        SALARY_PER_HOUR = salary;
-        uuid = UUID.randomUUID().toString();
-        timeSpent = Duration.ofHours(0);
+        this.salaryPerHour = salary;
+        this.uuid = UUID.randomUUID().toString();
+        this.hoursSpent = 0;
+        this.workContribution = new TreeMap<>();
     }
 
     public double calculateSalary() {
-        return getTimeSpent() * getSALARY_PER_HOUR();
+        return getTimeSpent() * salaryPerHour;
     }
 
     @Override
     public String toString() {
         return "Member{" +
                 "name='" + name + '\'' +
-                ", SALARY_PER_HOUR=" + SALARY_PER_HOUR +
-                ", timeSpent=" + timeSpent +
+                ", SALARY_PER_HOUR=" + salaryPerHour +
+                ", timeSpent=" + hoursSpent +
                 "Total Salary" + calculateSalary() + '}';
     }
 
-    public void spendTime(long hours) {
-        setTimeSpent(timeSpent.plusHours(hours));
+    /**
+     * Method for a member to work on an activity. Updates the members contribution and timeSpent on the project.
+     *
+     * @param activity      Activity to work on
+     * @param timeSpent     Time de facto spent working on the activity [hours]
+     * @param timeScheduled effectively used time/progress made on the activity
+     * @return the cost payed in salary for the work
+     */
+    public double workOnActivity(Activity activity, int timeSpent, int timeScheduled) {
+        hoursSpent += timeSpent;
+        if (workContribution.containsKey(activity)) {
+            workContribution.put(activity, workContribution.get(activity) + timeScheduled);     // update the contribution according to the effective work
+        }
+        return timeSpent * salaryPerHour;
     }
 
-    public void setSALARY_PER_HOUR(double SALARY_PER_HOUR) {
-        this.SALARY_PER_HOUR = SALARY_PER_HOUR;
+    public void spendTime(int timeSpent) {
+        hoursSpent += timeSpent;
+    }
+
+    public void setSalaryPerHour(double salaryPerHour) {
+        this.salaryPerHour = salaryPerHour;
     }
 
     //GETTERS AND SETTERS
@@ -49,20 +68,16 @@ public class Member {
         return uuid;
     }
 
-    public double getSALARY_PER_HOUR() {
-        return SALARY_PER_HOUR;
+    public double getSalaryPerHour() {
+        return salaryPerHour;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setTimeSpent(Duration timeSpent) {
-        this.timeSpent = timeSpent;
-    }
-
-    public long getTimeSpent() {
-        return timeSpent.toHours();
+    public int getTimeSpent() {
+        return hoursSpent;
     }
 
     @Override

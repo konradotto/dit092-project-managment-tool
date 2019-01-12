@@ -1,7 +1,11 @@
+import java.time.DayOfWeek;
+
 public class TimePeriod {
-
+    // constants
     private static final int LATER = 1;
+    private static final int WORKING_DAYS = 5;
 
+    // member attributes
     private YearWeek start;
     private YearWeek end;
 
@@ -18,6 +22,23 @@ public class TimePeriod {
         this(new YearWeek(startYear, startWeek), new YearWeek(endYear, endWeek));
     }
 
+    /**
+     * @return
+     */
+    public double calculatePassedFraction(YearWeek week, DayOfWeek passedDay) {
+        if (week.isBefore(start)) {
+            return 0.0;                 // the week is before the relevant time
+        }
+        if (week.isAfter(end)) {
+            return 1.0;
+        }
+
+        int totalDays = getDurationInWeeks() * WORKING_DAYS;
+        int daysPassed = (new TimePeriod(start, week).getDurationInWeeks() - 1) * WORKING_DAYS;
+        daysPassed += passedDay.getValue();
+
+        return ((double) daysPassed) / ((double) totalDays);
+    }
 
     /**
      * Function calculating the duration of a TimePeriod in weeks.

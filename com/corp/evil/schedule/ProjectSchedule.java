@@ -1,7 +1,8 @@
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.WeekFields;
-import java.util.*;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 public class ProjectSchedule {
 
@@ -44,63 +45,57 @@ public class ProjectSchedule {
 
     public void sort() {
         activities.sort(Activity::compareStartTime);
-        //activities.sort(Comparator.comparingInt(Activity::getStartWeek));
-        //activities.sort(Comparator.comparingInt(Activity::getStartYear));
     }
 
+    /**
+     * The earned value is defined as the
+     *
+     * @return
+     */
     public double getEarnedValue() {
-        double completion = 0.0;
-        double budgetAtCompletion = 0.0;
-        long totalDuration = 0;
-
+        double earnedValue = 0.0;
 
         for (Activity act : activities) {
-            long duration = (long) act.getDurationInHours();
-            totalDuration += duration;
-            completion += act.getPercentCompleted() * duration;         // weight completion of activities with their expected duration
-            budgetAtCompletion += act.getCostOfWorkScheduled();         // sum up the expected costs
+            earnedValue += act.getEarnedValue();                // sum up completed costs
         }
-
-        completion /= (double) totalDuration;
-
-        System.err.println("Total Duration: " + totalDuration);
-        System.err.println("Completion: " + completion);
-        System.err.println("Budget at Completion: " + budgetAtCompletion);
-        // normalize after completions are weighted
-
-        return budgetAtCompletion * (completion / 100.0);
+        return earnedValue;
     }
 
+    /**
+     * The cost variance is defined as the difference between the earned value and the actual (personnel-)cost
+     * of the work conducted at any point of the project.
+     *
+     * @return earnedValue - actualCost
+     */
     public double getCostVariance() {
-
-        double budgetedCost = 0;
-        double actualCost = 0;
+        double actualCost = 0.0;
 
         for (Activity act : activities) {
-            budgetedCost += act.getCostOfWorkScheduled() * act.getPercentCompleted() / 100.0;
-            actualCost += act.getCostOfWorkPerformed();
+            actualCost += act.getCostSoFar();
         }
-
-        return budgetedCost - actualCost;
+        return getEarnedValue() - actualCost;
     }
 
-    public double getScheduledCost() {
-        double scheduledCost = 0;
+    /**
+     * @return
+     */
+    public double getScheduledCost(YearWeek yearWeek, DayOfWeek day) {
+        double scheduledCost = 0.0;
 
         for (Activity act : activities) {
-            System.err.println(act.getName());
-            System.err.println("Percent: " + act.getPercentCompleted());
-            System.err.println("Cost scheduled total: " + act.getCostOfWorkScheduled());
-            System.err.println("Cost scheduled by now: " + act.getPercentScheduled() * act.getCostOfWorkScheduled());
-            scheduledCost += act.getPercentScheduled() * act.getCostOfWorkScheduled();
+            scheduledCost += act.getScheduledCost(yearWeek, day);
         }
-
         return scheduledCost;
     }
 
-    public double getScheduleVariance() {
-
-        return getEarnedValue() - getScheduledCost();
+    /**
+     * The schedule variance is defined as the difference between the earned value
+     * and the cost of the work that should be done by this time of the project.
+     *
+     * @return earned value - scheduled cost
+     */
+    public double getScheduleVariance(YearWeek yearWeek, DayOfWeek after) {
+        return getEarnedValue() - getScheduledCost(yearWeek, after);
     }
 
     /**
@@ -164,7 +159,7 @@ public class ProjectSchedule {
                     sb.append(formatTableRow(new String[]{"| " + activity.getName(),
                             "| " + activity.getTimePeriod().getStart().getWeek(),
                             "| " + activity.getTimePeriod().getEnd().getWeek(),
-                            "| " + String.format("%.2f", activity.getPercentCompleted()),
+                            "| " + String.format("%.2f", activity.getCompletion() * 100.0),
                             "| " + activity.getTeam().getName(),
                             "|"
                     }));
@@ -172,7 +167,7 @@ public class ProjectSchedule {
                     sb.append(formatTableRow(new String[]{"| " + activity.getName(),
                             "| " + activity.getTimePeriod().getStart().getWeek(),
                             "| " + activity.getTimePeriod().getEnd().getWeek(),
-                            "| " + String.format("%.2f", activity.getPercentCompleted()),
+                            "| " + String.format("%.2f", activity.getCompletion() * 100.0),
                             "| " + "No team assigned",
                             "|"
                     }));
@@ -192,26 +187,6 @@ public class ProjectSchedule {
             }
         }
         return result;
-    }
-
-    public static LocalDateTime getLocalDateTime(int year, int week, int day, int hour) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.WEEK_OF_YEAR, week);
-        cal.set(Calendar.DAY_OF_WEEK, day);
-
-        // local date time requires a TimeZone which instant does not provide
-        TimeZone tz = cal.getTimeZone();
-        ZoneId zid = (tz == null) ? ZoneId.systemDefault() : tz.toZoneId();
-        LocalDateTime dt = LocalDateTime.ofInstant(cal.toInstant(), zid);
-
-        return dt.withHour(hour).withMinute(0).withSecond(0).withNano(0);
-    }
-
-
-    public static int getWeek(LocalDateTime date) {
-        WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        return date.get(weekFields.weekOfWeekBasedYear());
     }
 
     public int getStartWeek() {

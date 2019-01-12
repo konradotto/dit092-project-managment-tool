@@ -243,10 +243,11 @@ public class ConsoleProgram {
             Print.println("This member is not assigned to the chosen task!" + Print.LS);
             return false;
         } else {
-            long timeSpent = myScanner.readLong("Enter the amount of time that " + member.getName() + " has spent on " + task.getName() + ':');
-            long timeScheduled = myScanner.readLong("Enter the amount of scheduled time that " + member.getName() + " has spent on " + task.getName() + ':');
+            int timeSpent = myScanner.readInt("Enter the amount of time that " + member.getName() + " has spent on " + task.getName() + ':');
+            int timeScheduled = myScanner.readInt("Enter the amount of scheduled time that " + member.getName() + " has spent on " + task.getName() + ':');
 
-            task.getTeam().workOnActivity(member, task, timeSpent, timeScheduled);
+            // TODO: make member work instead of team
+            task.work(member, timeSpent, timeScheduled);
         }
         return false;
     }
@@ -288,7 +289,7 @@ public class ConsoleProgram {
             try {
                 team.addActivity(task);
                 task.setTeam(team);
-                task.setCostOfWorkScheduled(task.scheduledCost());
+                //task.setCostOfWorkScheduled(task.scheduledCost());        //TODO: something
             } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
                 Print.println(e + Print.LS);
                 return false;
@@ -332,7 +333,7 @@ public class ConsoleProgram {
                 activity.setName(myScanner.readLine("Enter the new name: "));
                 break;
             case EDIT_TASK_END_WEEK:
-                activity.setEndWeek(myScanner.readInt("Enter the new end week: "));
+                activity.setEndWeek(myScanner.readInt("Enter the new end week: "));     //TODO: fix this shit
                 break;
             case EDIT_TASK_END_YEAR:
                 activity.setEndYear(myScanner.readInt("Enter the new end year: "));
@@ -458,7 +459,7 @@ public class ConsoleProgram {
                     break;
                 case EDIT_MEMBER_SALARY:
                     double salary = myScanner.readDouble("Enter the members new salary: ");
-                    member.setSALARY_PER_HOUR(salary);
+                    member.setSalaryPerHour(salary);
                     project.memberSalaryChanger(member,salary);
                     break;
                 case LEAVE_MEMBER_MENU:

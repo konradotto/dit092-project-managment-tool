@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.io.File;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class Project {
      * @param schedule ProjectSchedule defining at least a preliminary start year and week as well as
      *                 end year and week
      */
-    public Project(String name, ProjectSchedule schedule) {
+    public Project(String name, ProjectSchedule schedule) throws NameIsEmptyException {
         this.setName(name);
         this.setSchedule(schedule);
         this.setTeam(new Team(name));
@@ -199,8 +200,8 @@ public class Project {
         return schedule.getCostVariance();
     }
 
-    public double getScheduleVariance() {
-        return schedule.getScheduleVariance();
+    public double getScheduleVariance(YearWeek yearWeek, DayOfWeek after) {
+        return schedule.getScheduleVariance(yearWeek, after);
     }
 
     public String getName() {
@@ -258,7 +259,6 @@ public class Project {
         } catch (IllegalArgumentException e) {
             //Let's see about that...
         }
-
     }
 
     /**
@@ -313,7 +313,7 @@ public class Project {
     public void memberSalaryChanger(Member member, double salary){
         for (Team team: getTeams()){
             if (team.getMembers().contains(member)){
-                member.setSALARY_PER_HOUR(salary);
+                member.setSalaryPerHour(salary);
             }
         }
     }

@@ -1,4 +1,4 @@
-import java.util.List;
+/*import java.util.List;
 
 public class Budget {
 
@@ -19,6 +19,17 @@ public class Budget {
     public static double calculateEarnedValue(Activity activity) {
         //TODO: this needs to be calculated
         return activity.getPercentCompleted();
+    }
+
+    public static double calculateEarnedValue(Project project) {
+        double totalEarnedValue = 0;
+        for (Activity activity : project.getSchedule().getActivities()) {
+            totalEarnedValue += budgetAtCompletion(activity) * activity.getCompletion();
+        }
+    }
+
+    public static double expectedBudgetAtCompletion(Team team, Activity activity) {
+        return team.getExpectedBudgetAtCompletion(activity);
     }
 
 
@@ -85,3 +96,4 @@ public class Budget {
         this.percentCompleted = percentCompleted;
     }
 }
+*/

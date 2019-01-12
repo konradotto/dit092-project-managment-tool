@@ -201,7 +201,7 @@ public class Print {
 
     public static Activity createActivity(){
         String name = myScanner.readLine("Enter the name of the task: ");
-        return new Activity(name, readTimePeriod("activity"));
+        return new Activity(name, readTimePeriod("activity"), null);        // TODO: add a team
     }
 
 
@@ -250,7 +250,12 @@ public class Print {
      */
     public static Project createProject() {
         String name = myScanner.readLine("Please enter the name of the new project:");
-        return new Project(name, new ProjectSchedule(readTimePeriod("project")));
+        try {
+            return new Project(name, new ProjectSchedule(readTimePeriod("project")));       // TODO: clean-up this mess
+        } catch (NameIsEmptyException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String enterName(){
@@ -288,7 +293,12 @@ public class Print {
 
     public static Team createTeam() {
         String name = myScanner.readLine("Enter the name of the team: ");
-        Team team = new Team(name);
+        Team team = null;
+        try {
+            team = new Team(name);
+        } catch (NameIsEmptyException e) {          //TODO: fix this mess
+            e.printStackTrace();
+        }
         return team;
 
     }

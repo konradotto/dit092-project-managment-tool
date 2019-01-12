@@ -62,7 +62,8 @@ public class YearWeekTest {
                     {2010, 12, 2010, 13, -1, 1},        // first earlier second (same year, one week off)
                     {2010, 42, 2010, 42, 0, 0},         // first equal second (same year, same week)
                     {2010, 15, 2011, 15, -1, 1},        // first earlier second (same year, different week)
-                    {1950, 1, 1949, 52, 1, -1}          // first later second (year shift)
+                    {1950, 1, 1949, 52, 1, -1},         // first later second (year shift)
+                    {2010, 4, 2012, 12, -1, 1}          // first earlier second (multiple years and month in between)
             };
             return Arrays.asList(data);
         }

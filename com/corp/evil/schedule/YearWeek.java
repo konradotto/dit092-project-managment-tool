@@ -1,5 +1,8 @@
 public class YearWeek implements Comparable<YearWeek> {
 
+    static final int BEFORE = -1;
+    static final int AFTER = 1;
+
     static final int EARLIEST_YEAR_ALLOWED = 1900;
     static final int LATEST_YEAR_ALLOWED = 2100;
     static final int FIRST_WEEK = 1;
@@ -38,6 +41,14 @@ public class YearWeek implements Comparable<YearWeek> {
             result = Integer.compare(this.getWeek(), other.getWeek());      // compare the weeks if years are indecisive
         }
         return result;
+    }
+
+    public boolean isBefore(final YearWeek other) {
+        return compareTo(other) == BEFORE;
+    }
+
+    public boolean isAfter(final YearWeek other) {
+        return compareTo(other) == AFTER;
     }
 
     public int getWeek() {
