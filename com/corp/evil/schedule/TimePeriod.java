@@ -1,6 +1,7 @@
 public class TimePeriod {
 
     public static final int EARLIEST_YEAR_ALLOWED = 1900;
+    private static final int FIRST_WEEK = 1;
     public final static int WEEKS_PER_YEAR = 52;
 
     private int startWeek;
@@ -9,6 +10,10 @@ public class TimePeriod {
     private int endYear;
 
     public TimePeriod(int startWeek, int startYear, int endWeek, int endYear) {
+        if (startWeek < FIRST_WEEK || endWeek < FIRST_WEEK || startWeek > WEEKS_PER_YEAR || endWeek > WEEKS_PER_YEAR) {
+            throw new IllegalArgumentException("Weeks need to be integers in the interval " +
+                    FIRST_WEEK + " - " + WEEKS_PER_YEAR + "!");
+        }
         if (startYear > endYear) {
             throw new IllegalArgumentException("Start year can not be later than end year!" + Print.LS);
         }
@@ -16,7 +21,6 @@ public class TimePeriod {
             throw new IllegalArgumentException("This program only allows periods starting from the year "
                     + EARLIEST_YEAR_ALLOWED + "!");
         }
-
         if (startYear == endYear && startWeek > endWeek) {
             throw new IllegalArgumentException("Start of a TimePeriod can not be later than its end!");
         }

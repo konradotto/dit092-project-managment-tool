@@ -1,81 +1,22 @@
 {
-  "name": "Unnamed Project 2018-12-19",
+  "name": "blabla",
   "team": {
-    "name": "Project Team",
-    "members": [
-      {
-        "name": "Dude",
-        "uuid": "8e83d7cf-0734-4c0d-9208-45a347a29d83",
-        "SALARY_PER_HOUR": 5000.0,
-        "timeSpent": {
-          "seconds": 0,
-          "nanos": 0
-        }
-      },
-      {
-        "name": "Her Dudessness",
-        "uuid": "915cac3d-9337-4c08-9612-1c077a9586d0",
-        "SALARY_PER_HOUR": 0.0,
-        "timeSpent": {
-          "seconds": 0,
-          "nanos": 0
-        }
-      },
-      {
-        "name": "The dude",
-        "uuid": "36e05c01-2083-47e5-b9b1-06e85987c7b8",
-        "SALARY_PER_HOUR": 500.0,
-        "timeSpent": {
-          "seconds": 0,
-          "nanos": 0
-        }
-      }
-    ]
+    "name": "blabla",
+    "members": [],
+    "activities": []
   },
   "riskMatrix": {
-    "risks": [
-      {
-        "riskName": "Death",
-        "probability": "VERY_LIKELY",
-        "impact": "VERY_HIGH"
-      }
-    ],
+    "risks": [],
     "lineSeparator": "\n"
   },
   "schedule": {
     "LAST_WEEK_OF_YEAR": 52,
-    "activities": [
-      {
-        "startWeek": 12,
-        "endWeek": 18,
-        "endYear": 2019,
-        "startYear": 2019,
-        "name": "Test Activity",
-        "team": {
-          "name": "Team 1",
-          "members": [
-            {
-              "name": "Dude",
-              "uuid": "8e83d7cf-0734-4c0d-9208-45a347a29d83",
-              "SALARY_PER_HOUR": 5000.0,
-              "timeSpent": {
-                "seconds": 0,
-                "nanos": 0
-              }
-            }
-          ]
-        },
-        "costOfWorkScheduled": 700000.0,
-        "costOfWorkPerformed": 0.0,
-        "percentCompleted": 0.0,
-        "timeSpent": {}
-      }
-    ],
+    "activities": [],
     "start": {
       "date": {
-        "year": 2018,
-        "month": 11,
-        "day": 26
+        "year": 1938,
+        "month": 8,
+        "day": 1
       },
       "time": {
         "hour": 8,
@@ -86,9 +27,9 @@
     },
     "end": {
       "date": {
-        "year": 2019,
+        "year": 2014,
         "month": 1,
-        "day": 18
+        "day": 3
       },
       "time": {
         "hour": 17,
@@ -98,6 +39,7 @@
       }
     }
   },
+  "teams": [],
   "file": {
     "path": "/home/konrad/IdeaProjects/dit092-project-managment-tool/./broject.json"
   }
