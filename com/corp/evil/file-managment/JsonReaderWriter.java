@@ -70,9 +70,11 @@ public final class JsonReaderWriter {
         readyFileChooser();
         chooser.setDialogTitle("pick a JSON-File to save to");
 
-        chooser.showSaveDialog(frame);
-
-        File file = chooser.getSelectedFile();
+        File file;
+        do {
+            chooser.showSaveDialog(frame);
+            file = chooser.getSelectedFile();
+        } while (file == null);
 
         // make sure the file ends on <.json>
         String filename = file.getAbsolutePath();
