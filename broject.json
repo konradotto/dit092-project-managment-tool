@@ -1,8 +1,37 @@
 {
-  "name": "blabla",
+  "name": "Broject",
   "team": {
-    "name": "blabla",
-    "members": [],
+    "name": "Broject",
+    "members": [
+      {
+        "name": "Kardo",
+        "uuid": "5a599bc0-22c1-4b25-be3a-d60997fbe2bc",
+        "salaryPerHour": 100.0,
+        "hoursSpent": 0,
+        "workContribution": {}
+      },
+      {
+        "name": "Konrad",
+        "uuid": "297f030b-0689-4a76-8df3-7fb6071d4620",
+        "salaryPerHour": 100.0,
+        "hoursSpent": 0,
+        "workContribution": {}
+      },
+      {
+        "name": "Marcus",
+        "uuid": "03c51a27-ad38-4c71-b395-f261db1807c3",
+        "salaryPerHour": 100.0,
+        "hoursSpent": 0,
+        "workContribution": {}
+      },
+      {
+        "name": "Miru",
+        "uuid": "8b71274d-f256-4a01-970d-9487f81f890c",
+        "salaryPerHour": 200.0,
+        "hoursSpent": 0,
+        "workContribution": {}
+      }
+    ],
     "activities": []
   },
   "riskMatrix": {
@@ -12,35 +41,51 @@
   "schedule": {
     "LAST_WEEK_OF_YEAR": 52,
     "activities": [],
-    "start": {
-      "date": {
-        "year": 1938,
-        "month": 8,
-        "day": 1
+    "timePeriod": {
+      "start": {
+        "year": 2019,
+        "week": 1
       },
-      "time": {
-        "hour": 8,
-        "minute": 0,
-        "second": 0,
-        "nano": 0
-      }
-    },
-    "end": {
-      "date": {
-        "year": 2014,
-        "month": 1,
-        "day": 3
-      },
-      "time": {
-        "hour": 17,
-        "minute": 0,
-        "second": 0,
-        "nano": 0
+      "end": {
+        "year": 2019,
+        "week": 3
       }
     }
   },
-  "teams": [],
+  "teams": [
+    {
+      "name": "Coding",
+      "members": [
+        {
+          "name": "Konrad",
+          "uuid": "297f030b-0689-4a76-8df3-7fb6071d4620",
+          "salaryPerHour": 100.0,
+          "hoursSpent": 0,
+          "workContribution": {}
+        }
+      ],
+      "activities": []
+    },
+    {
+      "name": "Report",
+      "members": [
+        {
+          "name": "Miru",
+          "uuid": "8b71274d-f256-4a01-970d-9487f81f890c",
+          "salaryPerHour": 200.0,
+          "hoursSpent": 0,
+          "workContribution": {}
+        }
+      ],
+      "activities": []
+    }
+  ],
+  "currentWeek": {
+    "year": 2019,
+    "week": 2
+  },
+  "lastWeekday": "MONDAY",
   "file": {
-    "path": "/home/konrad/IdeaProjects/dit092-project-managment-tool/./broject.json"
+    "path": "/home/konrad/IdeaProjects/dit092-project-managment-tool/broject.json"
   }
 }

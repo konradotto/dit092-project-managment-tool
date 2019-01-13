@@ -1,13 +1,9 @@
 import javax.swing.*;
 import java.io.File;
 import java.time.DayOfWeek;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Project {
 
@@ -27,28 +23,6 @@ public class Project {
     private File file;
 
     /**
-     * Almost empty constructor taking only a name and a schedule as parameters.
-     * This allows to create projects which only have a name and a startWeek
-     * (+potentially already a set of activities which are pending execution).
-     * This way you can first do approximate planning of the demand within a project before
-     * assigning a team that is suited to it. The risks and further activities can easily
-     * be added after creation.
-     *
-     * @param name     String specifying the project name
-     * @param schedule ProjectSchedule defining at least a preliminary start year and week as well as
-     *                 end year and week
-     */
-    public Project(String name, ProjectSchedule schedule) throws NameIsEmptyException {
-        this.setName(name);
-        this.setSchedule(schedule);
-        this.setTeam(new Team(name));
-        this.setRiskMatrix(new RiskMatrix());
-        this.teams = new ArrayList<>();
-        onChange();         // save all changes
-    }
-
-
-    /**
      * Constructor for a project where the team, risk matrix and project schedule are already
      * worked out to a certain degree.
      *
@@ -63,12 +37,29 @@ public class Project {
         this.setTeam(team);
         this.setRiskMatrix(riskMatrix);
         this.setSchedule(schedule);
+        this.teams = new ArrayList<>();
 
-        Instant now = Instant.now();
-        this.currentWeek = new YearWeek(now.get(ChronoField.YEAR), now.get(ChronoField.ALIGNED_WEEK_OF_YEAR));
-        this.lastWeekday = DayOfWeek.of(now.get(ChronoField.DAY_OF_WEEK));
+        Calendar now = new GregorianCalendar();
+        this.currentWeek = new YearWeek(now.get(Calendar.YEAR), now.get(Calendar.WEEK_OF_YEAR));
+        this.lastWeekday = DayOfWeek.of(now.get(Calendar.DAY_OF_WEEK));
 
-        onChange();
+        onChange();             // save all changes
+    }
+
+    /**
+     * Almost empty constructor taking only a name and a schedule as parameters.
+     * This allows to create projects which only have a name and a startWeek
+     * (+potentially already a set of activities which are pending execution).
+     * This way you can first do approximate planning of the demand within a project before
+     * assigning a team that is suited to it. The risks and further activities can easily
+     * be added after creation.
+     *
+     * @param name     String specifying the project name
+     * @param schedule ProjectSchedule defining at least a preliminary start year and week as well as
+     *                 end year and week
+     */
+    public Project(String name, ProjectSchedule schedule) throws NameIsEmptyException {
+        this(name, new Team(name), new RiskMatrix(), schedule);
     }
 
     public void addMember(Member member) throws MemberAlreadyRegisteredException, MemberIsNullException {
@@ -84,7 +75,6 @@ public class Project {
         } catch (ActivityIsNullException e) {
             Print.println(e.getMessage());
         }
-
         onChange();
     }
 
@@ -169,8 +159,24 @@ public class Project {
      * This function solves that issue.
      */
     public void solveObjectCopies() {
-        for (Team team : teams) {
-            schedule.solveCopies(team);
+        solveCopiesInProject();         // make sure teams references the members from team
+        schedule.solveCopies(team);     // make sure every activity references the members from team
+    }
+
+    public void solveCopiesInProject() {
+        for (Member member : team.getMembers()) {
+            for (Team smallTeam : teams) {
+                if (smallTeam.contains(member)) {
+                    try {
+                        smallTeam.removeMember(member);
+                        smallTeam.addMember(member);
+                    } catch (MemberIsNullException e) {
+                        e.printStackTrace();
+                    } catch (MemberAlreadyRegisteredException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 
@@ -219,7 +225,7 @@ public class Project {
     }
 
     public String getBudgetString() {
-        String headline = "Project Budget for " + name + LS;
+        String headline = "Project Budget for " + name + ":" + LS;
 
         StringBuilder sb = new StringBuilder();
         sb.append(headline);
@@ -240,7 +246,7 @@ public class Project {
 
     public String getCostVarianceString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Cost Variance:     " + schedule.getCostVariance());
+        sb.append("Cost Variance:     " + schedule.getCostVariance() + Print.LS);
 
         return sb.toString();
     }

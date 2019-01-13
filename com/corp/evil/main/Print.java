@@ -338,7 +338,7 @@ public class Print {
 
     public static Member chooseMemberFromList(Team team) {
         sb.append("Please choose a member from the list:" + LS);
-        sb.append(team.toNumberedString() + LS);
+        sb.append(team.toNumberedString());
 
         printBuffer();
         return team.retrieveMember(myScanner.readInt() - 1);

@@ -45,14 +45,15 @@ public class ProjectSchedule {
 
 
     /**
-     * Reference the passed team instead of a separate object if an activity's team is the same as the one passed.
+     * Reference the passed project member instead of a separate object for all activity team members
      *
      * @param team Team to be looked for.
      */
     public void solveCopies(Team team) {
-        for (Activity activity : activities) {
-            if (activity.getTeam().equals(team)) {
-                activity.setTeam(team);
+        System.err.println("Function solveCopies(Team team) called!");
+        for (Member member : team.getMembers()) {
+            for (Activity activity : activities) {
+                activity.getTeam().solveCopies(member);
             }
         }
     }

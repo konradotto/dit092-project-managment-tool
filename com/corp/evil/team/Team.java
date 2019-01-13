@@ -8,6 +8,7 @@ public class Team {
     // constants
     private final static int COLUMN_WIDTH = 30;
     private final static int COLUMNS = 5;
+    private final static String newline = Print.LS;
 
     // members
     private String name;
@@ -62,6 +63,18 @@ public class Team {
         activities.remove(activity);
     }
 
+    public void solveCopies(Member member) {
+        System.err.println("Function solveCopies(Member member) called!");
+        int i = 0;
+        for (Member teamMember : members) {
+            if (member.getName().equals(teamMember.getName())) {
+                Print.println("It happened");
+                members.set(i, member);
+            }
+            i++;
+        }
+    }
+
     public boolean contains(Member member) {
         return members.contains(member);
     }
@@ -111,7 +124,7 @@ public class Team {
     @Override
     public String toString() {
         if (members.isEmpty()) {
-            return "No registered members!";
+            return "No registered members!" + newline;
         }
         return formatTable();
     }
@@ -150,9 +163,8 @@ public class Team {
 
     public String formatTable() {
         StringBuilder sb = new StringBuilder();
-        String newline = System.lineSeparator();
         if (members.isEmpty()) {
-            sb.append("Team: " + getName() + Print.LS);
+            sb.append("Team: " + getName() + newline);
             sb.append("There are no members registered in this team yet." + newline);
         } else {
 
