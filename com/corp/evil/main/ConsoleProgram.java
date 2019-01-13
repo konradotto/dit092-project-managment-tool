@@ -346,10 +346,10 @@ public class ConsoleProgram {
                 activity.setName(myScanner.readLine("Enter the new name: "));
                 break;
             case EDIT_TASK_END_WEEK:
-                activity.setEndWeek(myScanner.readInt("Enter the new end week: "));
+                activity.setEndWeek(myScanner.readInt("Enter the new end week: "), project.getSchedule().getTimePeriod());
                 break;
             case EDIT_TASK_END_YEAR:
-                activity.setEndYear(myScanner.readInt("Enter the new end year: "));
+                activity.setEndYear(myScanner.readInt("Enter the new end year: "), project.getSchedule().getTimePeriod());
                 break;
             case LEAVE_TASK_MENU:
                 leave = true;

@@ -180,9 +180,9 @@ public class Print {
     }
 
     public static int printEditTaskMenu(){
-        sb.append("➤ 1. Edit a task name" + LS);
-        sb.append("➤ 2. Edit a task end week" + LS);
-        sb.append("➤ 3. Edit a task end year" + LS);
+        sb.append("➤ 1. Edit task name" + LS);
+        sb.append("➤ 2. Edit task end week" + LS);
+        sb.append("➤ 3. Edit task end year" + LS);
         sb.append("➤ 4. Back to the previous menu" + LS);
 
         printBuffer();

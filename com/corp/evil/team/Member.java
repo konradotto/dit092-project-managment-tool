@@ -1,6 +1,4 @@
-import java.util.Map;
 import java.util.Objects;
-import java.util.TreeMap;
 import java.util.UUID;
 
 public class Member {
@@ -9,7 +7,7 @@ public class Member {
     private final String uuid;
     private double salaryPerHour;
     private int hoursSpent;
-    private Map<Activity, Integer> workContribution;
+    //private Map<Activity, Integer> workContribution;
 
     Member(String name, double salary) throws NameIsEmptyException {
         if (name.isEmpty()) {
@@ -19,7 +17,7 @@ public class Member {
         this.salaryPerHour = salary;
         this.uuid = UUID.randomUUID().toString();
         this.hoursSpent = 0;
-        this.workContribution = new TreeMap<>();
+        //this.workContribution = new TreeMap<>();
     }
 
     public double calculateSalary() {
@@ -45,9 +43,9 @@ public class Member {
      */
     public double workOnActivity(Activity activity, int timeSpent, int timeScheduled) {
         hoursSpent += timeSpent;
-        if (workContribution.containsKey(activity)) {
-            workContribution.put(activity, workContribution.get(activity) + timeScheduled);     // update the contribution according to the effective work
-        }
+        //if (workContribution.containsKey(activity)) {
+        //    workContribution.put(activity, workContribution.get(activity) + timeScheduled);     // update the contribution according to the effective work
+        //}
         return timeSpent * salaryPerHour;
     }
 

@@ -43,6 +43,14 @@ public class YearWeek implements Comparable<YearWeek> {
         return result;
     }
 
+    public boolean isWithin(TimePeriod timePeriod) {
+        if (this.isBefore(timePeriod.getStart())) {
+            return false;
+        }
+
+        return (!this.isAfter(timePeriod.getEnd()));
+    }
+
     public boolean isBefore(final YearWeek other) {
         return compareTo(other) == BEFORE;
     }

@@ -53,6 +53,9 @@ public class Activity {
      * @return average salary * expected work-duration
      */
     public double getBudgetAtCompletion() {
+        if (team == null) {
+            return 0.0;
+        }
         return team.getAverageSalary() * ((double) getBillableHours());
     }
 
@@ -63,7 +66,7 @@ public class Activity {
      */
     public double getEarnedValue() {
         if (team == null) {
-            return 0;
+            return 0.0;
         }
         return team.getAverageSalary() * hoursCovered;
     }
@@ -137,10 +140,14 @@ public class Activity {
         return costSoFar;
     }
 
-    public boolean setEndWeek(int week) {
+    public boolean setEndWeek(int week, TimePeriod timePeriod) {
         boolean success = false;
         try {
-            timePeriod.setEnd(new YearWeek(timePeriod.getEnd().getYear(), week));
+            YearWeek newEnd = new YearWeek(timePeriod.getEnd().getYear(), week);
+            if (!newEnd.isWithin(timePeriod)) {
+                throw new IllegalArgumentException("New end does not fit the project schedule!");
+            }
+            timePeriod.setEnd(newEnd);
             success = true;
         } catch (IllegalArgumentException e) {
             Print.println("Your newly selected week is apparently not suitable with the fix start date!");
@@ -148,15 +155,23 @@ public class Activity {
         return success;
     }
 
-    public boolean setEndYear(int year) {
+    public boolean setEndYear(int year, TimePeriod timePeriod) {
         boolean success = false;
         try {
-            timePeriod.setEnd(new YearWeek(year, timePeriod.getEnd().getWeek()));
+            YearWeek newEnd = new YearWeek(year, timePeriod.getEnd().getWeek());
+            if (!newEnd.isWithin(timePeriod)) {
+                throw new IllegalArgumentException("New end does not fit the project schedule!");
+            }
+            timePeriod.setEnd(newEnd);
             success = true;
         } catch (IllegalArgumentException e) {
             Print.println("Your newly selected year is apparently not suitable with the fix start date!");
         }
         return success;
+    }
+
+    public boolean hasTeam() {
+        return (team != null);
     }
 
     //End of Accessor methods

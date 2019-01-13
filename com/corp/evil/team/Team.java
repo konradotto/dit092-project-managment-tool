@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 
 public class Team {
 
@@ -12,8 +9,8 @@ public class Team {
 
     // members
     private String name;
-    private ArrayList<Member> members;
-    private ArrayList<Activity> activities;
+    private List<Member> members;
+    private List<Activity> activities;
 
     public Team(String name, ArrayList<Member> members, ArrayList<Activity> activities) throws NameIsEmptyException {
         if (name.trim().isEmpty()) {
@@ -105,7 +102,8 @@ public class Team {
     }
 
     public void replaceMembers(Team team) {
-        ArrayList<Member> temp = members;
+        List<Member> temp = new ArrayList<>(members);
+
         for (Member member : members) {
             temp.remove(member);
             temp.add(team.retrieveMember(member));
@@ -134,16 +132,13 @@ public class Team {
         return totalSalary / (double) members.size();
     }
 
-    public ArrayList<Member> getMembers() {
+    public List<Member> getMembers() {
         return members;
     }
 
 
     @Override
     public String toString() {
-        if (members.isEmpty()) {
-            return "No registered members!" + newline;
-        }
         return formatTable();
     }
 
@@ -181,36 +176,34 @@ public class Team {
 
     public String formatTable() {
         StringBuilder sb = new StringBuilder();
+
+        sb.append("\t\t\t Team: " + getName() + newline);
+
+        sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
+        sb.append(newline);
         if (members.isEmpty()) {
-            sb.append("Team: " + getName() + newline);
             sb.append("There are no members registered in this team yet." + newline);
-        } else {
-
-            sb.append("\t\t\t Team: " + getName() + newline);
-
-            sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
-            sb.append(newline);
-
-            // format table content
-            sb.append(formatTableRow(new String[]{"| Member name:", "| Salary/h:", "| Time spent:", "|"}));
-
-            // separator line
-
-            sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
-            sb.append(newline);
-
-            alphaSort();
-
-            for (Member member : members) {
-                sb.append(formatTableRow(new String[]{"| " + member.getName(),
-                        "| " + member.getSalaryPerHour(),
-                        "| " + member.getTimeSpent(), "|"}));
-
-                sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
-                sb.append(newline);
-            }
+            return sb.toString();
         }
-        //test
+
+        // format table content
+        sb.append(formatTableRow(new String[]{"| Member name:", "| Salary/h:", "| Time spent:", "|"}));
+
+        // separator line
+
+        sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
+        sb.append(newline);
+
+        alphaSort();
+
+        for (Member member : members) {
+            sb.append(formatTableRow(new String[]{"| " + member.getName(),
+                    "| " + member.getSalaryPerHour(),
+                    "| " + member.getTimeSpent(), "|"}));
+
+            sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
+            sb.append(newline);
+        }
         return sb.toString();
     }
 

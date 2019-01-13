@@ -60,22 +60,20 @@ public class Project {
      */
     public Project(String name, ProjectSchedule schedule) throws NameIsEmptyException {
         this(name, new Team(name), new RiskMatrix(), schedule);
+        onChange();
     }
 
     public void addMember(Member member) throws MemberAlreadyRegisteredException, MemberIsNullException {
         this.team.addMember(member);
-        onChange();
     }
 
     public void addActivity(Activity activity) {
         try {
             schedule.addActivity(activity);
-        } catch (ActivityAlreadyRegisteredException e) {
-            Print.println(e.getMessage());
-        } catch (ActivityIsNullException e) {
+            onChange();
+        } catch (ActivityAlreadyRegisteredException | ActivityIsNullException | IllegalArgumentException e) {
             Print.println(e.getMessage());
         }
-        onChange();
     }
 
     //TODO: what is this doing?
@@ -108,6 +106,7 @@ public class Project {
         for (Team team : teams) {
             addTeam(team);
         }
+        onChange();
     }
 
     public void removeTeam(Team team) throws TeamIsNullException {
@@ -149,7 +148,6 @@ public class Project {
      */
     public boolean setFile() {
         this.file = JsonReaderWriter.pickFile();
-
         return (this.file != null);
     }
 
@@ -218,7 +216,7 @@ public class Project {
 
         StringBuilder sb = new StringBuilder();
         sb.append(headline);
-        sb.append(String.join("", Collections.nCopies(headline.length() + 2 * MARGIN, "-")) + LS + LS);
+        sb.append(String.join("", Collections.nCopies(headline.length() + 2 * MARGIN, "-")) + LS);
         sb.append(getEarnedValueString());
         sb.append(getCostVarianceString());
         sb.append(getScheduleVarianceString());
@@ -312,6 +310,7 @@ public class Project {
         try {
             TimePeriod updatedPeriod = new TimePeriod(schedule.getTimePeriod().getStart(), endWeek);
             schedule.setTimePeriod(updatedPeriod);
+            onChange();
         } catch (IllegalArgumentException e) {
             //Let's see about that...
         }
@@ -365,6 +364,7 @@ public class Project {
                 member.setName(name);
             }
         }
+        onChange();
     }
 
     public void memberSalaryChanger(Member member, double salary) {
@@ -373,5 +373,6 @@ public class Project {
                 member.setSalaryPerHour(salary);
             }
         }
+        onChange();
     }
 }

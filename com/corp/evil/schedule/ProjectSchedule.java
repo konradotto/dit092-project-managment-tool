@@ -53,7 +53,9 @@ public class ProjectSchedule {
         System.err.println("Function solveCopies(Team team) called!");
         for (Member member : team.getMembers()) {
             for (Activity activity : activities) {
-                activity.getTeam().solveCopies(member);
+                if (activity.hasTeam()) {
+                    activity.getTeam().solveCopies(member);
+                }
             }
         }
     }
@@ -129,7 +131,7 @@ public class ProjectSchedule {
             throw new ActivityAlreadyRegisteredException("This activity is already registered!");
         }
         if (!activity.getTimePeriod().isWithin(timePeriod)) {
-            throw new IllegalArgumentException("The activities period is not within the time frame of the schedule!");
+            throw new IllegalArgumentException("The activity's period is not within the time frame of the schedule!");
         }
 
         activities.add(activity);
