@@ -460,13 +460,6 @@ public class Print {
 
     public static void defaultMonologue() {
         out.println("Choose a valid option!" + LS);
-        try {
-            println("Blabla");
-        } catch (RuntimeException e) {
-            println("Do something");
-        } catch (Exception e) {
-            println("Hi");
-        }
     }
 }
 
