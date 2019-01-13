@@ -43,6 +43,20 @@ public class ProjectSchedule {
         this(timePeriod, new ArrayList<>());
     }
 
+
+    /**
+     * Reference the passed team instead of a separate object if an activity's team is the same as the one passed.
+     *
+     * @param team Team to be looked for.
+     */
+    public void solveCopies(Team team) {
+        for (Activity activity : activities) {
+            if (activity.getTeam().equals(team)) {
+                activity.setTeam(team);
+            }
+        }
+    }
+
     public void sort() {
         activities.sort(Activity::compareStartTime);
     }

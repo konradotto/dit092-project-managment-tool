@@ -18,7 +18,7 @@ public class Project {
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
-    private ArrayList<Team> teams;  //TODO: decide whether we really need this...
+    ArrayList<Team> teams;  //TODO: decide whether we really need this...
 
     private File file;
 
@@ -128,6 +128,7 @@ public class Project {
         saveProject();
     }
 
+
     /**
      * Function to save the project either to the associated file or to a file being newly picked
      * if no valid file is set for the project.
@@ -142,6 +143,7 @@ public class Project {
         return JsonReaderWriter.save(this, file);
     }
 
+
     /**
      * Set the file the project is supposed to be saved to.
      *
@@ -151,6 +153,17 @@ public class Project {
         this.file = JsonReaderWriter.pickFile();
 
         return (this.file != null);
+    }
+
+    /**
+     * After loading it can happen that copies of objects are saved instead of copies.
+     * This leads to divergence when editing a particular instance.
+     * This function solves that issue.
+     */
+    public void solveObjectCopies() {
+        for (Team team : teams) {
+            schedule.solveCopies(team);
+        }
     }
 
     @Override

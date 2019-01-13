@@ -4,22 +4,23 @@
  */
 public class ConsoleProgram {
 
-    // status constants
-    private static final int NO_PROJECT = -1;
-
+    // entry menu states
     private static final int PROJECT = 1;
     private static final int MAIN = 2;
     private static final int END = 3;
+
     private static final int SUCCESS = 42;
     private static final int LOAD = 1;
     private static final int NEW = 2;
 
+    // project menu options
     private static final int PRINT_PROJECT = 1;
     private static final int EDIT_PROJECT = 2;
     private static final int LEAVE_PROJECT_MENU = 3;
     private static final int EDIT_PROJECT_NAME = 1;
     private static final int EDIT_PROJECT_END = 2;
 
+    // primary/main menu options
     private static final int PRIMARY_PROJECT = 1;
     private static final int PRIMARY_TEAM = 2;
     private static final int PRIMARY_TASK = 3;
@@ -27,6 +28,7 @@ public class ConsoleProgram {
     private static final int PRIMARY_BUDGET = 5;
     private static final int PRIMARY_SAVE_EXIT = 6;
 
+    // schedule menu options
     private static final int TASKS_PRINT_ALL = 1;
     private static final int TASK_ADD = 2;
     private static final int TASK_EDIT = 3;
@@ -35,34 +37,40 @@ public class ConsoleProgram {
     private static final int TASK_UPDATE_TIME_SPENT = 6;
     private static final int LEAVE_TASK_MANAGER = 7;
 
+    // task editing menu options
     private static final int EDIT_TASK_NAME = 1;
     private static final int EDIT_TASK_END_WEEK = 2;
     private static final int EDIT_TASK_END_YEAR = 3;
     private static final int LEAVE_TASK_MENU = 4;
 
+    // project editing menu options
     private static final int PROJECT_PRINT_MEMBERS = 1;
     private static final int PROJECT_PRINT_TEAMS = 2;
     private static final int PROJECT_ADD_MEMBER = 3;
     private static final int PROJECT_EDIT_MEMBER = 4;
     private static final int PROJECT_REMOVE_MEMBER = 5;
     private static final int PROJECT_ADD_TEAM = 6;
-    private static final int SUBTEAM_EDIT = 7;
+    private static final int TEAM_EDIT = 7;
     private static final int LEAVE_TEAM_MANAGER = 8;
 
+    // member edit menu options
     private static final int EDIT_MEMBER_NAME = 1;
     private static final int EDIT_MEMBER_SALARY = 2;
     private static final int LEAVE_MEMBER_MENU = 3;
 
+    // edit team menu options
     private static final int TEAM_CHANGE_NAME = 1;
     private static final int TEAM_ADD_MEMBER = 2;
     private static final int TEAM_REMOVE_MEMBER = 3;
     private static final int LEAVE_TEAM_MENU = 4;
 
+    // risk menu options
     private static final int PRINT_RISK_MATRIX = 1;
     private static final int ADD_RISK = 2;
     private static final int REMOVE_RISK = 3;
     private static final int LEAVE_RISK_MANAGER = 4;
 
+    // member selection options
     private static final int MEMBER_BY_NAME = 1;
     private static final int MEMBER_FROM_LIST = 2;
 
@@ -430,7 +438,7 @@ public class ConsoleProgram {
                     e.printStackTrace();
                 }
                 break;
-            case SUBTEAM_EDIT:
+            case TEAM_EDIT:
                 editTeam();
                 break;
             case LEAVE_TEAM_MANAGER://Back to previous menu

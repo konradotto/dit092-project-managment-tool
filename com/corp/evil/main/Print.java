@@ -57,6 +57,8 @@ public class Print {
             Print.println("The object loaded from the json-file is no project." + LS);
             return NOT_A_PROJECT;
         }
+        project.solveObjectCopies();
+
         project.offerFileChange();
         ConsoleProgram.setProject(project);
         return PROJECT_LOADED;

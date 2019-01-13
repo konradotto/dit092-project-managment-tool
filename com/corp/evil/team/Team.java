@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Team {
 
@@ -139,17 +140,6 @@ public class Team {
         return sb.toString();
     }
 
-    /*
-    public boolean workOnActivity(Member member, Activity activity, int timeSpent, int timeScheduled) {
-
-        // TODO: prevent to spend more scheduled time than needed for the task
-        member.spendTime(timeSpent);
-        double cost = timeSpent * member.getSalaryPerHour();
-        activity.spendTime(timeScheduled, timeSpent, cost);
-
-        return true;
-    }*/
-
     public void alphaSort() {
         members.sort(Comparator.comparing(Member::getName));
     }
@@ -214,5 +204,20 @@ public class Team {
         }
 
         return sumOfTimeSpent / sumOfDurations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(name, team.name) &&
+                Objects.equals(members, team.members) &&
+                Objects.equals(activities, team.activities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, members, activities);
     }
 }
