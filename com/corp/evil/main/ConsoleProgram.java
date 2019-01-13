@@ -346,7 +346,7 @@ public class ConsoleProgram {
                 activity.setName(myScanner.readLine("Enter the new name: "));
                 break;
             case EDIT_TASK_END_WEEK:
-                activity.setEndWeek(myScanner.readInt("Enter the new end week: "));     //TODO: fix this shit
+                activity.setEndWeek(myScanner.readInt("Enter the new end week: "));
                 break;
             case EDIT_TASK_END_YEAR:
                 activity.setEndYear(myScanner.readInt("Enter the new end year: "));
@@ -397,7 +397,6 @@ public class ConsoleProgram {
         } while (choice != LEAVE_RISK_MANAGER);
     }
 
-    // TODO: implement this mofo
     private static void projectBudgetManager() {
         int choice;
         do switch (choice = Print.printProjectBudgetMenu()) {
@@ -414,6 +413,8 @@ public class ConsoleProgram {
                 Print.println(project.getScheduleVarianceString());
                 break;
             case BUDGET_CHANGE_DATE:
+                // TODO: implement this mofo
+
                 break;
             case LEAVE_BUDGET_MENU:
                 Print.println("Leaving the budget manager...");

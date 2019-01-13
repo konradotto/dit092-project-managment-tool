@@ -237,28 +237,6 @@ public class Print {
 
 
     /**
-     * Method reading the start year, start week, end year and end week of a TimePeriod repeatedly
-     * until the values are successfully used to initialize a TimePeriod.
-     *
-     * @param purpose a String telling the user what he is entering the dates for
-     * @return the resulting TimePeriod
-     */
-    public static TimePeriod readTimePeriod(String purpose) {
-        int startYear = myScanner.readInt("Enter the start year of the " + purpose + ": ");
-        int startWeek = myScanner.readInt("Enter the start week of the " + purpose + ": ");
-        int endYear = myScanner.readInt("Enter the end year of the " + purpose + ": ");
-        int endWeek = myScanner.readInt("Enter the end week of the " + purpose + ": ");
-
-        try {
-            return new TimePeriod(startWeek, startYear, endWeek, endYear);
-        } catch (IllegalArgumentException e) {
-            Print.println(e + LS);
-            return readTimePeriod(purpose);             // recursively call of readTimePeriod until it succeeds
-        }
-    }
-
-
-    /**
      * Function reading the name and dates to create a new project
      *
      * @return the project created with the collected data
@@ -276,6 +254,27 @@ public class Print {
     public static String enterName(){
         String name = myScanner.readLine("Enter the intended name:");
         return name;
+    }
+
+    /**
+     * Method reading the start year, start week, end year and end week of a TimePeriod repeatedly
+     * until the values are successfully used to initialize a TimePeriod.
+     *
+     * @param purpose a String telling the user what he is entering the dates for
+     * @return the resulting TimePeriod
+     */
+    public static TimePeriod readTimePeriod(String purpose) {
+        int startYear = myScanner.readInt("Enter the start year of the " + purpose + ": ");
+        int startWeek = myScanner.readInt("Enter the start week of the " + purpose + ": ");
+        int endYear = myScanner.readInt("Enter the end year of the " + purpose + ": ");
+        int endWeek = myScanner.readInt("Enter the end week of the " + purpose + ": ");
+
+        try {
+            return new TimePeriod(startYear, startWeek, endYear, endWeek);
+        } catch (IllegalArgumentException e) {
+            Print.println(e + LS);
+            return readTimePeriod(purpose);             // recursively call of readTimePeriod until it succeeds
+        }
     }
 
     public static YearWeek pickEndWeek(String purpose) {
