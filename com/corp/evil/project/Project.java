@@ -211,8 +211,8 @@ public class Project {
         StringBuilder sb = new StringBuilder();
         sb.append(headline);
         sb.append(String.join("", Collections.nCopies(headline.length() + 2 * MARGIN, "-")) + LS + LS);
-        sb.append("Earned Value:      " + schedule.getEarnedValue() + LS);
-        sb.append("Cost Variance:     " + schedule.getCostVariance());
+        sb.append(getEarnedValueString());
+        sb.append(getCostVarianceString());
         sb.append(getScheduleVarianceString());
 
         return sb.toString();
@@ -220,12 +220,14 @@ public class Project {
 
     public String getEarnedValueString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Earned Value:      " + schedule.getEarnedValue() + LS);
 
         return sb.toString();
     }
 
     public String getCostVarianceString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("Cost Variance:     " + schedule.getCostVariance());
 
         return sb.toString();
     }
