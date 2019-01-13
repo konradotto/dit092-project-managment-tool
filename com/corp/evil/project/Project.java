@@ -164,19 +164,8 @@ public class Project {
     }
 
     public void solveCopiesInProject() {
-        for (Member member : team.getMembers()) {
-            for (Team smallTeam : teams) {
-                if (smallTeam.contains(member)) {
-                    try {
-                        smallTeam.removeMember(member);
-                        smallTeam.addMember(member);
-                    } catch (MemberIsNullException e) {
-                        e.printStackTrace();
-                    } catch (MemberAlreadyRegisteredException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+        for (Team smallTeam : teams) {
+            smallTeam.replaceMembers(team);
         }
     }
 

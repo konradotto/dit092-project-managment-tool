@@ -88,11 +88,29 @@ public class Team {
         return null;
     }
 
+    public Member retrieveMember(Member member) {
+        for (Member memberInHere : members) {
+            if (memberInHere.equals(member)) {
+                return memberInHere;
+            }
+        }
+        return null;
+    }
+
     public Member retrieveMember(int index) {
         if (index >= 0 && index < members.size()) {
             return members.get(index);
         }
         return null;
+    }
+
+    public void replaceMembers(Team team) {
+        ArrayList<Member> temp = members;
+        for (Member member : members) {
+            temp.remove(member);
+            temp.add(team.retrieveMember(member));
+        }
+        members = temp;
     }
 
     public double getExpectedBudgetAtCompletion(Activity activity) {
