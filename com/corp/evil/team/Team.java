@@ -10,7 +10,7 @@ public class Team {
     // members
     private String name;
     private List<Member> members;
-    private List<Activity> activities;
+    //private List<Activity> activities;
 
     public Team(String name, ArrayList<Member> members, ArrayList<Activity> activities) throws NameIsEmptyException {
         if (name.trim().isEmpty()) {
@@ -18,7 +18,7 @@ public class Team {
         }
         this.name = name;
         this.members = members;
-        this.activities = activities;
+        //this.activities = activities;
     }
 
     public Team(String name) throws NameIsEmptyException {
@@ -49,16 +49,19 @@ public class Team {
         } else if (false) {//activities.contains(activity)) {
             throw new ActivityAlreadyRegisteredException("An activity with same name exists already!");
         } else {
-            activities.add(activity);
+            //TODO change this to work again somehow
+
+            System.err.println("Major, we got a problem! In Team.addActivity(Activity activity)");
+            //activities.add(activity);
         }
     }
 
-    public void removeActivity(Activity activity) throws ActivityIsNullException {
+    /*public void removeActivity(Activity activity) throws ActivityIsNullException {
         if (activity == null) {
             throw new ActivityIsNullException("This activity does not exist!");
         }
         activities.remove(activity);
-    }
+    }*/
 
     public void solveCopies(Member member) {
         System.err.println("Function solveCopies(Member member) called!");
@@ -111,13 +114,14 @@ public class Team {
         members = temp;
     }
 
+    /*
     public double getExpectedBudgetAtCompletion(Activity activity) {
         if (!activities.contains(activity)) {
             throw new IllegalArgumentException("The activity is not being handled by this team!");
         }
         int hoursExpected = activity.getBillableHours();
         return (double) hoursExpected * getAverageSalary();
-    }
+    }*/
 
     /**
      * Assume everyone on the team will do the same amount of work on any task.
@@ -238,12 +242,11 @@ public class Team {
         if (o == null || getClass() != o.getClass()) return false;
         Team team = (Team) o;
         return Objects.equals(name, team.name) &&
-                Objects.equals(members, team.members) &&
-                Objects.equals(activities, team.activities);
+                Objects.equals(members, team.members);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, members, activities);
+        return Objects.hash(name, members);
     }
 }

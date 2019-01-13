@@ -41,7 +41,7 @@ public class Project {
 
         Calendar now = new GregorianCalendar();
         this.currentWeek = new YearWeek(now.get(Calendar.YEAR), now.get(Calendar.WEEK_OF_YEAR));
-        this.lastWeekday = DayOfWeek.of(now.get(Calendar.DAY_OF_WEEK));
+        this.lastWeekday = DayOfWeek.of((now.get(Calendar.DAY_OF_WEEK) - 1) % 7);
 
         onChange();             // save all changes
     }
@@ -241,7 +241,7 @@ public class Project {
     public String getScheduleVarianceString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Schedule Variance: " + schedule.getScheduleVariance(currentWeek, lastWeekday) + LS);
-        sb.append(dateAssumption());
+        sb.append(dateAssumption() + LS);
         return sb.toString();
     }
 

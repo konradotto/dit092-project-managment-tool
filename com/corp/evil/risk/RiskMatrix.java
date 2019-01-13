@@ -29,53 +29,57 @@ public class RiskMatrix {
 
     @Override
     public String toString() {
-    	return formatTable(true);
+        return formatTable(true);
     }
-    
+
     public String toStringText() {
-    	return formatTable(false);
+        return formatTable(false);
     }
-    
+
     public String formatTable(boolean numeric) {
         StringBuilder sb = new StringBuilder();
 
         if (risks.isEmpty()) {
             sb.append("There are no risks registered in this Risk Matrix yet." + lineSeparator);
         } else {
-            
+
             sb.append("\t\t\tRisk Matrix" + lineSeparator);
 
-            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")));
             sb.append(lineSeparator);
-            
+
             // format table content
-            sb.append(formatTableRow(new String[] {"| Risk name:", "| Probability:", "| Impact:", "| Risk:", "|"}));
+            sb.append(formatTableRow(new String[]{"| Risk name:", "| Probability:", "| Impact:", "| Risk:", "|"}));
 
             // separator line
 
-            sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+            sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")));
             sb.append(lineSeparator);
 
             for (Risk risk : risks) {
-                sb.append(formatTableRow(new String[] {"| " + risk.getRiskName(),
-                		"| " + String.valueOf(numeric ? risk.getProbability().getProbability() : risk.getProbability().getText()),
-                		"| " + String.valueOf(numeric ? risk.getImpact().getImpact() : risk.getImpact().getText()),
-                		"| " + String.valueOf(numeric ? risk.getRisk() : risk.getRiskString()), "|"}));
+                sb.append(formatTableRow(new String[]{"| " + risk.getRiskName(),
+                        "| " + String.valueOf(numeric ? risk.getProbability().getProbability() : risk.getProbability().getText()),
+                        "| " + String.valueOf(numeric ? risk.getImpact().getImpact() : risk.getImpact().getText()),
+                        "| " + String.valueOf(numeric ? risk.getRisk() : risk.getRiskString()), "|"}));
 
-                sb.append(String.join("", Collections.nCopies((COLUMNS-1) * COLUMN_WIDTH +1, "-")));
+                sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")));
                 sb.append(lineSeparator);
             }
         }
         //test
         return sb.toString();
     }
-    
-    
+
+
     private String formatTableRow(String[] columns) {
         String result = "";
 
-        for(int i = 0; i < COLUMNS - 1; ++i) {
-            result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
+        for (int i = 0; i < COLUMNS - 1; ++i) {
+            if (i == 0) {
+                result += String.format("%1$-" + 2 * COLUMN_WIDTH + "s", columns[i]);
+            } else {
+                result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
+            }
         }
         result += String.format(columns[4] + "%n");
 

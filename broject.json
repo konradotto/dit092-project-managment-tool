@@ -1,53 +1,73 @@
 {
   "name": "Broject",
   "team": {
-    "name": "Broject",
+    "name": "Brojct",
     "members": [
       {
         "name": "Ella",
-        "uuid": "80678037-ce55-4d13-9c79-691409ac1f43",
+        "uuid": "7771ae6e-88ab-4c98-8b11-59fad826f088",
         "salaryPerHour": 100.0,
         "hoursSpent": 0
       },
       {
         "name": "JP",
-        "uuid": "5fed8752-56b5-4e1f-903d-3674a3db1bba",
+        "uuid": "2da8283b-9e1e-470b-a197-e184bbee9cee",
+        "salaryPerHour": 100.0,
+        "hoursSpent": 0
+      },
+      {
+        "name": "Jakob",
+        "uuid": "40585592-7ca8-4f94-950a-a9ef0a50aef8",
         "salaryPerHour": 100.0,
         "hoursSpent": 0
       },
       {
         "name": "Kardo",
-        "uuid": "71e1029d-f3e4-443b-bb4e-4feacee4daa9",
+        "uuid": "ed52e62b-585e-42db-a504-40412e1558a9",
         "salaryPerHour": 100.0,
         "hoursSpent": 0
       },
       {
         "name": "Konrad",
-        "uuid": "18d3afea-458e-45af-a583-9957ec7a02b6",
+        "uuid": "4aef43bf-4d5c-4cf5-abfe-b3116b778005",
         "salaryPerHour": 100.0,
-        "hoursSpent": 0
+        "hoursSpent": 10
       },
       {
         "name": "Marcus",
-        "uuid": "3b60501c-71a2-46ef-9464-2439a74b4745",
+        "uuid": "b15076e1-ce1a-4903-a8b0-a55195ef741b",
         "salaryPerHour": 100.0,
         "hoursSpent": 0
       },
       {
         "name": "Miru",
-        "uuid": "eeb786a2-3ed0-45d8-9042-a9c692cb0e35",
+        "uuid": "faedf291-c15d-4f7b-bb6d-2cc528cd8cbb",
         "salaryPerHour": 100.0,
         "hoursSpent": 0
       }
-    ],
-    "activities": []
+    ]
   },
   "riskMatrix": {
-    "risks": [],
+    "risks": [
+      {
+        "riskName": "People Dying",
+        "probability": "UNLIKELY",
+        "impact": "VERY_HIGH"
+      },
+      {
+        "riskName": "Shit hitting the fan",
+        "probability": "POSSIBLE",
+        "impact": "HIGH"
+      },
+      {
+        "riskName": "System failure",
+        "probability": "VERY_UNLIKELY",
+        "impact": "VERY_HIGH"
+      }
+    ],
     "lineSeparator": "\n"
   },
   "schedule": {
-    "LAST_WEEK_OF_YEAR": 52,
     "activities": [
       {
         "name": "Code clean-up",
@@ -61,9 +81,26 @@
             "week": 2
           }
         },
+        "team": {
+          "name": "Coding",
+          "members": [
+            {
+              "name": "JP",
+              "uuid": "2da8283b-9e1e-470b-a197-e184bbee9cee",
+              "salaryPerHour": 100.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Konrad",
+              "uuid": "4aef43bf-4d5c-4cf5-abfe-b3116b778005",
+              "salaryPerHour": 100.0,
+              "hoursSpent": 10
+            }
+          ]
+        },
         "billableHours": 40,
-        "hoursCovered": 0,
-        "costSoFar": 0.0
+        "hoursCovered": 20,
+        "costSoFar": 1000.0
       },
       {
         "name": "Report Writing",
@@ -74,10 +111,33 @@
           },
           "end": {
             "year": 2019,
-            "week": 3
+            "week": 4
           }
         },
-        "billableHours": 40,
+        "team": {
+          "name": "Report",
+          "members": [
+            {
+              "name": "Ella",
+              "uuid": "7771ae6e-88ab-4c98-8b11-59fad826f088",
+              "salaryPerHour": 100.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Jakob",
+              "uuid": "40585592-7ca8-4f94-950a-a9ef0a50aef8",
+              "salaryPerHour": 100.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Miru",
+              "uuid": "faedf291-c15d-4f7b-bb6d-2cc528cd8cbb",
+              "salaryPerHour": 100.0,
+              "hoursSpent": 0
+            }
+          ]
+        },
+        "billableHours": 60,
         "hoursCovered": 0,
         "costSoFar": 0.0
       }
@@ -99,42 +159,40 @@
       "members": [
         {
           "name": "JP",
-          "uuid": "5fed8752-56b5-4e1f-903d-3674a3db1bba",
+          "uuid": "2da8283b-9e1e-470b-a197-e184bbee9cee",
           "salaryPerHour": 100.0,
           "hoursSpent": 0
         },
         {
           "name": "Konrad",
-          "uuid": "18d3afea-458e-45af-a583-9957ec7a02b6",
+          "uuid": "4aef43bf-4d5c-4cf5-abfe-b3116b778005",
           "salaryPerHour": 100.0,
-          "hoursSpent": 0
-        },
-        {
-          "name": "Miru",
-          "uuid": "eeb786a2-3ed0-45d8-9042-a9c692cb0e35",
-          "salaryPerHour": 100.0,
-          "hoursSpent": 0
+          "hoursSpent": 10
         }
-      ],
-      "activities": []
+      ]
     },
     {
       "name": "Report",
       "members": [
         {
           "name": "Ella",
-          "uuid": "80678037-ce55-4d13-9c79-691409ac1f43",
+          "uuid": "7771ae6e-88ab-4c98-8b11-59fad826f088",
+          "salaryPerHour": 100.0,
+          "hoursSpent": 0
+        },
+        {
+          "name": "Jakob",
+          "uuid": "40585592-7ca8-4f94-950a-a9ef0a50aef8",
           "salaryPerHour": 100.0,
           "hoursSpent": 0
         },
         {
           "name": "Miru",
-          "uuid": "eeb786a2-3ed0-45d8-9042-a9c692cb0e35",
+          "uuid": "faedf291-c15d-4f7b-bb6d-2cc528cd8cbb",
           "salaryPerHour": 100.0,
           "hoursSpent": 0
         }
-      ],
-      "activities": []
+      ]
     }
   ],
   "currentWeek": {

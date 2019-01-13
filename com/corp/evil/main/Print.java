@@ -106,7 +106,7 @@ public class Print {
         sb.append("➤ 2. Teams and Members" + LS);
         sb.append("➤ 3. Tasks Management" + LS);
         sb.append("➤ 4. Risks Management" + LS);
-        sb.append("➤ 5. Budget" + LS);
+        sb.append("➤ 5. Budget Management" + LS);
         sb.append("➤ 6. Save and Exit" + LS);
 
         printBuffer();
