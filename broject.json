@@ -48,7 +48,40 @@
   },
   "schedule": {
     "LAST_WEEK_OF_YEAR": 52,
-    "activities": [],
+    "activities": [
+      {
+        "name": "Code clean-up",
+        "timePeriod": {
+          "start": {
+            "year": 2019,
+            "week": 1
+          },
+          "end": {
+            "year": 2019,
+            "week": 2
+          }
+        },
+        "billableHours": 40,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "Report Writing",
+        "timePeriod": {
+          "start": {
+            "year": 2019,
+            "week": 2
+          },
+          "end": {
+            "year": 2019,
+            "week": 3
+          }
+        },
+        "billableHours": 40,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      }
+    ],
     "timePeriod": {
       "start": {
         "year": 2019,
@@ -73,6 +106,12 @@
         {
           "name": "Konrad",
           "uuid": "18d3afea-458e-45af-a583-9957ec7a02b6",
+          "salaryPerHour": 100.0,
+          "hoursSpent": 0
+        },
+        {
+          "name": "Miru",
+          "uuid": "eeb786a2-3ed0-45d8-9042-a9c692cb0e35",
           "salaryPerHour": 100.0,
           "hoursSpent": 0
         }

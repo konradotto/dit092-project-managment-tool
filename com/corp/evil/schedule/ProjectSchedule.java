@@ -1,16 +1,9 @@
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
 public class ProjectSchedule {
-
-    private final static int FIRST_WORKDAY = Calendar.MONDAY;
-    public final static int LAST_WORKDAY = Calendar.FRIDAY;
-    private final static int DAY_START_HOUR = 8;
-    public final static int DAY_END_HOUR = 17;
-    private final int LAST_WEEK_OF_YEAR = 52;
 
     // constants for table formatting
     private final static int COLUMN_WIDTH = 25;
@@ -24,7 +17,7 @@ public class ProjectSchedule {
         StringBuilder sbTemp = new StringBuilder();
         sbTemp.append("\t\t\t TASKS " + LS);
         sbTemp.append(SEPARATOR);
-        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start YearWeek:", "| End YearWeek:", "| Percent Completed:", "| Teams: ", "|"}));
+        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start Week, Year:", "| End Week, Year:", "| Percent Completed:", "| Teams: ", "|"}));
         sbTemp.append(SEPARATOR);
 
         HEAD = sbTemp.toString();
@@ -50,7 +43,6 @@ public class ProjectSchedule {
      * @param team Team to be looked for.
      */
     public void solveCopies(Team team) {
-        System.err.println("Function solveCopies(Team team) called!");
         for (Member member : team.getMembers()) {
             for (Activity activity : activities) {
                 if (activity.hasTeam()) {
@@ -174,16 +166,16 @@ public class ProjectSchedule {
                 if (activity.getTeam() != null) {
 
                     sb.append(formatTableRow(new String[]{"| " + activity.getName(),
-                            "| " + activity.getTimePeriod().getStart().getWeek(),
-                            "| " + activity.getTimePeriod().getEnd().getWeek(),
+                            "| " + activity.getTimePeriod().getStart().toString(),
+                            "| " + activity.getTimePeriod().getEnd().toString(),
                             "| " + String.format("%.2f", activity.getCompletion() * 100.0),
                             "| " + activity.getTeam().getName(),
                             "|"
                     }));
                 } else {
                     sb.append(formatTableRow(new String[]{"| " + activity.getName(),
-                            "| " + activity.getTimePeriod().getStart().getWeek(),
-                            "| " + activity.getTimePeriod().getEnd().getWeek(),
+                            "| " + activity.getTimePeriod().getStart().toString(),
+                            "| " + activity.getTimePeriod().getEnd().toString(),
                             "| " + String.format("%.2f", activity.getCompletion() * 100.0),
                             "| " + "No team assigned",
                             "|"

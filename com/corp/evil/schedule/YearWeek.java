@@ -34,6 +34,10 @@ public class YearWeek implements Comparable<YearWeek> {
         this.week = week;
     }
 
+    public String toString() {
+        return String.format("%d, %d", week, year);
+    }
+
     @Override
     public int compareTo(final YearWeek other) {
         int result = Integer.compare(this.getYear(), other.getYear());      // compare the years first

@@ -330,26 +330,28 @@ public class ConsoleProgram {
         return false;
     }
 
-    public static boolean editTask() {
+    public static void editTask() {
         Activity activity = null;
         try {
             activity = Print.readActivity();
         } catch (ActivityIsNullException e) {
             Print.println(e + Print.LS);
-            return false;
+            return;
         }
 
         boolean leave = false;
         do switch (Print.printEditTaskMenu()) {
-
             case EDIT_TASK_NAME:
                 activity.setName(myScanner.readLine("Enter the new name: "));
+                project.onChange();
                 break;
             case EDIT_TASK_END_WEEK:
                 activity.setEndWeek(myScanner.readInt("Enter the new end week: "), project.getSchedule().getTimePeriod());
+                project.onChange();
                 break;
             case EDIT_TASK_END_YEAR:
                 activity.setEndYear(myScanner.readInt("Enter the new end year: "), project.getSchedule().getTimePeriod());
+                project.onChange();
                 break;
             case LEAVE_TASK_MENU:
                 leave = true;
@@ -359,8 +361,6 @@ public class ConsoleProgram {
                 Print.defaultMonologue();
                 break;
         } while (!leave);
-
-        return false;       //TODO: always returning false
     }
 
     //TODO: clean up exceptions
