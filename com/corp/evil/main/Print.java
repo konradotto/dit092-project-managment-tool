@@ -201,6 +201,19 @@ public class Print {
         return myScanner.readInt();
     }
 
+    public static int printProjectBudgetMenu() {
+        sb.append("Choose an option from below" + LS);
+        sb.append("➤ 1. Print the Budget" + LS);
+        sb.append("➤ 2. Print the Earned Value" + LS);
+        sb.append("➤ 3. Print the Cost Variance" + LS);
+        sb.append("➤ 4. Print the Schedule Variance" + LS);
+        sb.append("➤ 5. Change the date used for determining the Schedule Variance" + LS);
+        sb.append("➤ 6. Back to the main" + LS);
+
+        printBuffer();
+        return myScanner.readInt();
+    }
+
     public static Activity createActivity(){
         String name = myScanner.readLine("Enter the name of the task: ");
         return new Activity(name, readTimePeriod("activity"), null);        // TODO: add a team

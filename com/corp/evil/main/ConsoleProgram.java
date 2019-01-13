@@ -70,6 +70,14 @@ public class ConsoleProgram {
     private static final int REMOVE_RISK = 3;
     private static final int LEAVE_RISK_MANAGER = 4;
 
+    // budget menu options
+    private static final int BUDGET_PRINT_FULL = 1;
+    private static final int BUDGET_EARNED_VALUE = 2;
+    private static final int BUDGET_COST_VARIANCE = 3;
+    private static final int BUDGET_SCHEDULE_VARIANCE = 4;
+    private static final int BUDGET_CHANGE_DATE = 5;
+    private static final int LEAVE_BUDGET_MENU = 6;
+
     // member selection options
     private static final int MEMBER_BY_NAME = 1;
     private static final int MEMBER_FROM_LIST = 2;
@@ -79,7 +87,6 @@ public class ConsoleProgram {
 
     // members
     private static Project project;
-    //private static boolean proceed = true;
 
     /**
      * Routine to run the ConsoleProgram.
@@ -92,7 +99,6 @@ public class ConsoleProgram {
         boolean proceed = true;
         // set entry point for the console program
         int position = PROJECT;
-
         do switch (position) {
             case PROJECT:       // print start menu and choose whether to load or create a new project
                 position = loadOrNewProject();
@@ -112,7 +118,7 @@ public class ConsoleProgram {
     }
 
     /**
-     * Function to load an existing project or create a new one.
+     * Routine to load an existing project or create a new one.
      *
      * @return next point in the program to continue from
      */
@@ -157,8 +163,7 @@ public class ConsoleProgram {
                 riskManager();
                 break;
             case PRIMARY_BUDGET:
-                // TODO: fix the god damn budget already, stupid idiot (Konrad)
-                Print.println(project.getBudget());
+                projectBudgetManager();
                 break;
             case PRIMARY_SAVE_EXIT:
                 next = END;
@@ -176,7 +181,7 @@ public class ConsoleProgram {
      */
     private static void endConsoleProgram() {
         boolean projectUsed = false;
-        if (project != null) {      // make sure project exists
+        if (project != null) {      // make sure project exists (it doesn't if no load or creteProject() was done)
             project.saveProject();
             projectUsed = true;
         }
@@ -392,6 +397,33 @@ public class ConsoleProgram {
         } while (choice != LEAVE_RISK_MANAGER);
     }
 
+    // TODO: implement this mofo
+    private static void projectBudgetManager() {
+        int choice;
+        do switch (choice = Print.printProjectBudgetMenu()) {
+            case BUDGET_PRINT_FULL:
+                Print.println(project.getBudgetString());
+                break;
+            case BUDGET_EARNED_VALUE:
+                Print.println(project.getEarnedValueString());
+                break;
+            case BUDGET_COST_VARIANCE:
+                Print.println(project.getCostVarianceString());
+                break;
+            case BUDGET_SCHEDULE_VARIANCE:
+                Print.println(project.getScheduleVarianceString());
+                break;
+            case BUDGET_CHANGE_DATE:
+                break;
+            case LEAVE_BUDGET_MENU:
+                Print.println("Leaving the budget manager...");
+                break;
+            default:
+                Print.defaultMonologue();
+                break;
+        } while (choice != LEAVE_BUDGET_MENU);
+    }
+
 
     //TODO: this needs some clean-up
     private static void teamMenu() {
@@ -556,7 +588,7 @@ public class ConsoleProgram {
     //TODO: do we really need the projectEditingMenu? Changing the start date or name from the projectMenu should be good enough...
 
     /**
-     * Function to edit a project's name or end date.
+     * Routine to edit a project's name or end date.
      */
     public static void editProject() {
         boolean leave = false;
@@ -577,6 +609,12 @@ public class ConsoleProgram {
         } while (!leave);
     }
 
+
+    /**
+     * Routine trying to load a project and set the project member here.
+     *
+     * @return point of continuation for the entry-menu (either continue with main or rerun the project-selection)
+     */
     private static int loadProject() {
         if (Print.loadProject() != Print.PROJECT_LOADED) {
             Print.println("Loading the Project failed. Try again!" + Print.LS);

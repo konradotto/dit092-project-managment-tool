@@ -1,8 +1,10 @@
 import javax.swing.*;
 import java.io.File;
 import java.time.DayOfWeek;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +21,8 @@ public class Project {
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
     ArrayList<Team> teams;  //TODO: decide whether we really need this...
+    private YearWeek currentWeek;
+    private DayOfWeek lastWeekday;
 
     private File file;
 
@@ -59,6 +63,10 @@ public class Project {
         this.setTeam(team);
         this.setRiskMatrix(riskMatrix);
         this.setSchedule(schedule);
+
+        Instant now = Instant.now();
+        this.currentWeek = new YearWeek(now.get(ChronoField.YEAR), now.get(ChronoField.ALIGNED_WEEK_OF_YEAR));
+        this.lastWeekday = DayOfWeek.of(now.get(ChronoField.DAY_OF_WEEK));
 
         onChange();
     }
@@ -177,7 +185,7 @@ public class Project {
         sb.append(team);
         sb.append(LS + LS);
 
-        sb.append(getBudget());
+        sb.append(getBudgetString());
         sb.append(LS + LS);
 
         sb.append(schedule);
@@ -197,11 +205,35 @@ public class Project {
         }
     }
 
-    public String getBudget() {
-        //TODO: is this all we want here?
+    public String getBudgetString() {
+        String headline = "Project Budget for " + name + LS;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(headline);
+        sb.append(String.join("", Collections.nCopies(headline.length() + 2 * MARGIN, "-")) + LS + LS);
+        sb.append("Earned Value:      " + schedule.getEarnedValue() + LS);
+        sb.append("Cost Variance:     " + schedule.getCostVariance());
+        sb.append(getScheduleVarianceString());
+
+        return sb.toString();
+    }
+
+    public String getEarnedValueString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Earned Value: " + schedule.getEarnedValue() + LS);
+        return sb.toString();
+    }
+
+    public String getCostVarianceString() {
+        StringBuilder sb = new StringBuilder();
+
+        return sb.toString();
+    }
+
+    public String getScheduleVarianceString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Schedule Variance: " + schedule.getScheduleVariance(currentWeek, lastWeekday) + LS);
+        sb.append(dateAssumption());
         return sb.toString();
     }
 
@@ -213,8 +245,9 @@ public class Project {
         return schedule.getCostVariance();
     }
 
-    public double getScheduleVariance(YearWeek yearWeek, DayOfWeek after) {
-        return schedule.getScheduleVariance(yearWeek, after);
+    public String dateAssumption() {
+        return "(Assuming it to be " + lastWeekday.toString() + " evening in week " + currentWeek.getWeek() +
+                ", " + currentWeek.getYear() + ")";
     }
 
     public String getName() {
