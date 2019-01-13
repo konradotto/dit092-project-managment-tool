@@ -110,6 +110,9 @@ public class Team {
 
     @Override
     public String toString() {
+        if (members.isEmpty()) {
+            return "No registered members!";
+        }
         return formatTable();
     }
 

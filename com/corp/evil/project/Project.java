@@ -106,7 +106,7 @@ public class Project {
     public void addTeam(Team team) throws TeamAlreadyRegisteredException, TeamIsNullException {
         if (team == null) {
             throw new TeamIsNullException("This team does not exist!");
-        } else if ( (teams != null) &&  (teams.contains(team))) {
+        } else if ((teams != null) && (teams.contains(team))) {
             throw new TeamAlreadyRegisteredException("A team with same name exists already!");
         } else {
             teams.add(team);
@@ -203,6 +203,19 @@ public class Project {
         } catch (MemberIsNullException e) {
             Print.println(e.getMessage());
         }
+    }
+
+    public String getTeamsString() {
+        if (teams.isEmpty()) {
+            return "No registered teams!" + Print.LS;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Team team : teams) {
+            sb.append(team + Print.LS);
+        }
+
+        return sb.toString();
     }
 
     public String getBudgetString() {
@@ -350,17 +363,18 @@ public class Project {
     public Member retrieveMember(int index) {
         return team.retrieveMember(index);
     }
-    public void memberNameChanger(Member member, String name){
-        for (Team team: getTeams()){
-            if (team.getMembers().contains(member)){
+
+    public void memberNameChanger(Member member, String name) {
+        for (Team team : getTeams()) {
+            if (team.getMembers().contains(member)) {
                 member.setName(name);
             }
         }
     }
 
-    public void memberSalaryChanger(Member member, double salary){
-        for (Team team: getTeams()){
-            if (team.getMembers().contains(member)){
+    public void memberSalaryChanger(Member member, double salary) {
+        for (Team team : getTeams()) {
+            if (team.getMembers().contains(member)) {
                 member.setSalaryPerHour(salary);
             }
         }

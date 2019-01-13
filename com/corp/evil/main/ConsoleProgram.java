@@ -430,21 +430,10 @@ public class ConsoleProgram {
         boolean leave = false;
         do switch (Print.printTeamMenu()) {
             case PROJECT_PRINT_MEMBERS:
-                if (project.getTeam().getMembers().isEmpty()) {
-                    System.out.println("No registered members!" + Print.LS);
-                } else {
-                    System.out.println(project.getTeam().toString() + Print.LS);
-
-                }
+                Print.println(project.getTeam().toString());
                 break;
             case PROJECT_PRINT_TEAMS:
-                if (project.getTeams().isEmpty()) {
-                    System.out.println("No registered teams!" + Print.LS);
-                } else {
-                    for (Team team : project.getTeams()) {
-                        System.out.println(team + Print.LS);
-                    }
-                }
+                Print.println(project.getTeamsString());
                 break;
             case PROJECT_ADD_MEMBER:
                 try {
