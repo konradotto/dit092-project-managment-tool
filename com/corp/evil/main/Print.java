@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,14 +9,19 @@ public class Print {
 
     private static final int SEPARATOR_WIDTH = 50;
 
-    private static final int DEFAULT = 0;
     public static final int PROJECT_LOADED = 1;
     private static final int IO_EXCEPTION = -1;
     private static final int PROJECT_STARTED = 2;
     private static final int NOT_A_PROJECT = -2;
 
-    // reasons to quit
-    private static final int NO_PROJECT = 1;
+    private static final int SEARCH_FOR_TASK = 1;
+    private static final int SELECT_TASK = 2;
+
+    private static final int SEARCH_FOR_MEMBER = 1;
+    private static final int SELECT_MEMBER = 2;
+
+    private static final int SEARCH_FOR_RISK = 1;
+    private static final int SELECT_RISK = 2;
 
     private static StringBuilder sb = new StringBuilder();
     static final String LS = System.lineSeparator();
@@ -170,20 +176,20 @@ public class Print {
         sb.append("➤ 1. Print All Tasks" + LS);
         sb.append("➤ 2. Add a task" + LS);
         sb.append("➤ 3. Edit a task" + LS);
-        sb.append("➤ 4. Remove a task" + LS);
-        sb.append("➤ 5. Assign a task to a team" + LS);
-        sb.append("➤ 6. Update the time spent on a task" + LS);
-        sb.append("➤ 7. Back to the main" + LS);
+        sb.append("➤ 4. Back to the main" + LS);
 
         printBuffer();
         return myScanner.readInt();
     }
 
-    public static int printEditTaskMenu(){
-        sb.append("➤ 1. Edit task name" + LS);
-        sb.append("➤ 2. Edit task end week" + LS);
-        sb.append("➤ 3. Edit task end year" + LS);
-        sb.append("➤ 4. Back to the previous menu" + LS);
+    public static int printEditTaskMenu() {
+        sb.append("➤ 1. Remove this task" + LS);
+        sb.append("➤ 2. Edit task name" + LS);
+        sb.append("➤ 3. Edit task end week" + LS);
+        sb.append("➤ 4. Edit task end year" + LS);
+        sb.append("➤ 5. Assign a team to this task" + LS);
+        sb.append("➤ 6. Update time spent on this task" + LS);
+        sb.append("➤ 7. Back to the previous menu" + LS);
 
         printBuffer();
         return myScanner.readInt();
@@ -214,13 +220,13 @@ public class Print {
         return myScanner.readInt();
     }
 
-    public static Activity createActivity(){
+    public static Activity createActivity() {
         String name = myScanner.readLine("Enter the name of the task: ");
         return new Activity(name, readTimePeriod("activity"), null);        // TODO: add a team
     }
 
 
-    public static Risk createRisk(){
+    public static Risk createRisk() {
         String name = myScanner.readLine("Enter the name of the risk: ");
         int probability = myScanner.readInt("Enter risk probability: ");
         int impact = myScanner.readInt("Enter risk impact: ");
@@ -251,7 +257,7 @@ public class Print {
         return null;
     }
 
-    public static String enterName(){
+    public static String enterName() {
         String name = myScanner.readLine("Enter the intended name:");
         return name;
     }
@@ -346,16 +352,16 @@ public class Print {
 
 
     public static Team readTeam() throws TeamIsNullException {
-        String option = myScanner.readLine("Choose how to retrieve a team:\n1) By entering the team's name\n2) By choosing a team from the list");
-        while (!(option.equals("1") || option.equals("2"))){
-            option = myScanner.readLine("Choose how to retrieve a team:\n1) By entering the team's name\n2) By choosing a team from the list");
-        }
-        switch (option) {
-            case "1":
+        switch (myScanner.readInt("Choose how to retrieve a team:" + LS +
+                "1) By entering the team's name" + LS +
+                "2) By choosing a team from the list")) {
+            case SEARCH_FOR_MEMBER:
                 Team team = ConsoleProgram.retrieveTeam(enterName());
-                if (team==null){{ throw new TeamIsNullException("No such team!"); }
+                if (team == null) {
+                    throw new TeamIsNullException("No such team registered!");
                 }
                 return team;
+            case SELECT_MEMBER:
             default:
                 return readTeamFromList();
         }
@@ -363,65 +369,70 @@ public class Print {
 
     public static Team readTeamFromList() throws TeamIsNullException {
         ArrayList<Team> teams = ConsoleProgram.getProject().getTeams();
-        if (teams.isEmpty()){
-            throw new TeamIsNullException("No registered teams!");
+        if (teams.isEmpty()) {
+            throw new TeamIsNullException("No teams registered for the project!");
         }
         teams.sort(Comparator.comparing(Team::getName));
+
         for (int i = 0; i < teams.size(); i++) {
-            System.out.println(i + ") " + teams.get(i).getName());
+            Print.println(i + 1 + ") " + teams.get(i).getName());
         }
         int j = myScanner.readInt("Choose a team from the list: ");
-        while (j>=teams.size()){
+        while (j > teams.size() || j < 1) {
             j = myScanner.readInt("Choose a valid option! ");
         }
-        return teams.get(j);
+        return teams.get(j - 1);
     }
 
     public static Activity readActivity() throws ActivityIsNullException {
-        String option = myScanner.readLine("Choose how to retrieve a task:\n1) By typing the task's name\n2) By choosing a task from the list");
-        while (!(option.equals("1") || option.equals("2"))){
-            option = myScanner.readLine("Choose how to retrieve a task:\n1) By typing the tasks's name\n2) By choosing a task from the list");
-        }
-        switch (option) {
-            case "1":
-                Activity activity =ConsoleProgram.retrieveActivity(enterName());
-                if (activity==null){
-                    throw new ActivityIsNullException("No such task!");
+        switch (myScanner.readInt("Choose how to retrieve a task:" + LS +
+                "1) By typing the tasks's name" + LS +
+                "2) By choosing a task from the list")) {
+            case SEARCH_FOR_TASK:
+                Activity activity = ConsoleProgram.retrieveActivity(enterName());
+                if (activity == null) {
+                    throw new ActivityIsNullException("No such activity registered!");
                 }
                 return activity;
+            case SELECT_TASK:
             default:
                 return readActivityFromList();
         }
     }
 
+    /**
+     * Method to select an activity from the List of all activities
+     *
+     * @return
+     */
     public static Activity readActivityFromList() throws ActivityIsNullException {
         ArrayList<Activity> activities = ConsoleProgram.getProject().getSchedule().getActivities();
-        if (activities.isEmpty()){
-            throw new ActivityIsNullException("No registered tasks!");
+        if (activities.isEmpty()) {
+            throw new ActivityIsNullException("No activities registered for the project!");
         }
         activities.sort(Comparator.comparing(Activity::getName));
+
         for (int i = 0; i < activities.size(); i++) {
-            System.out.println(i + ") " + activities.get(i).getName());
+            Print.println(i + 1 + ") " + activities.get(i).getName());
         }
         int j = myScanner.readInt("Choose an activity from the list: ");
-        while (j>=activities.size()){
+        while (j > activities.size() || j < 1) {
             j = myScanner.readInt("Choose a valid option! ");
         }
-        return activities.get(j);
+        return activities.get(j - 1);
     }
 
     public static Risk readRisk() throws RiskIsNullException {
-        String option = myScanner.readLine("Choose how to retrieve a risk:\n1) By entering the risk's name\n2) By choosing a risk from the list");
-        while (!(option.equals("1") || option.equals("2"))){
-            option = myScanner.readLine("Choose how to retrieve a member:\n1) By entering the risk's name\n2) By choosing a risk from the list");
-        }
-        switch (option) {
-            case "1":
+        switch (myScanner.readInt("Choose how to retrieve a risk:" + LS +
+                "1) By entering the risk's name" + LS +
+                "2) By choosing a risk from the list")) {
+            case SEARCH_FOR_RISK:
                 Risk risk = ConsoleProgram.retrieveRisk(enterName());
-                if (risk==null){
+                if (risk == null) {
                     throw new RiskIsNullException("No such risk!");
                 }
                 return risk;
+            case SELECT_RISK:
             default:
                 return readRiskFromList();
         }
@@ -429,18 +440,19 @@ public class Print {
 
     public static Risk readRiskFromList() throws RiskIsNullException {
         ArrayList<Risk> risks = ConsoleProgram.getProject().getRiskMatrix().getRisks();
-        if (risks.isEmpty()){
-            throw new RiskIsNullException("No registered risks!");
+        if (risks.isEmpty()) {
+            throw new RiskIsNullException("No risks registered for the project!");
         }
         risks.sort(Comparator.comparing(Risk::getRiskName));
+
         for (int i = 0; i < risks.size(); i++) {
-            System.out.println(i + ") " + risks.get(i).getRiskName());
+            System.out.println(i + 1 + ") " + risks.get(i).getRiskName());
         }
         int j = myScanner.readInt("Choose a risk from the list: ");
-        while (j>=risks.size()){
+        while (j > risks.size() || j < 1) {
             j = myScanner.readInt("Choose a valid option! ");
         }
-        return risks.get(j);
+        return risks.get(j - 1);
     }
 
 
@@ -453,25 +465,52 @@ public class Print {
         sb.setLength(0);        // empty buffer
     }
 
-    /**
-     * Function checking whether an integer is between 1 and 52 and can therefore be a year of the week
-     *
-     * @param week
-     * @return boolean telling whether week can be interpreted as a week
-     */
-    private static boolean checkWeeks(int week) {
-        if (week > 52) {
-            println("The year consists of 52 weeks only!" + LS);
-            return false;
-        } else if (week < 1) {
-            println("The first week of the year is week 1!" + LS);
-            return false;
-        }
-        return true;
-    }
-
     public static void defaultMonologue() {
         out.println("Choose a valid option!" + LS);
     }
-}
 
+    public static YearWeek readYearWeek() {
+        int year = myScanner.readInt("Enter the year your week is in: ");
+        int week = myScanner.readInt("Enter the week of the year: ");
+        try {
+            return new YearWeek(year, week);
+        } catch (IllegalArgumentException e) {
+            println(e.getMessage());
+            return null;
+        }
+    }
+
+    public static DayOfWeek readDayOfWeek() {
+        int cnt = 0;
+        do {
+            println("Choose a weekday for your date: ");
+            switch (myScanner.readInt(
+                    "1) Monday" + LS +
+                            "2) Tuesday" + LS +
+                            "3) Wednesday" + LS +
+                            "4) Thursday" + LS +
+                            "5) Friday" + LS +
+                            "6) Saturday" + LS +
+                            "7) Sunday")) {
+                case 1:
+                    return DayOfWeek.MONDAY;
+                case 2:
+                    return DayOfWeek.TUESDAY;
+                case 3:
+                    return DayOfWeek.WEDNESDAY;
+                case 4:
+                    return DayOfWeek.THURSDAY;
+                case 5:
+                    return DayOfWeek.FRIDAY;
+                case 6:
+                    return DayOfWeek.SATURDAY;
+                case 7:
+                    return DayOfWeek.SUNDAY;
+                default:
+                    println("Illegal selection. Try again!");
+                    cnt++;
+            }
+        } while (cnt < 3);
+        return null;
+    }
+}

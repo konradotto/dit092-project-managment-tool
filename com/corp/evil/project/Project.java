@@ -91,6 +91,13 @@ public class Project {
         return true;
     }
 
+    public void removeActivity(Activity activity) {
+        if (activity == null) {
+            return;
+        }
+
+    }
+
     public void addTeam(Team team) throws TeamAlreadyRegisteredException, TeamIsNullException {
         if (team == null) {
             throw new TeamIsNullException("This team does not exist!");
@@ -306,13 +313,12 @@ public class Project {
     }
 
     public void setEndWeek(YearWeek endWeek) {
-        //TODO: handle all tasks to end before the new end week
         try {
             TimePeriod updatedPeriod = new TimePeriod(schedule.getTimePeriod().getStart(), endWeek);
             schedule.setTimePeriod(updatedPeriod);
             onChange();
         } catch (IllegalArgumentException e) {
-            //Let's see about that...
+            Print.println(e.getMessage());
         }
     }
 
@@ -374,5 +380,29 @@ public class Project {
             }
         }
         onChange();
+    }
+
+    public void setDate(YearWeek yearWeek, DayOfWeek lastWeekday) {
+        if (yearWeek == null || lastWeekday == null) {
+            throw new IllegalArgumentException("Date contains a null-pointer!");
+        }
+        this.currentWeek = yearWeek;
+        this.lastWeekday = lastWeekday;
+        onChange();
+    }
+
+    public void assignTask(Activity activity, Team team) {
+        if (team.getMembers().isEmpty()) {
+            Print.println("A task cannot be assigned to an empty team!");
+        }
+
+        try {
+            team.addActivity(activity);
+            onChange();
+        } catch (ActivityAlreadyRegisteredException e) {
+            e.printStackTrace();
+        } catch (ActivityIsNullException e) {
+            e.printStackTrace();
+        }
     }
 }

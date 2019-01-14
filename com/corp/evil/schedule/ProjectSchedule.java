@@ -215,6 +215,11 @@ public class ProjectSchedule {
     }
 
     public void setTimePeriod(TimePeriod timePeriod) {
+        for (Activity activity : activities) {
+            if (!activity.getTimePeriod().isWithin(timePeriod)) {
+                throw new IllegalArgumentException("The new TimePeriod conflicts with the existing activities! Update aborted.");
+            }
+        }
         this.timePeriod = timePeriod;
     }
 

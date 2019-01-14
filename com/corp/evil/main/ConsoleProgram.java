@@ -32,16 +32,16 @@ public class ConsoleProgram {
     private static final int TASKS_PRINT_ALL = 1;
     private static final int TASK_ADD = 2;
     private static final int TASK_EDIT = 3;
-    private static final int TASK_REMOVE = 4;
-    private static final int TASK_ASSIGN_TEAM = 5;
-    private static final int TASK_UPDATE_TIME_SPENT = 6;
-    private static final int LEAVE_TASK_MANAGER = 7;
+    private static final int LEAVE_TASK_MANAGER = 4;
 
     // task editing menu options
-    private static final int EDIT_TASK_NAME = 1;
-    private static final int EDIT_TASK_END_WEEK = 2;
-    private static final int EDIT_TASK_END_YEAR = 3;
-    private static final int LEAVE_TASK_MENU = 4;
+    private static final int TASK_REMOVE = 1;
+    private static final int EDIT_TASK_NAME = 2;
+    private static final int EDIT_TASK_END_WEEK = 3;
+    private static final int EDIT_TASK_END_YEAR = 4;
+    private static final int TASK_ASSIGN_TEAM = 5;
+    private static final int TASK_UPDATE_TIME_SPENT = 6;
+    private static final int LEAVE_TASK_MENU = 7;
 
     // project editing menu options
     private static final int PROJECT_PRINT_MEMBERS = 1;
@@ -81,9 +81,6 @@ public class ConsoleProgram {
     // member selection options
     private static final int MEMBER_BY_NAME = 1;
     private static final int MEMBER_FROM_LIST = 2;
-
-    // result constants
-    private static final int PROJECT_CREATED = 1;
 
     // members
     private static Project project;
@@ -224,15 +221,6 @@ public class ConsoleProgram {
             case TASK_EDIT:
                 editTask();
                 break;
-            case TASK_REMOVE:
-                taskRemover();
-                break;
-            case TASK_ASSIGN_TEAM:
-                taskAssigner();
-                break;
-            case TASK_UPDATE_TIME_SPENT:
-                taskTimeSetter();
-                break;
             case LEAVE_TASK_MANAGER:
                 leaveMenu = true;
                 break;
@@ -283,64 +271,25 @@ public class ConsoleProgram {
     }
 
 
-    public static boolean taskAssigner() {
-        Activity task;
-        try {
-            task = Print.readActivity();
-        } catch (ActivityIsNullException e) {
-            Print.println(e + Print.LS);
-            return false;
-        }
-        Team team;
-        try {
-            team = Print.readTeam();
-        } catch (TeamIsNullException e) {
-            Print.println(e + Print.LS);
-            return false;
-        }
-        if (!team.getMembers().isEmpty()){
-            try {
-                team.addActivity(task);
-                task.setTeam(team);
-                //task.setCostOfWorkScheduled(task.scheduledCost());        //TODO: something
-            } catch (ActivityAlreadyRegisteredException | ActivityIsNullException e) {
-                Print.println(e + Print.LS);
-                return false;
-            }
-        }
-        else {
-            Print.println("A task cannot be assigned to an empty team!");
-        }
-        return false;
-    }
-
-    public static boolean taskRemover() {
-        Activity task;
-        try {
-            task = Print.readActivity();
-        } catch (ActivityIsNullException e) {
-            Print.println(e + Print.LS);
-            return false;
-        }
-        try {
-            project.getSchedule().removeActivity(task);
-        } catch (ActivityIsNullException e) {
-            Print.println(e + Print.LS);
-        }
-        return false;
+    public static void taskAssigner() {
     }
 
     public static void editTask() {
-        Activity activity = null;
+        Activity activity;
         try {
             activity = Print.readActivity();
         } catch (ActivityIsNullException e) {
-            Print.println(e + Print.LS);
+            Print.println(e.getMessage());
+            Print.println("Returning to last menu...");
             return;
         }
 
         boolean leave = false;
         do switch (Print.printEditTaskMenu()) {
+            case TASK_REMOVE:
+                project.removeActivity(activity);
+                leave = true;
+                break;
             case EDIT_TASK_NAME:
                 activity.setName(myScanner.readLine("Enter the new name: "));
                 project.onChange();
@@ -353,6 +302,17 @@ public class ConsoleProgram {
                 activity.setEndYear(myScanner.readInt("Enter the new end year: "), project.getSchedule().getTimePeriod());
                 project.onChange();
                 break;
+            case TASK_ASSIGN_TEAM:
+                try {
+                    project.assignTask(activity, Print.readTeam());
+                } catch (TeamIsNullException e) {
+                    Print.println(e.getMessage());
+                }
+                taskAssigner();
+                break;
+            case TASK_UPDATE_TIME_SPENT:
+                taskTimeSetter();
+                break;
             case LEAVE_TASK_MENU:
                 leave = true;
                 Print.println("Leaving the task editing menu...");
@@ -363,20 +323,21 @@ public class ConsoleProgram {
         } while (!leave);
     }
 
-    //TODO: clean up exceptions
+
     private static void riskManager() {
         int choice;
         do switch (choice = Print.printRiskMenu()) {
             case PRINT_RISK_MATRIX:
                 if (project.getRiskMatrix().getRisks().isEmpty()) {
-                    System.out.println("No registered risks!" + Print.LS);
+                    Print.println("No registered risks!" + Print.LS);
                 } else {
-                    System.out.println(project.getRiskMatrix().toStringText());
+                    Print.println(project.getRiskMatrix().toStringText());
                 }
                 break;
             case ADD_RISK:
                 try {
                     project.getRiskMatrix().addRisk(Print.createRisk());
+                    project.onChange();
                 } catch (RiskIsNullException | RiskAlreadyRegisteredException e) {
                     Print.println(e + Print.LS);
                 }
@@ -384,6 +345,7 @@ public class ConsoleProgram {
             case REMOVE_RISK:
                 try {
                     project.getRiskMatrix().removeRisk(Print.readRisk());
+                    project.onChange();
                 } catch (RiskIsNullException e) {
                     Print.println(e + Print.LS);
                 }
@@ -413,8 +375,11 @@ public class ConsoleProgram {
                 Print.println(project.getScheduleVarianceString());
                 break;
             case BUDGET_CHANGE_DATE:
-                // TODO: implement this mofo
-
+                try {
+                    project.setDate(Print.readYearWeek(), Print.readDayOfWeek());
+                } catch (IllegalArgumentException e) {
+                    Print.println(e.getMessage());
+                }
                 break;
             case LEAVE_BUDGET_MENU:
                 Print.println("Leaving the budget manager...");

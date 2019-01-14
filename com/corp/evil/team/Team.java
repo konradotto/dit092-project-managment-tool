@@ -10,19 +10,17 @@ public class Team {
     // members
     private String name;
     private List<Member> members;
-    //private List<Activity> activities;
 
-    public Team(String name, ArrayList<Member> members, ArrayList<Activity> activities) throws NameIsEmptyException {
+    public Team(String name, ArrayList<Member> members) throws NameIsEmptyException {
         if (name.trim().isEmpty()) {
             throw new NameIsEmptyException("The name-field of a team can not be empty!");
         }
         this.name = name;
         this.members = members;
-        //this.activities = activities;
     }
 
     public Team(String name) throws NameIsEmptyException {
-        this(name, new ArrayList<>(), new ArrayList<>());
+        this(name, new ArrayList<>());
     }
 
     public void addMember(Member member) throws MemberIsNullException, MemberAlreadyRegisteredException {
@@ -55,13 +53,6 @@ public class Team {
             //activities.add(activity);
         }
     }
-
-    /*public void removeActivity(Activity activity) throws ActivityIsNullException {
-        if (activity == null) {
-            throw new ActivityIsNullException("This activity does not exist!");
-        }
-        activities.remove(activity);
-    }*/
 
     public void solveCopies(Member member) {
         System.err.println("Function solveCopies(Member member) called!");
@@ -113,15 +104,6 @@ public class Team {
         }
         members = temp;
     }
-
-    /*
-    public double getExpectedBudgetAtCompletion(Activity activity) {
-        if (!activities.contains(activity)) {
-            throw new IllegalArgumentException("The activity is not being handled by this team!");
-        }
-        int hoursExpected = activity.getBillableHours();
-        return (double) hoursExpected * getAverageSalary();
-    }*/
 
     /**
      * Assume everyone on the team will do the same amount of work on any task.
@@ -220,21 +202,17 @@ public class Team {
         this.name = name;
     }
 
-
+/*
     public double timeSpentPercentage() {
 
         double sumOfDurations = 0;
-        /*for (Activity activity: activities){
-
-            sumOfDurations += activity.getDuration();
-        }*/
         double sumOfTimeSpent = 0;
         for (Member member : members) {
             sumOfTimeSpent += member.getTimeSpent();
         }
 
         return sumOfTimeSpent / sumOfDurations;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
