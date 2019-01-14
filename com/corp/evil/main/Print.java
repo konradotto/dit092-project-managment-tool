@@ -189,7 +189,7 @@ public class Print {
         sb.append("➤ 3. Edit task end week" + LS);
         sb.append("➤ 4. Edit task end year" + LS);
         sb.append("➤ 5. Assign a team to this task" + LS);
-        sb.append("➤ 6. Update time spent on this task" + LS);
+        sb.append("➤ 6. Work on this task" + LS);
         sb.append("➤ 7. Back to the previous menu" + LS);
 
         printBuffer();
