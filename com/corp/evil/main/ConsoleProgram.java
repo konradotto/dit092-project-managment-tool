@@ -406,7 +406,7 @@ public class ConsoleProgram {
                     break;
                 }
                 project.removeMember(member);
-                project.memberNameChanger(member, "Removed " +member.getName());
+                project.memberNameChanger(member, "(Removed) " +member.getName());
                 break;
             case PROJECT_ADD_TEAM:
                 try {

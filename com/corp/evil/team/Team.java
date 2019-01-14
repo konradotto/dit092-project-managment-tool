@@ -133,7 +133,7 @@ public class Team {
             int l = (int) Math.ceil(Math.log10(members.size()) + 0.005);   // number of digits needed for left aligned formatting
             for (int i = 0; i < members.size(); i++) {
                 Member mem = members.get(i);
-                sb.append(String.format("%1$" + String.valueOf(l) + "s %2$-20s\t%3$s%n", i + 1, mem.getName(), mem.getID()));
+                sb.append(String.format("%1$" + String.valueOf(l) + "s %2$-20s\t%3$s%n", i + 1+") ", mem.getName(), mem.getID()));
             }
         }
 

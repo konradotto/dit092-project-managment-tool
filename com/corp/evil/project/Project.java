@@ -34,7 +34,7 @@ public class Project {
      * @param schedule   ProjectSchedule defining the temporal project outlines
      */
     public Project(String name, Team team, RiskMatrix riskMatrix, ProjectSchedule schedule) {
-        this.setName(name);
+        this.name = name;
         this.setTeam(team);
         this.setRiskMatrix(riskMatrix);
         this.setSchedule(schedule);
