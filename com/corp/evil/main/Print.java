@@ -55,12 +55,12 @@ public class Print {
         try {
             project = JsonReaderWriter.load(Project.class);
         } catch (IOException e) {
-            Print.println("No project could be loaded from the specified file." + LS);
+            println("No project could be loaded from the specified file." + LS);
             return IO_EXCEPTION;
         }
 
         if (!project.isProject()) {
-            Print.println("The object loaded from the json-file is no project." + LS);
+            println("The object loaded from the json-file is no project." + LS);
             return NOT_A_PROJECT;
         }
         project.solveObjectCopies();
@@ -235,10 +235,8 @@ public class Print {
         Risk risk = null;
         try {
             risk = new Risk(name, probability, impact);
-        } catch (RiskProbabilityNotDefinedException e) {
-            e.printStackTrace();
-        } catch (RiskImpactNotDefinedException e) {
-            e.printStackTrace();
+        } catch (RiskProbabilityNotDefinedException | RiskImpactNotDefinedException e) {
+            println(e.getMessage() + LS);
         }
         return risk;
     }
@@ -254,7 +252,7 @@ public class Print {
         try {
             return new Project(name, new ProjectSchedule(readTimePeriod("project")));       // TODO: clean-up this mess
         } catch (NameIsEmptyException e) {
-            e.printStackTrace();
+            println(e.getMessage() + LS);
         }
         return null;
     }
@@ -280,7 +278,7 @@ public class Print {
         try {
             return new TimePeriod(startYear, startWeek, endYear, endWeek);
         } catch (IllegalArgumentException e) {
-            Print.println(e + LS);
+            println(e.getMessage() + LS);
             return readTimePeriod(purpose);             // recursively call of readTimePeriod until it succeeds
         }
     }
@@ -308,7 +306,7 @@ public class Print {
             Member member = new Member(name, salary);
             return member;
         } catch (NameIsEmptyException e) {
-            e.printStackTrace();
+            println(e.getMessage() + LS);
         }
         return null;
     }
@@ -319,7 +317,7 @@ public class Print {
         try {
             team = new Team(name);
         } catch (NameIsEmptyException e) {          //TODO: fix this mess
-            e.printStackTrace();
+            println(e.getMessage() + LS);
         }
         return team;
 
@@ -415,7 +413,7 @@ public class Print {
         activities.sort(Comparator.comparing(Activity::getName));
 
         for (int i = 0; i < activities.size(); i++) {
-            Print.println(i + 1 + ") " + activities.get(i).getName());
+            println(i + 1 + ") " + activities.get(i).getName());
         }
         int j = myScanner.readInt("Choose an activity from the list: ");
         while (j > activities.size() || j < 1) {
@@ -477,7 +475,7 @@ public class Print {
         try {
             return new YearWeek(year, week);
         } catch (IllegalArgumentException e) {
-            println(e.getMessage());
+            println(e.getMessage() + LS);
             return null;
         }
     }

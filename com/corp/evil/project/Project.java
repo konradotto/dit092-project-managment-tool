@@ -73,7 +73,7 @@ public class Project {
             schedule.addActivity(activity);
             onChange();
         } catch (ActivityAlreadyRegisteredException | ActivityIsNullException | IllegalArgumentException e) {
-            Print.println(e.getMessage());
+            Print.println(e.getMessage() + Print.LS);
         }
     }
 
@@ -212,7 +212,7 @@ public class Project {
             team.removeMember(member);
             onChange();
         } catch (MemberIsNullException e) {
-            Print.println(e.getMessage());
+            Print.println(e.getMessage() + Print.LS);
         }
     }
 
@@ -227,6 +227,13 @@ public class Project {
         }
 
         return sb.toString();
+    }
+
+    public String getTeamString() {
+        if (team.getMembers().isEmpty()) {
+            return "No registered members!" + Print.LS;
+        }
+        return team.toString();
     }
 
     public String getBudgetString() {
@@ -288,6 +295,7 @@ public class Project {
             }
         } else {
             this.name = passedName;
+            this.team.setName(name);
         }
         onChange();
     }
@@ -329,7 +337,7 @@ public class Project {
             schedule.setTimePeriod(updatedPeriod);
             onChange();
         } catch (IllegalArgumentException e) {
-            Print.println(e.getMessage());
+            Print.println(e.getMessage() + Print.LS);
         }
     }
 

@@ -268,7 +268,7 @@ public class ConsoleProgram {
         try {
             activity = Print.readActivity();
         } catch (ActivityIsNullException e) {
-            Print.println(e.getMessage());
+            Print.println(e.getMessage() + Print.LS);
             Print.println("Returning to last menu...");
             return;
         }
@@ -295,7 +295,7 @@ public class ConsoleProgram {
                 try {
                     project.assignTask(activity, Print.readTeam());
                 } catch (TeamIsNullException e) {
-                    Print.println(e.getMessage());
+                    Print.println(e.getMessage() + Print.LS);
                 }
                 break;
             case TASK_UPDATE_TIME_SPENT:
@@ -327,7 +327,7 @@ public class ConsoleProgram {
                     project.getRiskMatrix().addRisk(Print.createRisk());
                     project.onChange();
                 } catch (RiskIsNullException | RiskAlreadyRegisteredException e) {
-                    Print.println(e + Print.LS);
+                    Print.println(e.getMessage() + Print.LS);
                 }
                 break;
             case REMOVE_RISK:
@@ -335,7 +335,7 @@ public class ConsoleProgram {
                     project.getRiskMatrix().removeRisk(Print.readRisk());
                     project.onChange();
                 } catch (RiskIsNullException e) {
-                    Print.println(e + Print.LS);
+                    Print.println(e.getMessage() + Print.LS);
                 }
                 break;
             case LEAVE_RISK_MANAGER:
@@ -366,7 +366,7 @@ public class ConsoleProgram {
                 try {
                     project.setDate(Print.readYearWeek(), Print.readDayOfWeek());
                 } catch (IllegalArgumentException e) {
-                    Print.println(e.getMessage());
+                    Print.println(e.getMessage() + Print.LS);
                 }
                 break;
             case LEAVE_BUDGET_MENU:
@@ -384,7 +384,7 @@ public class ConsoleProgram {
         boolean leave = false;
         do switch (Print.printTeamMenu()) {
             case PROJECT_PRINT_MEMBERS:
-                Print.println(project.getTeam().toString());
+                Print.println(project.getTeamString());
                 break;
             case PROJECT_PRINT_TEAMS:
                 Print.println(project.getTeamsString());
@@ -393,7 +393,7 @@ public class ConsoleProgram {
                 try {
                     project.getTeam().addMember(Print.createMember());
                 } catch (MemberIsNullException | MemberAlreadyRegisteredException e) {
-                    Print.println(e + Print.LS);
+                    Print.println(e.getMessage() + Print.LS);
                 }
                 break;
             case PROJECT_EDIT_MEMBER:
@@ -402,18 +402,17 @@ public class ConsoleProgram {
             case PROJECT_REMOVE_MEMBER:
                 Member member = chooseMember(project.getTeam());
                 if (member == null) {
-                    Print.println("Member is null! Nothing to be done here...");
+                    Print.println("No such member!");
                     break;
                 }
                 project.removeMember(member);
+                project.memberNameChanger(member, "Removed " +member.getName());
                 break;
             case PROJECT_ADD_TEAM:
                 try {
                     project.addTeam(Print.createTeam());
-                } catch (TeamAlreadyRegisteredException e) {
-                    e.printStackTrace();
-                } catch (TeamIsNullException e) {
-                    e.printStackTrace();
+                } catch (TeamAlreadyRegisteredException | TeamIsNullException e) {
+                    Print.println(e.getMessage() + Print.LS);
                 }
                 break;
             case TEAM_EDIT:
@@ -468,7 +467,7 @@ public class ConsoleProgram {
         try {
             team = Print.readTeam();
         } catch (TeamIsNullException e) {
-            Print.println(e + Print.LS);
+            Print.println(e.getMessage() + Print.LS);
             return false;
         }
 
@@ -487,7 +486,7 @@ public class ConsoleProgram {
                     }
                     team.addMember(member);
                 } catch (MemberIsNullException | MemberAlreadyRegisteredException e) {
-                    Print.println(e + Print.LS);
+                    Print.println(e.getMessage() + Print.LS);
                 }
                 break;
             case TEAM_REMOVE_MEMBER:
@@ -498,7 +497,7 @@ public class ConsoleProgram {
                     }
                     team.removeMember(member);
                 } catch (MemberIsNullException e) {
-                    Print.println(e + Print.LS);
+                    Print.println(e.getMessage() + Print.LS);
                 }
                 break;
             case LEAVE_TEAM_MENU:
