@@ -200,7 +200,7 @@ public class ConsoleProgram {
                 editProject();
                 break;
             case LEAVE_PROJECT_MENU:
-                Print.println("Leaving the general project menu...");
+                Print.println("Leaving the general project menu..." + Print.LS);
                 leave = true;
                 break;
             default:
@@ -223,6 +223,7 @@ public class ConsoleProgram {
                 editTask();
                 break;
             case LEAVE_TASK_MANAGER:
+                Print.println("Leaving the tasks management menu..." + Print.LS);
                 leaveMenu = true;
                 break;
             default:
@@ -302,8 +303,8 @@ public class ConsoleProgram {
                 taskTimeSetter(activity);
                 break;
             case LEAVE_TASK_MENU:
+                Print.println("Leaving the task editing menu..." + Print.LS);
                 leave = true;
-                Print.println("Leaving the task editing menu...");
                 break;
             default:
                 Print.defaultMonologue();
@@ -339,7 +340,7 @@ public class ConsoleProgram {
                 }
                 break;
             case LEAVE_RISK_MANAGER:
-                Print.println("Leaving the risk manager...");
+                Print.println("Leaving the risk manager..." + Print.LS);
                 break;
             default:
                 Print.defaultMonologue();
@@ -370,7 +371,7 @@ public class ConsoleProgram {
                 }
                 break;
             case LEAVE_BUDGET_MENU:
-                Print.println("Leaving the budget manager...");
+                Print.println("Leaving the budget manager menu ..." + Print.LS);
                 break;
             default:
                 Print.defaultMonologue();
@@ -419,6 +420,7 @@ public class ConsoleProgram {
                 editTeam();
                 break;
             case LEAVE_TEAM_MANAGER://Back to previous menu
+                Print.println("Leaving the teams and members menu..." + Print.LS);
                 leave = true;
                 break;
             default:
@@ -501,6 +503,7 @@ public class ConsoleProgram {
                 }
                 break;
             case LEAVE_TEAM_MENU:
+                Print.println("Leaving the edit team menu..." + Print.LS);
                 leave = true;
                 break;
             default:

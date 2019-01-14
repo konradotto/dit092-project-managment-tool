@@ -183,7 +183,7 @@ public class Project {
         sb.append(String.join("", Collections.nCopies(MARGIN, " ")) + getTitle() + LS);
         sb.append(String.join("", Collections.nCopies(getTitle().length() + 2 * MARGIN, "=")) + LS + LS);
 
-        sb.append(team);
+        sb.append(getTeamString());
         sb.append(LS + LS);
 
         sb.append(getBudgetString());
