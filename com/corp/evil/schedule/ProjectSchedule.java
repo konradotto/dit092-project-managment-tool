@@ -17,7 +17,7 @@ public class ProjectSchedule {
         StringBuilder sbTemp = new StringBuilder();
         sbTemp.append("\t\t\t TASKS " + LS);
         sbTemp.append(SEPARATOR);
-        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start Week, Year:", "| End Week, Year:", "| Percent Completed:", "| Teams: ", "|"}));
+        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start: Week, Year:", "| End: Week, Year:", "| Percent Completed:", "| Teams: ", "|"}));
         sbTemp.append(SEPARATOR);
 
         HEAD = sbTemp.toString();

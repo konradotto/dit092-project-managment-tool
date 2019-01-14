@@ -10,6 +10,7 @@ public class Project {
     // constants
     private static final int MARGIN = 3;
     private static final String LS = System.lineSeparator();
+    public static final String CURRENCY = "SEK";
 
     // member variables
     private String name;
@@ -178,9 +179,9 @@ public class Project {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(String.join("", Collections.nCopies(getName().length() + 2 * MARGIN, "=")) + LS);
-        sb.append(String.join("", Collections.nCopies(MARGIN, " ")) + getName() + LS);
-        sb.append(String.join("", Collections.nCopies(getName().length() + 2 * MARGIN, "=")) + LS + LS);
+        sb.append(String.join("", Collections.nCopies(getTitle().length() + 2 * MARGIN, "=")) + LS);
+        sb.append(String.join("", Collections.nCopies(MARGIN, " ")) + getTitle() + LS);
+        sb.append(String.join("", Collections.nCopies(getTitle().length() + 2 * MARGIN, "=")) + LS + LS);
 
         sb.append(team);
         sb.append(LS + LS);
@@ -194,6 +195,16 @@ public class Project {
         sb.append(riskMatrix.toStringText());
 
         return sb.toString();
+    }
+
+    public String weeksString() {
+        return String.format("   (From week %d, %d to week %d, %d)", schedule.getStartWeek(),
+                schedule.getTimePeriod().getStart().getYear(), schedule.getEndWeek(),
+                schedule.getTimePeriod().getEnd().getYear());
+    }
+
+    public String getTitle() {
+        return getName() + weeksString();
     }
 
     public void removeMember(Member member) {
@@ -233,21 +244,21 @@ public class Project {
 
     public String getEarnedValueString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Earned Value:      " + schedule.getEarnedValue() + LS);
+        sb.append(String.format("Earned Value:      %.2f %s", schedule.getEarnedValue(), CURRENCY + LS));
 
         return sb.toString();
     }
 
     public String getCostVarianceString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Cost Variance:     " + schedule.getCostVariance() + Print.LS);
+        sb.append(String.format("Cost Variance:     %.2f %s", schedule.getCostVariance(), CURRENCY + LS));
 
         return sb.toString();
     }
 
     public String getScheduleVarianceString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Schedule Variance: " + schedule.getScheduleVariance(currentWeek, lastWeekday) + LS);
+        sb.append(String.format("Schedule Variance: %.2f %s", schedule.getScheduleVariance(currentWeek, lastWeekday), CURRENCY + LS));
         sb.append(dateAssumption() + LS);
         return sb.toString();
     }
@@ -392,17 +403,9 @@ public class Project {
     }
 
     public void assignTask(Activity activity, Team team) {
-        if (team.getMembers().isEmpty()) {
-            Print.println("A task cannot be assigned to an empty team!");
+        if (activity == null) {
+            throw new IllegalArgumentException("Can only set a team for non-null activities.");
         }
-
-        try {
-            team.addActivity(activity);
-            onChange();
-        } catch (ActivityAlreadyRegisteredException e) {
-            e.printStackTrace();
-        } catch (ActivityIsNullException e) {
-            e.printStackTrace();
-        }
+        activity.setTeam(team);
     }
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -26,11 +28,25 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Member{" +
-                "name='" + name + '\'' +
-                ", SALARY_PER_HOUR=" + salaryPerHour +
-                ", timeSpent=" + hoursSpent +
-                "Total Salary" + calculateSalary() + '}';
+        List<String> taskNames = new ArrayList<>();
+        for (Activity activity : ConsoleProgram.getProject().getSchedule().getActivities()) {
+            if (activity.getTeam().getMembers().contains(this)) {
+                taskNames.add(activity.getName());
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(name + " has worked " + hoursSpent + " hours on project " +
+                ConsoleProgram.getProject().getName() + "." + Print.LS);
+        if (taskNames.isEmpty()) {
+            return sb.toString();
+        }
+        sb.append(name + " is working on: ");
+        for (String s : taskNames) {
+            sb.append(s + ", ");
+        }
+
+        String result = sb.toString();
+        return result.substring(0, result.length() - 2);
     }
 
     /**

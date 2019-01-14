@@ -56,7 +56,8 @@ public class ConsoleProgram {
     // member edit menu options
     private static final int EDIT_MEMBER_NAME = 1;
     private static final int EDIT_MEMBER_SALARY = 2;
-    private static final int LEAVE_MEMBER_MENU = 3;
+    private static final int PRINT_MEMBER_HOURS = 3;
+    private static final int LEAVE_MEMBER_MENU = 4;
 
     // edit team menu options
     private static final int TEAM_CHANGE_NAME = 1;
@@ -230,26 +231,18 @@ public class ConsoleProgram {
         } while (!leaveMenu);
     }
 
-    public static boolean taskTimeSetter() {
-        Activity task;
-        try {
-            task = Print.readActivity();
-        } catch (ActivityIsNullException e) {
-            Print.println(e + Print.LS);
-            return false;
-        }
+    public static boolean taskTimeSetter(Activity task) {
         Member member = chooseMember(task.getTeam());
 
-        if (!task.getTeam().contains(member)) {
-            Print.println("This member is not assigned to the chosen task!" + Print.LS);
+        if (member == null) {
+            Print.println("No one is working on this activity yet." + Print.LS);
             return false;
-        } else {
-            int timeSpent = myScanner.readInt("Enter the amount of time that " + member.getName() + " has spent on " + task.getName() + ':');
-            int timeScheduled = myScanner.readInt("Enter the amount of scheduled time that " + member.getName() + " has spent on " + task.getName() + ':');
-
-            // TODO: make member work instead of team
-            task.work(member, timeSpent, timeScheduled);
         }
+
+        int timeSpent = myScanner.readInt("Enter the amount of time that " + member.getName() + " has spent on " + task.getName() + ':');
+        int timeScheduled = myScanner.readInt("Enter the amount of scheduled time that " + member.getName() + " has spent on " + task.getName() + ':');
+
+        task.work(member, timeSpent, timeScheduled);
         return false;
     }
 
@@ -268,10 +261,6 @@ public class ConsoleProgram {
                 break;
         }
         return member;
-    }
-
-
-    public static void taskAssigner() {
     }
 
     public static void editTask() {
@@ -308,10 +297,9 @@ public class ConsoleProgram {
                 } catch (TeamIsNullException e) {
                     Print.println(e.getMessage());
                 }
-                taskAssigner();
                 break;
             case TASK_UPDATE_TIME_SPENT:
-                taskTimeSetter();
+                taskTimeSetter(activity);
                 break;
             case LEAVE_TASK_MENU:
                 leave = true;
@@ -456,6 +444,9 @@ public class ConsoleProgram {
                     double salary = myScanner.readDouble("Enter the members new salary: ");
                     member.setSalaryPerHour(salary);
                     project.memberSalaryChanger(member,salary);
+                    break;
+                case PRINT_MEMBER_HOURS:
+                    Print.println(member.toString());
                     break;
                 case LEAVE_MEMBER_MENU:
                     Print.println("Leaving the edit member menu...");

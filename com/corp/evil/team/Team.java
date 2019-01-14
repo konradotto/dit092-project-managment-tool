@@ -41,25 +41,10 @@ public class Team {
         members.remove(member);
     }
 
-    public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
-        if (activity == null) {
-            throw new ActivityIsNullException("This activity does not exist!");
-        } else if (false) {//activities.contains(activity)) {
-            throw new ActivityAlreadyRegisteredException("An activity with same name exists already!");
-        } else {
-            //TODO change this to work again somehow
-
-            System.err.println("Major, we got a problem! In Team.addActivity(Activity activity)");
-            //activities.add(activity);
-        }
-    }
-
     public void solveCopies(Member member) {
-        System.err.println("Function solveCopies(Member member) called!");
         int i = 0;
         for (Member teamMember : members) {
             if (member.getName().equals(teamMember.getName())) {
-                Print.println("It happened");
                 members.set(i, member);
             }
             i++;
@@ -184,8 +169,8 @@ public class Team {
 
         for (Member member : members) {
             sb.append(formatTableRow(new String[]{"| " + member.getName(),
-                    "| " + member.getSalaryPerHour(),
-                    "| " + member.getTimeSpent(), "|"}));
+                    String.format("| %.2f %s", member.getSalaryPerHour(), Project.CURRENCY),
+                    "| " + member.getTimeSpent() + " h", "|"}));
 
             sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
             sb.append(newline);
@@ -201,18 +186,6 @@ public class Team {
     public void setName(String name) {
         this.name = name;
     }
-
-/*
-    public double timeSpentPercentage() {
-
-        double sumOfDurations = 0;
-        double sumOfTimeSpent = 0;
-        for (Member member : members) {
-            sumOfTimeSpent += member.getTimeSpent();
-        }
-
-        return sumOfTimeSpent / sumOfDurations;
-    }*/
 
     @Override
     public boolean equals(Object o) {

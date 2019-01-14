@@ -142,7 +142,7 @@ public class Print {
         sb.append("➤ 1. Print All Members" + LS);
         sb.append("➤ 2. Print All Teams" + LS);
         sb.append("➤ 3. Add member to the project" + LS);
-        sb.append("➤ 4. Update member's information" + LS);
+        sb.append("➤ 4. Update or display a member" + LS);
         sb.append("➤ 5. Remove member from the project" + LS);
         sb.append("➤ 6. Create a sub-team" + LS);
         sb.append("➤ 7. Edit a sub-team" + LS);
@@ -166,7 +166,8 @@ public class Print {
     public static int printEditMemberMenu() {
         sb.append("➤ 1. Update the member's name" + LS);
         sb.append("➤ 2. Update the members's salary" + LS);
-        sb.append("➤ 3. Back to the previous menu" + LS);
+        sb.append("➤ 3. Print the time worked by this team member" + LS);
+        sb.append("➤ 4. Back to the previous menu" + LS);
 
         printBuffer();
         return myScanner.readInt();
@@ -222,7 +223,8 @@ public class Print {
 
     public static Activity createActivity() {
         String name = myScanner.readLine("Enter the name of the task: ");
-        return new Activity(name, readTimePeriod("activity"), null);        // TODO: add a team
+        return new Activity(name, readTimePeriod("activity"), null,
+                myScanner.readInt("Please enter the estimated effort in hours: "));
     }
 
 

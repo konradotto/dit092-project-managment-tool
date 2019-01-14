@@ -124,15 +124,6 @@ public class Activity {
     }
 
     public void setTeam(Team team) {
-        if (team != null) {
-            try {
-                team.addActivity(this);
-            } catch (ActivityAlreadyRegisteredException e) {
-                e.printStackTrace();
-            } catch (ActivityIsNullException e) {
-                e.printStackTrace();
-            }
-        }
         this.team = team;
     }
 
