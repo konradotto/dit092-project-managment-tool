@@ -154,17 +154,45 @@
           }
         },
         "team": {
-          "name": "Something",
+          "name": "Report",
           "members": [
             {
-              "name": "Kardo",
-              "uuid": "ed52e62b-585e-42db-a504-40412e1558a9",
+              "name": "Ella",
+              "uuid": "7771ae6e-88ab-4c98-8b11-59fad826f088",
               "salaryPerHour": 100.0,
               "hoursSpent": 0
+            },
+            {
+              "name": "Jakob",
+              "uuid": "40585592-7ca8-4f94-950a-a9ef0a50aef8",
+              "salaryPerHour": 100.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Miru",
+              "uuid": "faedf291-c15d-4f7b-bb6d-2cc528cd8cbb",
+              "salaryPerHour": 200.0,
+              "hoursSpent": 5
             }
           ]
         },
         "billableHours": 20,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "Schedule Functionalities",
+        "timePeriod": {
+          "start": {
+            "year": 2019,
+            "week": 1
+          },
+          "end": {
+            "year": 2019,
+            "week": 3
+          }
+        },
+        "billableHours": 25,
         "hoursCovered": 0,
         "costSoFar": 0.0
       }
@@ -231,6 +259,10 @@
           "hoursSpent": 0
         }
       ]
+    },
+    {
+      "name": "Organisation",
+      "members": []
     }
   ],
   "currentWeek": {

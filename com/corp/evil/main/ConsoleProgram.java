@@ -402,7 +402,12 @@ public class ConsoleProgram {
                 editMember(project.getTeam());
                 break;
             case PROJECT_REMOVE_MEMBER:
-                project.removeMember(chooseMember(project.getTeam()));
+                Member member = chooseMember(project.getTeam());
+                if (member == null) {
+                    Print.println("Member is null! Nothing to be done here...");
+                    break;
+                }
+                project.removeMember(member);
                 break;
             case PROJECT_ADD_TEAM:
                 try {
@@ -477,14 +482,23 @@ public class ConsoleProgram {
                 break;
             case TEAM_ADD_MEMBER:
                 try {
-                    team.addMember(chooseMember(project.getTeam()));
+                    Member member = chooseMember(project.getTeam());
+                    if (member == null) {
+                        Print.println("Member is null! Returning to team menu...");
+                        break;
+                    }
+                    team.addMember(member);
                 } catch (MemberIsNullException | MemberAlreadyRegisteredException e) {
                     Print.println(e + Print.LS);
                 }
                 break;
             case TEAM_REMOVE_MEMBER:
                 try {
-                    team.removeMember(chooseMember(team));
+                    Member member = chooseMember(team);
+                    if (member == null) {
+                        throw new MemberIsNullException("No member selected to remove from the team!");
+                    }
+                    team.removeMember(member);
                 } catch (MemberIsNullException e) {
                     Print.println(e + Print.LS);
                 }

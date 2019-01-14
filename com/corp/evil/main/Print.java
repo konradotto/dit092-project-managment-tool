@@ -142,10 +142,10 @@ public class Print {
         sb.append("➤ 1. Print All Members" + LS);
         sb.append("➤ 2. Print All Teams" + LS);
         sb.append("➤ 3. Add member to the project" + LS);
-        sb.append("➤ 4. Update or display a member" + LS);
+        sb.append("➤ 4. Edit or display a member" + LS);
         sb.append("➤ 5. Remove member from the project" + LS);
-        sb.append("➤ 6. Create a sub-team" + LS);
-        sb.append("➤ 7. Edit a sub-team" + LS);
+        sb.append("➤ 6. Create a Team" + LS);
+        sb.append("➤ 7. Edit a Team" + LS);
         sb.append("➤ 8. Back to the main" + LS);
 
         printBuffer();
