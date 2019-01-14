@@ -384,6 +384,37 @@ public class Project {
         onChange();
     }
 
+
+    public  Team retrieveTeam(String name) {
+        for (Team team : getTeams()) {
+            if (team.getName().equals(name)) {
+                return team;
+            }
+        }
+        return null;
+    }
+
+    public  Activity retrieveActivity(String name) {
+        for (Activity activity : getSchedule().getActivities()) {
+            if (activity.getName().equals(name)) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+    public  Risk retrieveRisk(String name) {
+        for (Risk risk : getRiskMatrix().getRisks()) {
+            if (risk.getRiskName().equals(name)) {
+                return risk;
+            }
+        }
+        return null;
+    }
+
+
+
+
     public void memberSalaryChanger(Member member, double salary) {
         for (Team team : getTeams()) {
             if (team.getMembers().contains(member)) {

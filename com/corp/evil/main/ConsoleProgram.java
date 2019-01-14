@@ -392,10 +392,8 @@ public class ConsoleProgram {
             case PROJECT_ADD_MEMBER:
                 try {
                     project.getTeam().addMember(Print.createMember());
-                } catch (MemberIsNullException e) {
-                    e.printStackTrace();
-                } catch (MemberAlreadyRegisteredException e) {
-                    e.printStackTrace();
+                } catch (MemberIsNullException | MemberAlreadyRegisteredException e) {
+                    Print.println(e + Print.LS);
                 }
                 break;
             case PROJECT_EDIT_MEMBER:
@@ -512,36 +510,6 @@ public class ConsoleProgram {
         } while (!leave);
 
         return false;       // TODO: this is always returning false...
-    }
-
-
-    //TODO: move these to Project-class
-
-    public static Team retrieveTeam(String name) {
-        for (Team team : project.getTeams()) {
-            if (team.getName().equals(name)) {
-                return team;
-            }
-        }
-        return null;
-    }
-
-    public static Activity retrieveActivity(String name) {
-        for (Activity activity : project.getSchedule().getActivities()) {
-            if (activity.getName().equals(name)) {
-                return activity;
-            }
-        }
-        return null;
-    }
-
-    public static Risk retrieveRisk(String name) {
-        for (Risk risk : project.getRiskMatrix().getRisks()) {
-            if (risk.getRiskName().equals(name)) {
-                return risk;
-            }
-        }
-        return null;
     }
 
 

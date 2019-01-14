@@ -358,7 +358,7 @@ public class Print {
                 "1) By entering the team's name" + LS +
                 "2) By choosing a team from the list")) {
             case SEARCH_FOR_MEMBER:
-                Team team = ConsoleProgram.retrieveTeam(enterName());
+                Team team = ConsoleProgram.getProject().retrieveTeam(enterName());
                 if (team == null) {
                     throw new TeamIsNullException("No such team registered!");
                 }
@@ -391,7 +391,7 @@ public class Print {
                 "1) By typing the tasks's name" + LS +
                 "2) By choosing a task from the list")) {
             case SEARCH_FOR_TASK:
-                Activity activity = ConsoleProgram.retrieveActivity(enterName());
+                Activity activity = ConsoleProgram.getProject().retrieveActivity(enterName());
                 if (activity == null) {
                     throw new ActivityIsNullException("No such activity registered!");
                 }
@@ -429,7 +429,7 @@ public class Print {
                 "1) By entering the risk's name" + LS +
                 "2) By choosing a risk from the list")) {
             case SEARCH_FOR_RISK:
-                Risk risk = ConsoleProgram.retrieveRisk(enterName());
+                Risk risk = ConsoleProgram.getProject().retrieveRisk(enterName());
                 if (risk == null) {
                     throw new RiskIsNullException("No such risk!");
                 }
