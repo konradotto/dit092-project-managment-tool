@@ -8,7 +8,7 @@ import java.util.*;
 public class Project {
 
     // constants
-    private static final int MARGIN = 3;
+    public static final int MARGIN = 3;
     private static final String LS = System.lineSeparator();
     public static final String CURRENCY = "SEK";
 

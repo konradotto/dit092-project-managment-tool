@@ -1,7 +1,6 @@
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class ProjectSchedule {
 
@@ -11,6 +10,8 @@ public class ProjectSchedule {
     private final static String LS = Print.LS;
     private final static String SEPARATOR = String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")) + LS;
     private final static String HEAD;
+    private final static int MIN_SPACE_PER_WEEK = 3;
+    private final static int SPACES = 2;
 
     // initialising the static header part of every ProjectSchedule
     static {
@@ -53,7 +54,7 @@ public class ProjectSchedule {
     }
 
     public void sort() {
-        activities.sort(Activity::compareStartTime);
+        activities.sort(Activity::order);
     }
 
     /**
@@ -139,7 +140,9 @@ public class ProjectSchedule {
 
     @Override
     public String toString() {
-        return formatTable();
+        this.sort();
+        return toAsciiString();
+        //return formatTable();
     }
 
     private static String formatTableRow(String[] columns) {
@@ -187,15 +190,75 @@ public class ProjectSchedule {
         return sb.toString();
     }
 
+    public String toAsciiString() {
+        StringBuilder sb = new StringBuilder();
+        String headline = "Project Schedule for " + ConsoleProgram.getProject().getName() + ":" + Print.LS;
+        sb.append(headline);
 
-    public List<Activity> getParticipation(Member member) {
-        List<Activity> result = new ArrayList<>();
-        for (Activity act : this.activities) {
-            if (act.getTeam().contains(member)) {
-                result.add(act);
+        int numberOfWeeks = timePeriod.getDurationInWeeks();
+
+        // define the length of all week columns
+        int spacePerWeek = (int) Math.log10(numberOfWeeks + 1) + 2;
+        if (spacePerWeek < MIN_SPACE_PER_WEEK) {
+            spacePerWeek = MIN_SPACE_PER_WEEK;
+        }
+
+        String columnHeader = "Task Name";
+        int longestActivityName = columnHeader.length();
+
+        // define the length of the first column
+        for (Activity activity : activities) {
+            if (activity.getName().length() > longestActivityName) {
+                longestActivityName = activity.getName().length();
             }
         }
-        return result;
+
+        sb.append(String.join("", Collections.nCopies((longestActivityName + SPACES) +
+                (numberOfWeeks * spacePerWeek) + 2 * Project.MARGIN, "-")) + LS);
+
+
+        // append row of weeks
+        sb.append(Print.stretchString("", longestActivityName + SPACES, ' '));
+        for (int i = 0; i < numberOfWeeks; i++) {
+            String s = "w" + (i + 1);
+            sb.append(Print.stretchString(s, spacePerWeek, ' '));
+        }
+        sb.append(Print.LS);
+
+        // append row for first column's header
+        sb.append(columnHeader);
+        sb.append(Print.LS);
+
+        String emptyWeekCell = Print.stretchString("", spacePerWeek, ' ');
+        String firstWeek = Print.stretchString(" ", spacePerWeek, '*');
+        String week = Print.stretchString("", spacePerWeek, '*');
+
+        // append one row per activity
+        for (Activity act : activities) {
+            sb.append(Print.stretchString(act.getName(), longestActivityName + SPACES, ' '));
+
+            // calculate the amount of empty weeks
+            int emptyBefore = new TimePeriod(timePeriod.getStart(), act.getTimePeriod().getStart()).getDurationInWeeks() - 1;
+            for (int i = 0; i < emptyBefore; i++) {
+                sb.append(emptyWeekCell);
+            }
+
+            // one starting cell with a star less in the beginning
+            sb.append(firstWeek);
+
+            // append rest of the weeks for that activity
+            for (int i = 0; i < act.getTimePeriod().getDurationInWeeks() - 1; i++) {
+                sb.append(week);
+            }
+
+            // make last week one star shorter than normal weeks:
+            sb.setCharAt(sb.length() - 1, ' ');
+
+            // end line
+            sb.append(Print.LS);
+        }
+
+        return sb.toString();
     }
 
     public int getStartWeek() {

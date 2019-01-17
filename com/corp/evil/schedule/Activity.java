@@ -75,8 +75,8 @@ public class Activity {
         return ((double) hoursCovered) / ((double) billableHours);
     }
 
-    public static int compareStartTime(Activity a1, Activity a2) {
-        return a1.getTimePeriod().getStart().compareTo(a2.getTimePeriod().getStart());
+    public static int order(Activity a1, Activity a2) {
+        return a1.getTimePeriod().compareTo(a2.getTimePeriod());
     }
 
     /**

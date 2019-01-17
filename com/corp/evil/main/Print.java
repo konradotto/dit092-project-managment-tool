@@ -513,4 +513,17 @@ public class Print {
         } while (cnt < 3);
         return null;
     }
+
+    public static String stretchString(String string, int length, char filler) {
+        if (string.length() > length) {
+            throw new IllegalArgumentException("String \"" + string + "\" can not be stretched to length " +
+                    length + "." + "It is longer than that.");
+        }
+
+        String result = string;
+        while (result.length() < length) {
+            result += filler;
+        }
+        return result;
+    }
 }
