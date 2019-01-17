@@ -77,9 +77,10 @@ public final class JsonReaderWriter {
         } while (file == null);
 
         // make sure the file ends on <.json>
-        String filename = file.getAbsolutePath();
-        if (!filename.endsWith(".json")) {
-            file = new File(filename + ".json");
+
+        if (!(file.getAbsolutePath().split(".").length == 2 && file.getAbsolutePath().endsWith(".json"))) {
+            String[] splitFile = file.getAbsolutePath().split(".");
+            file = new File(splitFile[0] + ".json)");
         }
 
         return file;
