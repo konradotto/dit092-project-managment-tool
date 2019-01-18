@@ -386,7 +386,6 @@ public class ConsoleProgram {
     }
 
 
-    //TODO: this needs some clean-up
     private static void teamMenu() {
         boolean leave = false;
         do switch (Print.printTeamMenu()) {
@@ -435,11 +434,11 @@ public class ConsoleProgram {
         } while (!leave);
     }
 
-    private static boolean editMember(Team team) {
+    private static void editMember(Team team) {
 
         Member member = chooseMember(team);
         if (member == null) {
-            return false;
+            return;
         }
 
         boolean leave = false;
@@ -467,16 +466,16 @@ public class ConsoleProgram {
                     break;
             }
         } while (!leave);
-        return false;       //TODO: allow returning true
+        return;
     }
 
-    private static boolean editTeam() {
+    private static void editTeam() {
         Team team;
         try {
             team = Print.readTeam();
         } catch (TeamIsNullException e) {
             Print.println(e.getMessage() + Print.LS);
-            return false;
+            return;
         }
 
         boolean leave = false;
@@ -516,12 +515,7 @@ public class ConsoleProgram {
                 Print.defaultMonologue();
                 break;
         } while (!leave);
-
-        return false;       // TODO: this is always returning false...
     }
-
-
-    //TODO: do we really need the projectEditingMenu? Changing the start date or name from the projectMenu should be good enough...
 
     /**
      * Routine to edit a project's name or end date.

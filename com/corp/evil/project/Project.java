@@ -3,7 +3,10 @@ import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
 
 public class Project {
 
@@ -21,7 +24,7 @@ public class Project {
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
-    ArrayList<Team> teams;  //TODO: decide whether we really need this...
+    ArrayList<Team> teams;
     private YearWeek currentWeek;
     private DayOfWeek lastWeekday;
 
@@ -82,21 +85,6 @@ public class Project {
         }
     }
 
-    //TODO: what is this doing?
-    public boolean addActivity(String name, TimePeriod timePeriod, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
-
-        // make sure the members are in the team
-        for (Member member : team.getMembers()) {
-            if (!team.getMembers().contains(member)) {
-                return false;
-            }
-        }
-
-        schedule.addActivity(new Activity(name, timePeriod, team));
-        onChange();
-        return true;
-    }
-
     public void removeActivity(Activity activity) throws ActivityIsNullException {
         if (activity == null) {
             return;
@@ -112,13 +100,6 @@ public class Project {
             throw new TeamAlreadyRegisteredException("A team with same name exists already!");
         } else {
             teams.add(team);
-        }
-        onChange();
-    }
-
-    public void addTeam(List<Team> teams) throws TeamAlreadyRegisteredException, TeamIsNullException {
-        for (Team team : teams) {
-            addTeam(team);
         }
         onChange();
     }
