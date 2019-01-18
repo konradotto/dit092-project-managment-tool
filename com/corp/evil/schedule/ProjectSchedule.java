@@ -71,6 +71,19 @@ public class ProjectSchedule {
         return earnedValue;
     }
 
+    public double getExpectedCost() {
+        double expectedCost = 0.0;
+
+        for (Activity act : activities) {
+            expectedCost += act.getBudgetAtCompletion();
+        }
+        return expectedCost;
+    }
+
+    public double getCompletion() {
+        return getEarnedValue() / getExpectedCost();
+    }
+
     /**
      * The cost variance is defined as the difference between the earned value and the actual (personnel-)cost
      * of the work conducted at any point of the project.

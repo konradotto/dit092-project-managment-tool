@@ -8,7 +8,11 @@ import java.util.*;
 public class Project {
 
     // constants
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
     public static final int MARGIN = 3;
+    private static final int MAX_BARS = 20;
     private static final String LS = System.lineSeparator();
     public static final String CURRENCY = "SEK";
 
@@ -239,6 +243,9 @@ public class Project {
     }
 
     public String getBudgetString() {
+        if (ConsoleProgram.useAscii()) {
+            return getAsciiBudget();
+        }
         String headline = "Project Budget for " + name + ":" + LS;
 
         StringBuilder sb = new StringBuilder();
@@ -247,6 +254,51 @@ public class Project {
         sb.append(getEarnedValueString());
         sb.append(getCostVarianceString());
         sb.append(getScheduleVarianceString());
+
+        return sb.toString();
+    }
+
+    public String getAsciiBudget() {
+        StringBuilder sb = new StringBuilder();
+
+        String headline = "Project Budget for " + name + ":";
+        int completion = (int) (schedule.getCompletion() * MAX_BARS);
+        String loadBar = "|=" + Print.stretchString("", completion, '=') + Print.stretchString("", MAX_BARS - completion, ' ') + "|";
+
+        String costVar = " ";
+        int count = Math.abs((int) ((MAX_BARS / 2) * (getCostVariance() / schedule.getExpectedCost())));
+        if (count > MAX_BARS / 2) {
+            count = MAX_BARS;
+        }
+        if (getCostVariance() < 0) {
+            costVar += Print.stretchString("", MAX_BARS / 2 - count, ' ') + ANSI_RED +
+                    Print.stretchString("", count, '-') + ANSI_BLACK + "|" + Print.LS;
+        } else {
+            costVar += Print.stretchString("", MAX_BARS / 2, ' ') + "|" +
+                    Print.stretchString("", count, '+') + Print.LS;
+        }
+
+        // construct row for schedule Variance
+        String schedVar = " ";
+        count = Math.abs((int) ((MAX_BARS / 2) * (schedule.getScheduleVariance(currentWeek, lastWeekday) / schedule.getExpectedCost())));
+        if (count > MAX_BARS / 2) {
+            count = MAX_BARS;
+        }
+        if (schedule.getScheduleVariance(currentWeek, lastWeekday) < 0) {
+            schedVar += Print.stretchString("", MAX_BARS / 2 - count, ' ') + ANSI_RED +
+                    Print.stretchString("", count, '-') + ANSI_BLACK + "|" + Print.LS;
+        } else {
+            schedVar += Print.stretchString("", MAX_BARS / 2, ' ') + "|" +
+                    Print.stretchString("", count, '+') + Print.LS;
+        }
+
+        // combine the created strings
+        sb.append(Print.stretchString("", (dateAssumption().length() - headline.length()) / 2, ' ') + Print.LS);
+        sb.append(Print.stretchString("", dateAssumption().length(), '-') + Print.LS);
+        sb.append("Progress:           " + loadBar + Print.LS);
+        sb.append("Cost Variance:      " + costVar);
+        sb.append("Schedule Variance:  " + schedVar);
+        sb.append(dateAssumption() + LS);
 
         return sb.toString();
     }
@@ -260,7 +312,7 @@ public class Project {
 
     public String getCostVarianceString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Cost Variance:     %.2f %s", schedule.getCostVariance(), CURRENCY + LS));
+        sb.append(String.format("Cost Variance:     %.2f %s", getCostVariance(), CURRENCY + LS));
 
         return sb.toString();
     }
