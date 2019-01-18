@@ -153,6 +153,9 @@ public class ProjectSchedule {
 
     @Override
     public String toString() {
+        if (this.getActivities().isEmpty()){
+            return "No registered tasks yet!"+LS;
+        }
         this.sort();
         if (ConsoleProgram.useAscii()) {
             return toAsciiString();
