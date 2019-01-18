@@ -21,7 +21,7 @@ public class Project {
     private Team team;
     private RiskMatrix riskMatrix;
     private ProjectSchedule schedule;
-    ArrayList<Team> teams;  //TODO: decide whether we really need this...
+    ArrayList<Team> teams;
     private YearWeek currentWeek;
     private DayOfWeek lastWeekday;
 
@@ -80,21 +80,6 @@ public class Project {
         } catch (ActivityAlreadyRegisteredException | ActivityIsNullException | IllegalArgumentException e) {
             Print.println(e.getMessage() + Print.LS);
         }
-    }
-
-    //TODO: what is this doing?
-    public boolean addActivity(String name, TimePeriod timePeriod, Team team) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
-
-        // make sure the members are in the team
-        for (Member member : team.getMembers()) {
-            if (!team.getMembers().contains(member)) {
-                return false;
-            }
-        }
-
-        schedule.addActivity(new Activity(name, timePeriod, team));
-        onChange();
-        return true;
     }
 
     public void removeActivity(Activity activity) throws ActivityIsNullException {

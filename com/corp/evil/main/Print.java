@@ -255,7 +255,7 @@ public class Print {
     public static Project createProject() {
         String name = myScanner.readLine("Please enter the name of the new project:");
         try {
-            return new Project(name, new ProjectSchedule(readTimePeriod("project")));       // TODO: clean-up this mess
+            return new Project(name, new ProjectSchedule(readTimePeriod("project")));
         } catch (NameIsEmptyException e) {
             println(e.getMessage() + LS);
         }
@@ -321,7 +321,7 @@ public class Print {
         Team team = null;
         try {
             team = new Team(name);
-        } catch (NameIsEmptyException e) {          //TODO: fix this mess
+        } catch (NameIsEmptyException e) {
             println(e.getMessage() + LS);
         }
         return team;
