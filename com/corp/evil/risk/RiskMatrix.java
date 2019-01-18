@@ -90,7 +90,6 @@ public class RiskMatrix {
             sb.append(formatTableRow(new String[]{"| Risk name:", "| Probability:", "| Impact:", "| Risk:", "|"}));
 
             // separator line
-
             sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + longestRisk + 5, "-")));
             sb.append(lineSeparator);
 

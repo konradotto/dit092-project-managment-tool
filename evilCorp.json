@@ -1,0 +1,406 @@
+{
+  "name": "DIT092 - Project Management Tool",
+  "team": {
+    "name": "DIT092 - Project Management Tool",
+    "members": [
+      {
+        "name": " Miruna Botusan",
+        "uuid": "d6d8a2a5-be33-499a-b06a-3b51eb6000a7",
+        "salaryPerHour": 1000.0,
+        "hoursSpent": 0
+      },
+      {
+        "name": "Gabriela Istrate",
+        "uuid": "d36eb2ec-c53b-4ceb-ad3c-a919e6788c13",
+        "salaryPerHour": 1000.0,
+        "hoursSpent": 0
+      },
+      {
+        "name": "Jakob Karlsson",
+        "uuid": "36ce18f2-debd-4887-b4b3-1de834735c4c",
+        "salaryPerHour": 1000.0,
+        "hoursSpent": 0
+      },
+      {
+        "name": "Jean Paul Massoud",
+        "uuid": "8b1232c9-1e24-4f3e-b477-2548c69562ff",
+        "salaryPerHour": 1000.0,
+        "hoursSpent": 0
+      },
+      {
+        "name": "Kardo Marof",
+        "uuid": "5ae84afe-8b1f-43a6-9eeb-7fb44dce54d6",
+        "salaryPerHour": 1000.0,
+        "hoursSpent": 0
+      },
+      {
+        "name": "Konrad Otto",
+        "uuid": "72c52e08-cbf6-4857-9ce8-a4a2247c3ad6",
+        "salaryPerHour": 1000.0,
+        "hoursSpent": 2
+      },
+      {
+        "name": "Marcus Olsson",
+        "uuid": "ab587a3b-9092-453c-805e-d3e57ac91491",
+        "salaryPerHour": 1000.0,
+        "hoursSpent": 0
+      }
+    ]
+  },
+  "riskMatrix": {
+    "risks": [
+      {
+        "riskName": "Not meeting the deadline ",
+        "probability": "POSSIBLE",
+        "impact": "VERY_HIGH"
+      },
+      {
+        "riskName": "Not having a functional product",
+        "probability": "POSSIBLE",
+        "impact": "VERY_HIGH"
+      },
+      {
+        "riskName": "Workload might be too high",
+        "probability": "LIKELY",
+        "impact": "MEDIUM"
+      },
+      {
+        "riskName": "Limited time to work on the project",
+        "probability": "UNLIKELY",
+        "impact": "HIGH"
+      }
+    ],
+    "lineSeparator": "\r\n"
+  },
+  "schedule": {
+    "activities": [
+      {
+        "name": "A1-Assign tasks",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 47
+          },
+          "end": {
+            "year": 2018,
+            "week": 47
+          }
+        },
+        "team": {
+          "name": "Konrad",
+          "members": [
+            {
+              "name": "Konrad Otto",
+              "uuid": "72c52e08-cbf6-4857-9ce8-a4a2247c3ad6",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 2
+            }
+          ]
+        },
+        "billableHours": 1,
+        "hoursCovered": 1,
+        "costSoFar": 1000.0
+      },
+      {
+        "name": "A1-Preliminary Design",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 47
+          },
+          "end": {
+            "year": 2018,
+            "week": 48
+          }
+        },
+        "billableHours": 15,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "A1-Set schedule\t",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 47
+          },
+          "end": {
+            "year": 2018,
+            "week": 47
+          }
+        },
+        "billableHours": 25,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "A1-Team Members(email list) ",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 47
+          },
+          "end": {
+            "year": 2018,
+            "week": 47
+          }
+        },
+        "billableHours": 1,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "A1- Assignment review",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 48
+          },
+          "end": {
+            "year": 2018,
+            "week": 48
+          }
+        },
+        "team": {
+          "name": "All members",
+          "members": [
+            {
+              "name": " Miruna Botusan",
+              "uuid": "d6d8a2a5-be33-499a-b06a-3b51eb6000a7",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Gabriela Istrate",
+              "uuid": "d36eb2ec-c53b-4ceb-ad3c-a919e6788c13",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Jakob Karlsson",
+              "uuid": "36ce18f2-debd-4887-b4b3-1de834735c4c",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Jean Paul Massoud",
+              "uuid": "8b1232c9-1e24-4f3e-b477-2548c69562ff",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Kardo Marof",
+              "uuid": "5ae84afe-8b1f-43a6-9eeb-7fb44dce54d6",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 0
+            },
+            {
+              "name": "Konrad Otto",
+              "uuid": "72c52e08-cbf6-4857-9ce8-a4a2247c3ad6",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 2
+            },
+            {
+              "name": "Marcus Olsson",
+              "uuid": "ab587a3b-9092-453c-805e-d3e57ac91491",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 0
+            }
+          ]
+        },
+        "billableHours": 2,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "A1-Format and Proofread",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 48
+          },
+          "end": {
+            "year": 2018,
+            "week": 48
+          }
+        },
+        "billableHours": 3,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "A1-Review of Preliminary Design",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 48
+          },
+          "end": {
+            "year": 2018,
+            "week": 48
+          }
+        },
+        "billableHours": 3,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "A1-Review schedule ",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 48
+          },
+          "end": {
+            "year": 2018,
+            "week": 48
+          }
+        },
+        "billableHours": 1,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "A1-Team Contract review",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 48
+          },
+          "end": {
+            "year": 2018,
+            "week": 48
+          }
+        },
+        "billableHours": 2,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      },
+      {
+        "name": "A2-Assign tasks\t",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 49
+          },
+          "end": {
+            "year": 2018,
+            "week": 49
+          }
+        },
+        "team": {
+          "name": "Konrad",
+          "members": [
+            {
+              "name": "Konrad Otto",
+              "uuid": "72c52e08-cbf6-4857-9ce8-a4a2247c3ad6",
+              "salaryPerHour": 1000.0,
+              "hoursSpent": 2
+            }
+          ]
+        },
+        "billableHours": 1,
+        "hoursCovered": 1,
+        "costSoFar": 1000.0
+      },
+      {
+        "name": "A2-Assignment review",
+        "timePeriod": {
+          "start": {
+            "year": 2018,
+            "week": 49
+          },
+          "end": {
+            "year": 2018,
+            "week": 49
+          }
+        },
+        "billableHours": 1,
+        "hoursCovered": 0,
+        "costSoFar": 0.0
+      }
+    ],
+    "timePeriod": {
+      "start": {
+        "year": 2018,
+        "week": 47
+      },
+      "end": {
+        "year": 2019,
+        "week": 3
+      }
+    }
+  },
+  "teams": [
+    {
+      "name": "0",
+      "members": []
+    },
+    {
+      "name": "All members",
+      "members": [
+        {
+          "name": " Miruna Botusan",
+          "uuid": "d6d8a2a5-be33-499a-b06a-3b51eb6000a7",
+          "salaryPerHour": 1000.0,
+          "hoursSpent": 0
+        },
+        {
+          "name": "Gabriela Istrate",
+          "uuid": "d36eb2ec-c53b-4ceb-ad3c-a919e6788c13",
+          "salaryPerHour": 1000.0,
+          "hoursSpent": 0
+        },
+        {
+          "name": "Jakob Karlsson",
+          "uuid": "36ce18f2-debd-4887-b4b3-1de834735c4c",
+          "salaryPerHour": 1000.0,
+          "hoursSpent": 0
+        },
+        {
+          "name": "Jean Paul Massoud",
+          "uuid": "8b1232c9-1e24-4f3e-b477-2548c69562ff",
+          "salaryPerHour": 1000.0,
+          "hoursSpent": 0
+        },
+        {
+          "name": "Kardo Marof",
+          "uuid": "5ae84afe-8b1f-43a6-9eeb-7fb44dce54d6",
+          "salaryPerHour": 1000.0,
+          "hoursSpent": 0
+        },
+        {
+          "name": "Konrad Otto",
+          "uuid": "72c52e08-cbf6-4857-9ce8-a4a2247c3ad6",
+          "salaryPerHour": 1000.0,
+          "hoursSpent": 2
+        },
+        {
+          "name": "Marcus Olsson",
+          "uuid": "ab587a3b-9092-453c-805e-d3e57ac91491",
+          "salaryPerHour": 1000.0,
+          "hoursSpent": 0
+        }
+      ]
+    },
+    {
+      "name": "Konrad",
+      "members": [
+        {
+          "name": "Konrad Otto",
+          "uuid": "72c52e08-cbf6-4857-9ce8-a4a2247c3ad6",
+          "salaryPerHour": 1000.0,
+          "hoursSpent": 2
+        }
+      ]
+    }
+  ],
+  "currentWeek": {
+    "year": 2019,
+    "week": 3
+  },
+  "lastWeekday": "WEDNESDAY",
+  "file": {
+    "path": "E:\\IdeaProjects\\dit092-project-managment-tool\\broject.json"
+  }
+}
