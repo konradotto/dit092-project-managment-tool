@@ -48,6 +48,7 @@
     ]
   },
   "riskMatrix": {
+    "longestRisk": 0,
     "risks": [
       {
         "riskName": "People Dying",
@@ -318,10 +319,10 @@
     }
   ],
   "currentWeek": {
-    "year": 2017,
-    "week": 1
+    "year": 2019,
+    "week": 10
   },
-  "lastWeekday": "MONDAY",
+  "lastWeekday": "SUNDAY",
   "file": {
     "path": "/home/konrad/IdeaProjects/dit092-project-managment-tool/broject.json"
   }

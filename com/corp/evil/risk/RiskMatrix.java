@@ -6,6 +6,7 @@ public class RiskMatrix {
     private final static int COLUMN_WIDTH = 15;
     private final static int COLUMNS = 5;
     private final static int SPACES = 2;
+    private int longestRisk = 0;
 
     private ArrayList<Risk> risks;
     private String lineSeparator = System.lineSeparator();
@@ -74,7 +75,15 @@ public class RiskMatrix {
 
             sb.append("\t\t\tRisk Matrix" + lineSeparator);
 
-            sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")));
+
+            longestRisk = "| Risk name: ".length();
+            for (Risk risk : risks) {
+                if (risk.getRiskName().length() > longestRisk) {
+                    longestRisk = risk.getRiskName().length();
+                }
+            }
+
+            sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + longestRisk + 5, "-")));
             sb.append(lineSeparator);
 
             // format table content
@@ -82,7 +91,7 @@ public class RiskMatrix {
 
             // separator line
 
-            sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")));
+            sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + longestRisk + 5, "-")));
             sb.append(lineSeparator);
 
             for (Risk risk : risks) {
@@ -91,7 +100,7 @@ public class RiskMatrix {
                         "| " + String.valueOf(numeric ? risk.getImpact().getImpact() : risk.getImpact().getText()),
                         "| " + String.valueOf(numeric ? risk.getRisk() : risk.getRiskString()), "|"}));
 
-                sb.append(String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")));
+                sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + longestRisk + 5, "-")));
                 sb.append(lineSeparator);
             }
         }
@@ -103,9 +112,10 @@ public class RiskMatrix {
     private String formatTableRow(String[] columns) {
         String result = "";
 
+
         for (int i = 0; i < COLUMNS - 1; ++i) {
             if (i == 0) {
-                result += String.format("%1$-" + 2 * COLUMN_WIDTH + "s", columns[i]);
+                result += String.format("%1$-" + (longestRisk + 4) + "s", columns[i]);
             } else {
                 result += String.format("%1$-" + COLUMN_WIDTH + "s", columns[i]);
             }
