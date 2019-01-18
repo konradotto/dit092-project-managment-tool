@@ -113,7 +113,12 @@ public class Print {
         sb.append("➤ 3. Tasks Management" + LS);
         sb.append("➤ 4. Risks Management" + LS);
         sb.append("➤ 5. Budget Management" + LS);
-        sb.append("➤ 6. Save and Exit" + LS);
+        if (ConsoleProgram.useAscii()) {
+            sb.append("➤ 6. Switch off ASCII" + LS);
+        } else {
+            sb.append("➤ 6. Switch on ASCII" + LS);
+        }
+        sb.append("➤ 7. Save and Exit" + LS);
 
         printBuffer();
         return myScanner.readInt();

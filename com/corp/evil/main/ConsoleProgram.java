@@ -26,7 +26,8 @@ public class ConsoleProgram {
     private static final int PRIMARY_TASK = 3;
     private static final int PRIMARY_RISK = 4;
     private static final int PRIMARY_BUDGET = 5;
-    private static final int PRIMARY_SAVE_EXIT = 6;
+    private static final int PRIMARY_SWITCH_ASCII = 6;
+    private static final int PRIMARY_SAVE_EXIT = 7;
 
     // schedule menu options
     private static final int TASKS_PRINT_ALL = 1;
@@ -163,6 +164,9 @@ public class ConsoleProgram {
                 break;
             case PRIMARY_BUDGET:
                 projectBudgetManager();
+                break;
+            case PRIMARY_SWITCH_ASCII:
+                ascii = !ascii;
                 break;
             case PRIMARY_SAVE_EXIT:
                 next = END;
