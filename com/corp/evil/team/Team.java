@@ -1,29 +1,26 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class Team {
 
     // constants
-    private final static int COLUMN_WIDTH = 30;
-    private final static int COLUMNS = 5;
+    private static final int COLUMN_WIDTH = 30;
+    private static final int COLUMNS = 5;
+    private static final String newline = Print.LS;
 
     // members
     private String name;
-    private ArrayList<Member> members;
-    private ArrayList<Activity> activities;
+    private List<Member> members;
 
-    public Team(String name, ArrayList<Member> members, ArrayList<Activity> activities) throws NameIsEmptyException {
+    public Team(String name, ArrayList<Member> members) throws NameIsEmptyException {
         if (name.trim().isEmpty()) {
             throw new NameIsEmptyException("The name-field of a team can not be empty!");
         }
         this.name = name;
         this.members = members;
-        this.activities = activities;
     }
 
     public Team(String name) throws NameIsEmptyException {
-        this(name, new ArrayList<>(), new ArrayList<>());
+        this(name, new ArrayList<>());
     }
 
     public void addMember(Member member) throws MemberIsNullException, MemberAlreadyRegisteredException {
@@ -44,21 +41,14 @@ public class Team {
         members.remove(member);
     }
 
-    public void addActivity(Activity activity) throws ActivityAlreadyRegisteredException, ActivityIsNullException {
-        if (activity == null) {
-            throw new ActivityIsNullException("This activity does not exist!");
-        } else if (false) {//activities.contains(activity)) {
-            throw new ActivityAlreadyRegisteredException("An activity with same name exists already!");
-        } else {
-            activities.add(activity);
+    public void solveCopies(Member member) {
+        int i = 0;
+        for (Member teamMember : members) {
+            if (member.getName().equals(teamMember.getName())) {
+                members.set(i, member);
+            }
+            i++;
         }
-    }
-
-    public void removeActivity(Activity activity) throws ActivityIsNullException {
-        if (activity == null) {
-            throw new ActivityIsNullException("This activity does not exist!");
-        }
-        activities.remove(activity);
     }
 
     public boolean contains(Member member) {
@@ -74,6 +64,15 @@ public class Team {
         return null;
     }
 
+    public Member retrieveMember(Member member) {
+        for (Member memberInHere : members) {
+            if (memberInHere.equals(member)) {
+                return memberInHere;
+            }
+        }
+        return null;
+    }
+
     public Member retrieveMember(int index) {
         if (index >= 0 && index < members.size()) {
             return members.get(index);
@@ -81,12 +80,14 @@ public class Team {
         return null;
     }
 
-    public double getExpectedBudgetAtCompletion(Activity activity) {
-        if (!activities.contains(activity)) {
-            throw new IllegalArgumentException("The activity is not being handled by this team!");
+    public void replaceMembers(Team team) {
+        List<Member> temp = new ArrayList<>(members);
+
+        for (Member member : members) {
+            temp.remove(member);
+            temp.add(team.retrieveMember(member));
         }
-        int hoursExpected = activity.getBillableHours();
-        return (double) hoursExpected * getAverageSalary();
+        members = temp;
     }
 
     /**
@@ -102,7 +103,7 @@ public class Team {
         return totalSalary / (double) members.size();
     }
 
-    public ArrayList<Member> getMembers() {
+    public List<Member> getMembers() {
         return members;
     }
 
@@ -132,23 +133,12 @@ public class Team {
             int l = (int) Math.ceil(Math.log10(members.size()) + 0.005);   // number of digits needed for left aligned formatting
             for (int i = 0; i < members.size(); i++) {
                 Member mem = members.get(i);
-                sb.append(String.format("%1$" + String.valueOf(l) + "s %2$-20s\t%3$s%n", i + 1, mem.getName(), mem.getID()));
+                sb.append(String.format("%1$" + String.valueOf(l) + "s %2$-20s\t%3$s%n", i + 1+") ", mem.getName(), mem.getID()));
             }
         }
 
         return sb.toString();
     }
-
-    /*
-    public boolean workOnActivity(Member member, Activity activity, int timeSpent, int timeScheduled) {
-
-        // TODO: prevent to spend more scheduled time than needed for the task
-        member.spendTime(timeSpent);
-        double cost = timeSpent * member.getSalaryPerHour();
-        activity.spendTime(timeScheduled, timeSpent, cost);
-
-        return true;
-    }*/
 
     public void alphaSort() {
         members.sort(Comparator.comparing(Member::getName));
@@ -157,37 +147,34 @@ public class Team {
 
     public String formatTable() {
         StringBuilder sb = new StringBuilder();
-        String newline = System.lineSeparator();
+
+        sb.append("\t\t\t Team: " + getName() + newline);
+
+        sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
+        sb.append(newline);
         if (members.isEmpty()) {
-            sb.append("Team: " + getName() + Print.LS);
             sb.append("There are no members registered in this team yet." + newline);
-        } else {
-
-            sb.append("\t\t\t Team: " + getName() + newline);
-
-            sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
-            sb.append(newline);
-
-            // format table content
-            sb.append(formatTableRow(new String[]{"| Member name:", "| Salary/h:", "| Time spent:", "|"}));
-
-            // separator line
-
-            sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
-            sb.append(newline);
-
-            alphaSort();
-
-            for (Member member : members) {
-                sb.append(formatTableRow(new String[]{"| " + member.getName(),
-                        "| " + member.getSalaryPerHour(),
-                        "| " + member.getTimeSpent(), "|"}));
-
-                sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
-                sb.append(newline);
-            }
+            return sb.toString();
         }
-        //test
+
+        // format table content
+        sb.append(formatTableRow(new String[]{"| Member name:", "| Salary/h:", "| Time spent:", "|"}));
+
+        // separator line
+
+        sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
+        sb.append(newline);
+
+        alphaSort();
+
+        for (Member member : members) {
+            sb.append(formatTableRow(new String[]{"| " + member.getName(),
+                    String.format("| %.2f %s", member.getSalaryPerHour(), Project.CURRENCY),
+                    "| " + member.getTimeSpent() + " h", "|"}));
+
+            sb.append(String.join("", Collections.nCopies((COLUMNS - 2) * COLUMN_WIDTH + 1, "-")));
+            sb.append(newline);
+        }
         return sb.toString();
     }
 
@@ -200,19 +187,17 @@ public class Team {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(name, team.name) &&
+                Objects.equals(members, team.members);
+    }
 
-    public double timeSpentPercentage() {
-
-        double sumOfDurations = 0;
-        /*for (Activity activity: activities){
-
-            sumOfDurations += activity.getDuration();
-        }*/
-        double sumOfTimeSpent = 0;
-        for (Member member : members) {
-            sumOfTimeSpent += member.getTimeSpent();
-        }
-
-        return sumOfTimeSpent / sumOfDurations;
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, members);
     }
 }

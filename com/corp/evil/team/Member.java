@@ -1,6 +1,6 @@
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.TreeMap;
 import java.util.UUID;
 
 public class Member {
@@ -9,7 +9,7 @@ public class Member {
     private final String uuid;
     private double salaryPerHour;
     private int hoursSpent;
-    private Map<Activity, Integer> workContribution;
+    //private Map<Activity, Integer> workContribution;
 
     Member(String name, double salary) throws NameIsEmptyException {
         if (name.isEmpty()) {
@@ -19,7 +19,7 @@ public class Member {
         this.salaryPerHour = salary;
         this.uuid = UUID.randomUUID().toString();
         this.hoursSpent = 0;
-        this.workContribution = new TreeMap<>();
+        //this.workContribution = new TreeMap<>();
     }
 
     public double calculateSalary() {
@@ -28,11 +28,25 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Member{" +
-                "name='" + name + '\'' +
-                ", SALARY_PER_HOUR=" + salaryPerHour +
-                ", timeSpent=" + hoursSpent +
-                "Total Salary" + calculateSalary() + '}';
+        List<String> taskNames = new ArrayList<>();
+        for (Activity activity : ConsoleProgram.getProject().getSchedule().getActivities()) {
+            if (activity.getTeam().getMembers().contains(this)) {
+                taskNames.add(activity.getName());
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(name + " has worked " + hoursSpent + " hours on project " +
+                ConsoleProgram.getProject().getName() + "." + Print.LS);
+        if (taskNames.isEmpty()) {
+            return sb.toString();
+        }
+        sb.append(name + " is working on: ");
+        for (String s : taskNames) {
+            sb.append(s + ", ");
+        }
+
+        String result = sb.toString();
+        return result.substring(0, result.length() - 2);
     }
 
     /**
@@ -45,9 +59,9 @@ public class Member {
      */
     public double workOnActivity(Activity activity, int timeSpent, int timeScheduled) {
         hoursSpent += timeSpent;
-        if (workContribution.containsKey(activity)) {
-            workContribution.put(activity, workContribution.get(activity) + timeScheduled);     // update the contribution according to the effective work
-        }
+        //if (workContribution.containsKey(activity)) {
+        //    workContribution.put(activity, workContribution.get(activity) + timeScheduled);     // update the contribution according to the effective work
+        //}
         return timeSpent * salaryPerHour;
     }
 

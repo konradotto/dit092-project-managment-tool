@@ -1,16 +1,8 @@
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.List;
 
 public class ProjectSchedule {
-
-    private final static int FIRST_WORKDAY = Calendar.MONDAY;
-    public final static int LAST_WORKDAY = Calendar.FRIDAY;
-    private final static int DAY_START_HOUR = 8;
-    public final static int DAY_END_HOUR = 17;
-    private final int LAST_WEEK_OF_YEAR = 52;
 
     // constants for table formatting
     private final static int COLUMN_WIDTH = 25;
@@ -18,13 +10,15 @@ public class ProjectSchedule {
     private final static String LS = Print.LS;
     private final static String SEPARATOR = String.join("", Collections.nCopies((COLUMNS) * COLUMN_WIDTH + 1, "-")) + LS;
     private final static String HEAD;
+    private final static int MIN_SPACE_PER_WEEK = 3;
+    private final static int SPACES = 2;
 
     // initialising the static header part of every ProjectSchedule
     static {
         StringBuilder sbTemp = new StringBuilder();
         sbTemp.append("\t\t\t TASKS " + LS);
         sbTemp.append(SEPARATOR);
-        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start YearWeek:", "| End YearWeek:", "| Percent Completed:", "| Teams: ", "|"}));
+        sbTemp.append(formatTableRow(new String[]{"| Task name:", "| Start: Week, Year:", "| End: Week, Year:", "| Percent Completed:", "| Teams: ", "|"}));
         sbTemp.append(SEPARATOR);
 
         HEAD = sbTemp.toString();
@@ -43,8 +37,24 @@ public class ProjectSchedule {
         this(timePeriod, new ArrayList<>());
     }
 
+
+    /**
+     * Reference the passed project member instead of a separate object for all activity team members
+     *
+     * @param team Team to be looked for.
+     */
+    public void solveCopies(Team team) {
+        for (Member member : team.getMembers()) {
+            for (Activity activity : activities) {
+                if (activity.hasTeam()) {
+                    activity.getTeam().solveCopies(member);
+                }
+            }
+        }
+    }
+
     public void sort() {
-        activities.sort(Activity::compareStartTime);
+        activities.sort(Activity::order);
     }
 
     /**
@@ -59,6 +69,19 @@ public class ProjectSchedule {
             earnedValue += act.getEarnedValue();                // sum up completed costs
         }
         return earnedValue;
+    }
+
+    public double getExpectedCost() {
+        double expectedCost = 0.0;
+
+        for (Activity act : activities) {
+            expectedCost += act.getBudgetAtCompletion();
+        }
+        return expectedCost;
+    }
+
+    public double getCompletion() {
+        return getEarnedValue() / getExpectedCost();
     }
 
     /**
@@ -114,7 +137,7 @@ public class ProjectSchedule {
             throw new ActivityAlreadyRegisteredException("This activity is already registered!");
         }
         if (!activity.getTimePeriod().isWithin(timePeriod)) {
-            throw new IllegalArgumentException("The activities period is not within the time frame of the schedule!");
+            throw new IllegalArgumentException("The activity's period is not within the time frame of the schedule!");
         }
 
         activities.add(activity);
@@ -130,6 +153,13 @@ public class ProjectSchedule {
 
     @Override
     public String toString() {
+        if (this.getActivities().isEmpty()){
+            return "No registered tasks yet!"+LS;
+        }
+        this.sort();
+        if (ConsoleProgram.useAscii()) {
+            return toAsciiString();
+        }
         return formatTable();
     }
 
@@ -157,16 +187,16 @@ public class ProjectSchedule {
                 if (activity.getTeam() != null) {
 
                     sb.append(formatTableRow(new String[]{"| " + activity.getName(),
-                            "| " + activity.getTimePeriod().getStart().getWeek(),
-                            "| " + activity.getTimePeriod().getEnd().getWeek(),
+                            "| " + activity.getTimePeriod().getStart().toString(),
+                            "| " + activity.getTimePeriod().getEnd().toString(),
                             "| " + String.format("%.2f", activity.getCompletion() * 100.0),
                             "| " + activity.getTeam().getName(),
                             "|"
                     }));
                 } else {
                     sb.append(formatTableRow(new String[]{"| " + activity.getName(),
-                            "| " + activity.getTimePeriod().getStart().getWeek(),
-                            "| " + activity.getTimePeriod().getEnd().getWeek(),
+                            "| " + activity.getTimePeriod().getStart().toString(),
+                            "| " + activity.getTimePeriod().getEnd().toString(),
                             "| " + String.format("%.2f", activity.getCompletion() * 100.0),
                             "| " + "No team assigned",
                             "|"
@@ -178,15 +208,76 @@ public class ProjectSchedule {
         return sb.toString();
     }
 
+    public String toAsciiString() {
+        this.sort();
+        StringBuilder sb = new StringBuilder();
+        String headline = "Project Schedule for " + ConsoleProgram.getProject().getName() + ":" + Print.LS;
+        sb.append(headline);
 
-    public List<Activity> getParticipation(Member member) {
-        List<Activity> result = new ArrayList<>();
-        for (Activity act : this.activities) {
-            if (act.getTeam().contains(member)) {
-                result.add(act);
+        int numberOfWeeks = timePeriod.getDurationInWeeks();
+
+        // define the length of all week columns
+        int spacePerWeek = (int) Math.log10(numberOfWeeks + 1) + 2;
+        if (spacePerWeek < MIN_SPACE_PER_WEEK) {
+            spacePerWeek = MIN_SPACE_PER_WEEK;
+        }
+
+        String columnHeader = "Task Name";
+        int longestActivityName = columnHeader.length();
+
+        // define the length of the first column
+        for (Activity activity : activities) {
+            if (activity.getName().length() > longestActivityName) {
+                longestActivityName = activity.getName().length();
             }
         }
-        return result;
+
+        sb.append(String.join("", Collections.nCopies((longestActivityName + SPACES) +
+                (numberOfWeeks * spacePerWeek) + 2 * Project.MARGIN, "-")) + LS);
+
+
+        // append row of weeks
+        sb.append(Print.stretchString("", longestActivityName + SPACES, ' '));
+        for (int i = 0; i < numberOfWeeks; i++) {
+            String s = "w" + (i + 1);
+            sb.append(Print.stretchString(s, spacePerWeek, ' '));
+        }
+        sb.append(Print.LS);
+
+        // append row for first column's header
+        sb.append(columnHeader);
+        sb.append(Print.LS);
+
+        String emptyWeekCell = Print.stretchString("", spacePerWeek, ' ');
+        String firstWeek = Print.stretchString(" ", spacePerWeek, '*');
+        String week = Print.stretchString("", spacePerWeek, '*');
+
+        // append one row per activity
+        for (Activity act : activities) {
+            sb.append(Print.stretchString(act.getName(), longestActivityName + SPACES, ' '));
+
+            // calculate the amount of empty weeks
+            int emptyBefore = new TimePeriod(timePeriod.getStart(), act.getTimePeriod().getStart()).getDurationInWeeks() - 1;
+            for (int i = 0; i < emptyBefore; i++) {
+                sb.append(emptyWeekCell);
+            }
+
+            // one starting cell with a star less in the beginning
+            sb.append(firstWeek);
+
+            // append rest of the weeks for that activity
+            for (int i = 0; i < act.getTimePeriod().getDurationInWeeks() - 1; i++) {
+                sb.append(week);
+            }
+
+            // make last week one star shorter than normal weeks:
+            sb.setCharAt(sb.length() - 1, ' ');
+
+            // end line
+            sb.append(Print.LS);
+        }
+
+        return sb.toString();
     }
 
     public int getStartWeek() {
@@ -206,6 +297,11 @@ public class ProjectSchedule {
     }
 
     public void setTimePeriod(TimePeriod timePeriod) {
+        for (Activity activity : activities) {
+            if (!activity.getTimePeriod().isWithin(timePeriod)) {
+                throw new IllegalArgumentException("The new TimePeriod conflicts with the existing activities! Update aborted.");
+            }
+        }
         this.timePeriod = timePeriod;
     }
 

@@ -34,6 +34,10 @@ public class YearWeek implements Comparable<YearWeek> {
         this.week = week;
     }
 
+    public String toString() {
+        return String.format("%d, %d", week, year);
+    }
+
     @Override
     public int compareTo(final YearWeek other) {
         int result = Integer.compare(this.getYear(), other.getYear());      // compare the years first
@@ -41,6 +45,14 @@ public class YearWeek implements Comparable<YearWeek> {
             result = Integer.compare(this.getWeek(), other.getWeek());      // compare the weeks if years are indecisive
         }
         return result;
+    }
+
+    public boolean isWithin(TimePeriod timePeriod) {
+        if (this.isBefore(timePeriod.getStart())) {
+            return false;
+        }
+
+        return (!this.isAfter(timePeriod.getEnd()));
     }
 
     public boolean isBefore(final YearWeek other) {

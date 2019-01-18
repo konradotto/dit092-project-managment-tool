@@ -71,10 +71,26 @@ public class TimePeriod {
      * @return boolean telling whether otherPeriod is within this
      */
     public boolean isWithin(TimePeriod otherPeriod) {
-        if (start.compareTo(otherPeriod.getStart()) == LATER) {         // other period starts before start?
+        if (start.compareTo(otherPeriod.getStart()) == YearWeek.BEFORE) {   // other period starts before start?
             return false;
         }
-        return (otherPeriod.getEnd().compareTo(end) != LATER);          // other period doesn't end after end?
+        return (end.compareTo(otherPeriod.getEnd()) != YearWeek.AFTER);     // end is not after surrounding period's end?
+    }
+
+    /**
+     * Method comparing the temporal order of this and otherPeriod
+     *
+     * @param otherPeriod a TimePeriod we want to compare the start of this to.
+     * @return -1 if this starts before otherPeriod (or ends before if they start in the same week),
+     * 0 if they are identical,
+     * 1 if this starts after otherPeriod (or ends after otherPeriod if they started together)
+     */
+    public int compareTo(TimePeriod otherPeriod) {
+        int result = this.start.compareTo(otherPeriod.getStart());
+        if (result == 0) {
+            result = this.end.compareTo(otherPeriod.getEnd());
+        }
+        return result;
     }
 
     public YearWeek getStart() {

@@ -38,7 +38,7 @@ public final class JsonReaderWriter {
     }
 
     public static void readyFileChooser() {
-        chooser.setCurrentDirectory(new File("."));
+        chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         frame.toFront();
         frame.setAlwaysOnTop(true);
         frame.requestFocus();
@@ -74,12 +74,15 @@ public final class JsonReaderWriter {
         do {
             chooser.showSaveDialog(frame);
             file = chooser.getSelectedFile();
-        } while (file == null);
+        }
+        while (file == null || file.getName().split("\\.")[0].length() == 0);         // prevent null and empty pre-ending
 
         // make sure the file ends on <.json>
-        String filename = file.getAbsolutePath();
-        if (!filename.endsWith(".json")) {
-            file = new File(filename + ".json");
+        String temp = file.getAbsolutePath();
+        if (!(temp.split("\\.").length == 2 && temp.endsWith(".json"))) {
+            String[] splitFile = temp.split("\\.");
+            System.out.println(splitFile[0]);
+            file = new File(splitFile[0] + ".json");
         }
 
         return file;

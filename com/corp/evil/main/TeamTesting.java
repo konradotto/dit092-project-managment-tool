@@ -7,7 +7,7 @@ public class TeamTesting {
 
         ArrayList<Activity> activities = new ArrayList<>();
         ArrayList<Member> members = new ArrayList<>();
-        Team t1 = new Team("lil pump", members, activities);
+        Team t1 = new Team("lil pump", members);
 
         Member m2 = new Member("kardo", 100.0);
         Member m1 = new Member("jean", 100.0);
