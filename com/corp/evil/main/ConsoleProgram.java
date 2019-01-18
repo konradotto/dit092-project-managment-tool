@@ -459,7 +459,7 @@ public class ConsoleProgram {
                     Print.println(member.toString());
                     break;
                 case LEAVE_MEMBER_MENU:
-                    Print.println("Leaving the edit member menu...");
+                    Print.println("Leaving the edit member menu..."+Print.LS);
                     leave = true;
                     break;
                 default:

@@ -3,9 +3,9 @@ import java.util.*;
 public class Team {
 
     // constants
-    private final static int COLUMN_WIDTH = 30;
-    private final static int COLUMNS = 5;
-    private final static String newline = Print.LS;
+    private static final int COLUMN_WIDTH = 30;
+    private static final int COLUMNS = 5;
+    private static final String newline = Print.LS;
 
     // members
     private String name;
