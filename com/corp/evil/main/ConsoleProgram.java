@@ -85,6 +85,7 @@ public class ConsoleProgram {
 
     // members
     private static Project project;
+    private static boolean ascii = true;
 
     /**
      * Routine to run the ConsoleProgram.
@@ -277,8 +278,12 @@ public class ConsoleProgram {
         boolean leave = false;
         do switch (Print.printEditTaskMenu()) {
             case TASK_REMOVE:
-                project.removeActivity(activity);
-                leave = true;
+                try {
+                    project.removeActivity(activity);
+                    leave = true;
+                } catch (ActivityIsNullException e) {
+                    Print.println("This shouldn't even be possible!!!");
+                }
                 break;
             case EDIT_TASK_NAME:
                 activity.setName(myScanner.readLine("Enter the new name: "));
@@ -317,11 +322,8 @@ public class ConsoleProgram {
         int choice;
         do switch (choice = Print.printRiskMenu()) {
             case PRINT_RISK_MATRIX:
-                if (project.getRiskMatrix().getRisks().isEmpty()) {
-                    Print.println("No registered risks!" + Print.LS);
-                } else {
-                    Print.println(project.getRiskMatrix().toStringText());
-                }
+                Print.println(project.getRiskMatrix().toString());
+
                 break;
             case ADD_RISK:
                 try {
@@ -407,7 +409,7 @@ public class ConsoleProgram {
                     break;
                 }
                 project.removeMember(member);
-                project.memberNameChanger(member, "(Removed) " +member.getName());
+                project.memberNameChanger(member, "(Removed) " + member.getName());
                 break;
             case PROJECT_ADD_TEAM:
                 try {
@@ -442,12 +444,12 @@ public class ConsoleProgram {
                 case EDIT_MEMBER_NAME:
                     String name = myScanner.readLine("Enter the members new name: ");
                     member.setName(name);
-                    project.memberNameChanger(member,name);
+                    project.memberNameChanger(member, name);
                     break;
                 case EDIT_MEMBER_SALARY:
                     double salary = myScanner.readDouble("Enter the members new salary: ");
                     member.setSalaryPerHour(salary);
-                    project.memberSalaryChanger(member,salary);
+                    project.memberSalaryChanger(member, salary);
                     break;
                 case PRINT_MEMBER_HOURS:
                     Print.println(member.toString());
@@ -563,5 +565,9 @@ public class ConsoleProgram {
 
     public static Project getProject() {
         return ConsoleProgram.project;
+    }
+
+    public static boolean useAscii() {
+        return ascii;
     }
 }

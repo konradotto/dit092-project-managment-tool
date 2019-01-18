@@ -141,8 +141,10 @@ public class ProjectSchedule {
     @Override
     public String toString() {
         this.sort();
-        return toAsciiString();
-        //return formatTable();
+        if (ConsoleProgram.useAscii()) {
+            return toAsciiString();
+        }
+        return formatTable();
     }
 
     private static String formatTableRow(String[] columns) {
@@ -191,6 +193,7 @@ public class ProjectSchedule {
     }
 
     public String toAsciiString() {
+        this.sort();
         StringBuilder sb = new StringBuilder();
         String headline = "Project Schedule for " + ConsoleProgram.getProject().getName() + ":" + Print.LS;
         sb.append(headline);

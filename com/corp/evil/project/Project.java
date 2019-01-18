@@ -21,6 +21,7 @@ public class Project {
     private YearWeek currentWeek;
     private DayOfWeek lastWeekday;
 
+
     private File file;
 
     /**
@@ -92,11 +93,12 @@ public class Project {
         return true;
     }
 
-    public void removeActivity(Activity activity) {
+    public void removeActivity(Activity activity) throws ActivityIsNullException {
         if (activity == null) {
             return;
         }
-
+        schedule.removeActivity(activity);
+        onChange();
     }
 
     public void addTeam(Team team) throws TeamAlreadyRegisteredException, TeamIsNullException {
@@ -192,7 +194,7 @@ public class Project {
         sb.append(schedule);
         sb.append(LS + LS);
 
-        sb.append(riskMatrix.toStringText());
+        sb.append(riskMatrix.toString());
 
         return sb.toString();
     }
